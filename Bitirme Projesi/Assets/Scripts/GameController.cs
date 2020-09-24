@@ -11,39 +11,151 @@ public class GameController : MonoBehaviour
     public Text leftText;
     public Text rightText;
 
+    public Text timeText;
+
+    public Text tutorialText;
+
+    private int score;
+    private int questionAnswered;
+    private int correctAnswered;
+
+    public int minLetters = 1;
+    public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
+
+    private bool rightIsCorrect;
+    private bool gamePaused = true;
+
+    private float limitTime;
+
+    //private float timePassedSinceLastAnswer;
     void Start()
     {
-        //Zaman tutulacak
-        newQuestion();
+        resetAttributes();
+        //newQuestion();
+        StartCoroutine(tutorial());
     }
 
     private void Update()
     {
-        //Kullanıcıdan input alınacak
+        if (gamePaused) return;
+
+        this.limitTime -= Time.deltaTime;
+        this.timeText.text =((int) this.limitTime).ToString();
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            checkLeft();//Soldaki doğru cevap mı diye kontrol et
+            newQuestion();
+            //timePassedSinceLastAnswer = 0f;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            checkRight();//Sağdaki doğru cevap mı diye kontrol et
+            newQuestion();
+            //this.timePassedSinceLastAnswer = 0f;
+        }
+
+        //this.timePassedSinceLastAnswer += Time.deltaTime;
+
     }
 
     public void newQuestion()
     {
-        int length = (int)Random.Range(1, 7);
-        withoutUppercase = StringManager.instance.generateString(length);
-        withUppercase = StringManager.instance.generateString(length);
+        int length = (int)Random.Range(minLetters, maxLetters);
 
-        withUppercase = StringManager.instance.assignRandomUppercase(withUppercase);
+        this.withoutUppercase = StringManager.instance.generateString(length);
+        this.withUppercase = StringManager.instance.generateString(length);
+
+        this.withUppercase = StringManager.instance.assignRandomUppercase(withUppercase);
 
         int randomTextIndex = (int)Random.Range(0, 2);
 
         if (randomTextIndex == 0)
         {
-            leftText.text = withUppercase;
-            rightText.text = withoutUppercase;
-            //O zaman doğru cevap sol olacak
+            this.leftText.text = withUppercase;
+            this.rightText.text = withoutUppercase;
+            this.rightIsCorrect = false;//O zaman doğru cevap sol olacak
         }
         else
         {
-            rightText.text = withUppercase;
-            leftText.text = withoutUppercase;
-            //Doğru cevap sağ olacak
+            this.rightText.text = withUppercase;
+            this.leftText.text = withoutUppercase;
+            this.rightIsCorrect = true;//Doğru cevap sağ olacak
         }
+
+
+    }
+
+    public void resetAttributes()
+    {
+        this.score = 0;
+        this.questionAnswered = 0;
+        this.correctAnswered = 0;
+        this.limitTime = 60f;
+    }
+
+    public void checkLeft()
+    {
+        if (!rightIsCorrect)
+        {
+            this.score += 100;
+            this.questionAnswered++;
+            this.correctAnswered++;
+            Debug.Log(score);
+        }
+        else
+        {
+            //Dııt sesi belki yanlış bildiği için
+        }
+    }
+
+    public void checkRight()
+    {
+        if (rightIsCorrect)
+        {
+            this.score += 100;
+            this.questionAnswered++;
+            this.correctAnswered++;
+            Debug.Log(score);
+        }
+        else
+        {
+            //Dııt sesi belki yanlış bildiği için
+        }
+    }
+
+    public  IEnumerator tutorial()
+    {
+       
+        this.withUppercase = "A";
+        this.withoutUppercase = "a";
+
+        this.rightText.text = withoutUppercase;
+        this.leftText.text = withUppercase;
+
+        while (!Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            yield return null;
+        }
+
+        this.tutorialText.text = "Harika!";
+        yield return new WaitForSeconds(2f);
+
+        this.tutorialText.text = "Unutmayın ki cevapların doğruluğu kadar soruları hızlı cevaplamak da önemlidir.";
+        yield return new WaitForSeconds(3f);
+
+        this.tutorialText.text = "Oyunu başlatmak için herhangi bir tuşa basın.";
+
+        while (!Input.anyKeyDown)
+        {
+            yield return null;
+        }
+
+        tutorialText.enabled = false;
+        timeText.enabled = true;
+        newQuestion();
+        gamePaused = false;
+
 
 
     }
