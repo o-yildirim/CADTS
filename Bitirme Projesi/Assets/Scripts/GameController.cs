@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private string withUppercase;
-    private string withoutUppercase;
+
+    public static GameController instance;
+
+    public string withUppercase;
+    public string withoutUppercase;
 
     public Text leftText;
     public Text rightText;
@@ -15,19 +18,36 @@ public class GameController : MonoBehaviour
 
     public Text tutorialText;
 
-    private int score;
-    private int questionAnswered;
-    private int correctAnswered;
+    public GameObject gamePanel;
+    
+
+    public int score;
+    public int questionsAsked;
+    public int questionAnswered;
+    public int correctAnswered;
 
     public int minLetters = 1;
     public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
 
-    private bool rightIsCorrect;
-    private bool gamePaused = true;
+    public bool rightIsCorrect;
+    public bool gamePaused = true;
 
     private float limitTime;
-
     //private float timePassedSinceLastAnswer;
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+  
     void Start()
     {
         resetAttributes();
@@ -40,7 +60,16 @@ public class GameController : MonoBehaviour
         if (gamePaused) return;
 
         this.limitTime -= Time.deltaTime;
-        this.timeText.text =((int) this.limitTime).ToString();
+        this.timeText.text = ((int) this.limitTime).ToString();
+
+
+        if(limitTime <= 0f)
+        {
+            finishGame();
+           
+
+        }
+
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -83,6 +112,8 @@ public class GameController : MonoBehaviour
             this.rightIsCorrect = true;//Doğru cevap sağ olacak
         }
 
+        this.questionsAsked++;
+
 
     }
 
@@ -91,6 +122,7 @@ public class GameController : MonoBehaviour
         this.score = 0;
         this.questionAnswered = 0;
         this.correctAnswered = 0;
+        this.questionsAsked = 0;
         this.limitTime = 60f;
     }
 
@@ -99,7 +131,7 @@ public class GameController : MonoBehaviour
         if (!rightIsCorrect)
         {
             this.score += 100;
-            this.questionAnswered++;
+        
             this.correctAnswered++;
             Debug.Log(score);
         }
@@ -107,6 +139,7 @@ public class GameController : MonoBehaviour
         {
             //Dııt sesi belki yanlış bildiği için
         }
+        this.questionAnswered++;
     }
 
     public void checkRight()
@@ -114,7 +147,6 @@ public class GameController : MonoBehaviour
         if (rightIsCorrect)
         {
             this.score += 100;
-            this.questionAnswered++;
             this.correctAnswered++;
             Debug.Log(score);
         }
@@ -122,6 +154,7 @@ public class GameController : MonoBehaviour
         {
             //Dııt sesi belki yanlış bildiği için
         }
+        this.questionAnswered++;
     }
 
     public  IEnumerator tutorial()
@@ -156,8 +189,13 @@ public class GameController : MonoBehaviour
         newQuestion();
         gamePaused = false;
 
+    }
 
-
+    public void finishGame()
+    {
+        this.gamePaused = true;
+        this.gamePanel.SetActive(false);
+        StatisticManager.instance.showStatistics();
     }
 
 }
