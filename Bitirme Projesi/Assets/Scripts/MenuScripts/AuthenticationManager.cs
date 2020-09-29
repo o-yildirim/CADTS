@@ -22,12 +22,13 @@ public class AuthenticationManager : MonoBehaviour
     public void register()
     {
         var registeredUser = new User(registerName.text,registerSurname.text,dateOfBirth.text,registerEmail.text, registerPassword.text);
-        DatabaseHandler.PostUser(registeredUser, registerEmail.text, () =>
-        {
+        string email = encode(registerEmail.text); //**
+        DatabaseHandler.PostUser(registeredUser, email, () =>
+        {/*
             DatabaseHandler.GetUser(registerEmail.text, user =>
             {
                 //Debug.Log($"{user.username}'s mail is {user.email} and password is {user.password}");
-            });
+            });*/
 
             /* DatabaseHandler.GetUsers(users =>
              {
@@ -48,6 +49,8 @@ public class AuthenticationManager : MonoBehaviour
             return;
         }
 
+        email.text = encode(email.text); //**
+
         DatabaseHandler.GetUser(email.text, user =>
         {
             Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
@@ -61,5 +64,17 @@ public class AuthenticationManager : MonoBehaviour
                 status.text = "Password is incorrect";
             }
         });
+    }
+
+    public string encode(string email)
+    {
+        email = email.Replace(".", ",");
+        return email;
+    }
+
+    public string decode(string email)
+    {
+        email = email.Replace(",", ".");
+        return email;
     }
 }
