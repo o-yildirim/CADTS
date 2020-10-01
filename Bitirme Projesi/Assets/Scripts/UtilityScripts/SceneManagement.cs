@@ -14,7 +14,7 @@ public class SceneManagement : MonoBehaviour
         }
        else if(instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 

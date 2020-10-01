@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class LoginScreenManager : MonoBehaviour
 {
+    public static LoginScreenManager instance;
+
     public GameObject loginPanel;
     public GameObject registerPanel;
 
@@ -14,6 +16,18 @@ public class LoginScreenManager : MonoBehaviour
     private Image registerButtonImage;
 
     public Color defaultButtonColor;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         loginButtonImage = loginPanelButton.GetComponent<Image>();
@@ -26,6 +40,7 @@ public class LoginScreenManager : MonoBehaviour
     {
         if (!loginPanel.activeSelf)
         {
+            AuthenticationManager.instance.setStatus("");
             registerButtonImage.color = Color.gray;
             loginButtonImage.color = defaultButtonColor;
 
@@ -38,6 +53,7 @@ public class LoginScreenManager : MonoBehaviour
     {
         if (!registerPanel.activeSelf)
         {
+            AuthenticationManager.instance.setStatus("");
             loginButtonImage.color = Color.gray;
             registerButtonImage.color = defaultButtonColor;
             

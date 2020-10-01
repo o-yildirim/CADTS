@@ -28,7 +28,7 @@ public class DatabaseHandler : MonoBehaviour
     {
         //RestClient.Put<User>($"{databaseURL}users/{userId}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
        
-        RestClient.Put<User>(databaseURL +"users/"+userId+".json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error));
+        RestClient.Put<User>(databaseURL +"users/"+userId+".json", user).Then(response => { callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class DatabaseHandler : MonoBehaviour
     /// <param name="callback"> What to do after the user is downloaded successfully </param>
     public static void GetUser(string userId, GetUserCallback callback)
     {
-        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); }).Catch(error => Debug.Log(error));
+        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("E-mail veya şifre yanlış boomer"));
     }
 
     /// <summary>
@@ -61,4 +61,6 @@ public class DatabaseHandler : MonoBehaviour
             callback(users);
         });
     }
+
+   
 }
