@@ -127,7 +127,7 @@ public class AuthenticationManager : MonoBehaviour
 
             if (user.password.Equals(password.text))
             {
-                SceneManagement.instance.loadSceneCall();
+                SceneManagement.instance.loadSceneCall(1);
             }
             else if (user.password.Equals(password.text))
             {

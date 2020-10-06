@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class SceneManagement : MonoBehaviour
 {
     public static SceneManagement instance;
     private void Awake()
     {
-       if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
-       else if(instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -31,9 +32,19 @@ public class SceneManagement : MonoBehaviour
         //loading screeni kaldır
     }
 
-    public void loadSceneCall()
+    public void loadSceneCall(int buildIndex)
     {
-        Debug.Log("Metodun içi");
-        StartCoroutine(loadScene(1));
+        StartCoroutine(loadScene(buildIndex));
+    }
+
+    public void loadMinigame()
+    {
+        GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
+        Minigame minigame = selectedGameObject.GetComponent<Minigame>();
+        if (minigame != null)
+        {
+            int buildIndex = minigame.sceneIndex;
+            loadSceneCall(buildIndex);
+        }
     }
 }
