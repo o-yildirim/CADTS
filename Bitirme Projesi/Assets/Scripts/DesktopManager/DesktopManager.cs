@@ -136,19 +136,47 @@ public class DesktopManager : MonoBehaviour
 
     public void ResetButtonColors(Button[] buttons)
     {
+        /*
         for (int i = 0; i < buttons.Length; i++)
         {
             Image buttonImage = buttons[i].GetComponent<Image>();
             buttonImage.color = unselectedColor;
+
         }
+        */
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Image buttonImage = buttons[i].GetComponent<Image>();
+            if(buttonImage.color == selectedButtonColor)
+            {
+                buttonImage.color = unselectedColor;
+                break;
+            }
+           
+        }
+        
     }
 
     public void ResetPanels(GameObject[] panels)
     {
-        for (int i = 0; i < panels.Length; i++)
+
+        /*
+       for (int i = 0; i < panels.Length; i++)
         {
             panels[i].SetActive(false);
+        } 
+        */
+
+        
+        for(int i = 0; i < panels.Length; i++)
+        {
+            if (panels[i].activeSelf)
+            {
+                panels[i].SetActive(false);
+                break;
+            }
         }
+        
     }
 
     public void PanelSelect()
