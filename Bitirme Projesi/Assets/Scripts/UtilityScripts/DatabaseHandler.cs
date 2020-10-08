@@ -6,6 +6,8 @@ using FullSerializer;
 
 public class DatabaseHandler : MonoBehaviour
 {
+
+    public static User loggedInUser;
     // Start is called before the first frame update
     //bitirme-projesi-df6c6
     private const string projectId = "bitirme-projesi-df6c6"; // You can find this in your Firebase project settings

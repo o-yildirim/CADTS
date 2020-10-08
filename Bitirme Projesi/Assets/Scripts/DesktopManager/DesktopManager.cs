@@ -132,6 +132,13 @@ public class DesktopManager : MonoBehaviour
 
         ActivatePanel(desktopButtons[0], desktopPanels[0]);
         ActivatePanel(gameCategoryButtons[0], gameCategoryPanels[0]);
+
+        Debug.Log("Name: " + DatabaseHandler.loggedInUser.name +
+                  " Surname: " + DatabaseHandler.loggedInUser.surname +
+                  " Dob: " + DatabaseHandler.loggedInUser.dob +
+                  " E-mail: " + DatabaseHandler.loggedInUser.email +
+                  " Password: " + DatabaseHandler.loggedInUser.password
+                  );
     }
 
     public void ResetButtonColors(Button[] buttons)

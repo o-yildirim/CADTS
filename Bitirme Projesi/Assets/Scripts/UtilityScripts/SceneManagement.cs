@@ -47,4 +47,14 @@ public class SceneManagement : MonoBehaviour
             loadSceneCall(buildIndex);
         }
     }
+
+    public void loadLoginScreen()
+    {
+        StartCoroutine(loadScene(0));
+    }
+
+    public void loadMainMenu()
+    {
+        StartCoroutine(loadScene(1));
+    }
 }

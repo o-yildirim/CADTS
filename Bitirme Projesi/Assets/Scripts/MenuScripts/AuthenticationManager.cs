@@ -127,7 +127,9 @@ public class AuthenticationManager : MonoBehaviour
 
             if (user.password.Equals(password.text))
             {
-                SceneManagement.instance.loadSceneCall(1);
+                User loggedInUser = new User(user.name, user.surname, user.dob, user.email, user.password);
+                DatabaseHandler.loggedInUser = loggedInUser;
+                SceneManagement.instance.loadMainMenu();
             }
             else if (user.password.Equals(password.text))
             {
