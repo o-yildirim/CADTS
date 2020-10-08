@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     public int questionAnswered;
     public int correctAnswered;
 
+    public float givenTime;
+
     public int minLetters = 1;
     public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
 
@@ -123,7 +125,7 @@ public class GameController : MonoBehaviour
         this.questionAnswered = 0;
         this.correctAnswered = 0;
         this.questionsAsked = 0;
-        this.limitTime = 60f;
+        this.limitTime = this.givenTime;
     }
 
     public void checkLeft()

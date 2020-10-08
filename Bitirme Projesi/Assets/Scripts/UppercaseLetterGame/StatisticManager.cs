@@ -12,6 +12,8 @@ public class StatisticManager : MonoBehaviour
     public Text questionAskedText;
     public Text correctAnsweredText;
 
+    public Button returnToMenuButton;
+
     void Awake()
     {
         if (instance == null)
@@ -22,6 +24,9 @@ public class StatisticManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        returnToMenuButton.onClick.AddListener(SceneManagement.instance.loadMainMenu);
+
     }
 
  
