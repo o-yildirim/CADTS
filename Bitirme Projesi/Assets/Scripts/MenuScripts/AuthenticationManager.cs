@@ -91,24 +91,24 @@ public class AuthenticationManager : MonoBehaviour
     {
         var registeredUser = new User(registerName.text,registerSurname.text,dateOfBirth.text,registerEmail.text, registerPassword.text);
         string email = encode(registerEmail.text); //**
-        DatabaseHandler.PostUser(registeredUser, email, () =>
-        {/*
-            DatabaseHandler.GetUser(registerEmail.text, user =>
-            {
-                //Debug.Log($"{user.username}'s mail is {user.email} and password is {user.password}");
-            });*/
 
-            /* DatabaseHandler.GetUsers(users =>
-             {
-                 foreach (var user in users)
-                 {
-                     Debug.Log($"{user.Value.username} {user.Value.email} {user.Value.password}");
-                 }
-             });
-         });*/
+        bool checkAccount = false;
+
+        DatabaseHandler.GetUser(email, user => checkAccount = checkIfExists(user));
+
+        if (checkAccount)
+        {
+            status.text = "Bu e-maile ait bir hesap bulunmakta.";
+        }
+        else
+        {
+            DatabaseHandler.PostUser(registeredUser, email, () =>
+            {
+            //getAllUsers();
             LoginScreenManager.instance.switchToLogin();
-            //status.text = "Başarıyla kayıt olundu.";
-        });
+                status.text = "Başarıyla kayıt olundu.";
+            });
+        }
     }
 
     public void login()
@@ -154,4 +154,65 @@ public class AuthenticationManager : MonoBehaviour
     {
         status.text = sentence;
     }
+
+    public bool checkIfExists(User user)
+    {
+        bool exists = false;
+        if(user.email != String.Empty)
+        {
+            exists = true;
+        }
+        return exists;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* public void getAllUsers()
+    {
+
+        DatabaseHandler.GetUser(registerEmail.text, user =>
+        {
+            Debug.Log($"{user.name}'s mail is {user.email} and password is {user.password}");
+        });
+
+        DatabaseHandler.GetUsers(users =>
+        {
+            foreach (var user in users)
+            {
+                Debug.Log($"{user.Value.name} {user.Value.email} {user.Value.password}");
+            }
+        });
+    });
+    }
+    */
+   
 }
