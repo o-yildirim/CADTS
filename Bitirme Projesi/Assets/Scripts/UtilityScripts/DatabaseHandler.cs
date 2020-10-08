@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Proyecto26;
 using FullSerializer;
-
 public class DatabaseHandler : MonoBehaviour
 {
 
@@ -29,8 +28,7 @@ public class DatabaseHandler : MonoBehaviour
     public static void PostUser(User user, string userId, PostUserCallback callback)
     {
         //RestClient.Put<User>($"{databaseURL}users/{userId}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
-       
-        RestClient.Put<User>(databaseURL +"users/"+userId+".json", user).Then(response => { callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
+        RestClient.Put<User>(databaseURL +"users/"+userId+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
     }
 
     /// <summary>
@@ -40,7 +38,26 @@ public class DatabaseHandler : MonoBehaviour
     /// <param name="callback"> What to do after the user is downloaded successfully </param>
     public static void GetUser(string userId, GetUserCallback callback)
     {
-        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("E-mail veya şifre yanlış boomer"));
+        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("Email veya şifre yanlış"));
+    }
+
+
+    public static void registerUser(User user, string userId, GetUserCallback callback)
+    {
+        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user2 => { callback(user2); AuthenticationManager.instance.setStatus("Bu e-maile ait bir hesap bulunmakta."); })
+            .Catch(error =>
+            handleJsonException(userId,user,error)
+            );
+    }
+
+    public static void handleJsonException(string userId, User user, System.Exception error)
+    {
+        Debug.Log(error);
+        if (error is Proyecto26.RequestException)
+        {
+            RestClient.Put<User>(databaseURL + "users/" + userId + ".json", user);
+            AuthenticationManager.instance.setStatus("Hesap başarıyla kaydedildi");
+        }
     }
 
     /// <summary>

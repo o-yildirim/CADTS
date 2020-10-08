@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour
 
         }
 
-
+        
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             checkLeft();//Soldaki doğru cevap mı diye kontrol et

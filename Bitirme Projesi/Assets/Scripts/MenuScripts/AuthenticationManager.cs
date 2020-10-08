@@ -91,24 +91,7 @@ public class AuthenticationManager : MonoBehaviour
     {
         var registeredUser = new User(registerName.text,registerSurname.text,dateOfBirth.text,registerEmail.text, registerPassword.text);
         string email = encode(registerEmail.text); //**
-
-        bool checkAccount = false;
-
-        DatabaseHandler.GetUser(email, user => checkAccount = checkIfExists(user));
-
-        if (checkAccount)
-        {
-            status.text = "Bu e-maile ait bir hesap bulunmakta.";
-        }
-        else
-        {
-            DatabaseHandler.PostUser(registeredUser, email, () =>
-            {
-            //getAllUsers();
-            LoginScreenManager.instance.switchToLogin();
-                status.text = "Başarıyla kayıt olundu.";
-            });
-        }
+        DatabaseHandler.registerUser(registeredUser, email, user => { });
     }
 
     public void login()
@@ -120,7 +103,6 @@ public class AuthenticationManager : MonoBehaviour
         }
 
         email.text = encode(email.text); //**
-
         DatabaseHandler.GetUser(email.text, user =>
         {
             Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
@@ -135,7 +117,7 @@ public class AuthenticationManager : MonoBehaviour
             {
                 status.text = "Password is incorrect";
             }
-        });
+        });     
     }
 
     public string encode(string email)
