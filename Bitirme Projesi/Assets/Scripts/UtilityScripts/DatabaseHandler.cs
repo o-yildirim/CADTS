@@ -27,23 +27,13 @@ public class DatabaseHandler : MonoBehaviour
         }
     }*/
 
-    /// <summary>
-    /// Adds a user to the Firebase Database
-    /// </summary>
-    /// <param name="user"> User object that will be uploaded </param>
-    /// <param name="userId"> Id of the user that will be uploaded </param>
-    /// <param name="callback"> What to do after the user is uploaded successfully </param>
+
     public static void PostUser(User user, string userId, PostUserCallback callback)
     {
         //RestClient.Put<User>($"{databaseURL}users/{userId}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
         RestClient.Put<User>(databaseURL +"users/"+userId+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
     }
 
-    /// <summary>
-    /// Retrieves a user from the Firebase Database, given their id
-    /// </summary>
-    /// <param name="userId"> Id of the user that we are looking for </param>
-    /// <param name="callback"> What to do after the user is downloaded successfully </param>
     public static void GetUser(string userId, GetUserCallback callback)
     {
         RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("Email veya şifre yanlış"));
@@ -65,8 +55,9 @@ public class DatabaseHandler : MonoBehaviour
         {
             AuthenticationManager.instance.createTokenAsync();
             RestClient.Put<User>(databaseURL + "users/" + userId + ".json", user);
-            AuthenticationManager.instance.setStatus("Hesap başarıyla kaydedildi");
             LoginScreenManager.instance.switchToLogin();
+            AuthenticationManager.instance.setStatus("Hesap başarıyla kaydedildi");
+
         }
         
         else if (error.Message.Equals("Cannot resolve destination host") || error.Message.Equals("Cannot connect to destination host"))
@@ -75,11 +66,7 @@ public class DatabaseHandler : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Gets all users from the Firebase Database
-    /// </summary>
-    /// <param name="callback"> What to do after all users are downloaded successfully </param>
-    public static void GetUsers(GetUsersCallback callback)
+    public static void GetAllUsers(GetUsersCallback callback)
     {
         RestClient.Get($"{databaseURL}users.json").Then(response =>
         {
