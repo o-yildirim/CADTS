@@ -90,8 +90,9 @@ public class AuthenticationManager : MonoBehaviour
     public void register()
     {
         var registeredUser = new User(registerName.text,registerSurname.text,dateOfBirth.text,registerEmail.text, registerPassword.text);
-        string email = encode(registerEmail.text); //**
+        string email = encode(registerEmail.text); 
         DatabaseHandler.registerUser(registeredUser, email, user => { });
+
     }
 
     public void login()
@@ -102,7 +103,7 @@ public class AuthenticationManager : MonoBehaviour
             return;
         }
 
-        email.text = encode(email.text); //**
+        email.text = encode(email.text); 
         DatabaseHandler.GetUser(email.text, user =>
         {
             Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
@@ -136,17 +137,6 @@ public class AuthenticationManager : MonoBehaviour
     {
         status.text = sentence;
     }
-
-    public bool checkIfExists(User user)
-    {
-        bool exists = false;
-        if(user.email != String.Empty)
-        {
-            exists = true;
-        }
-        return exists;
-    }
-
 
 
 

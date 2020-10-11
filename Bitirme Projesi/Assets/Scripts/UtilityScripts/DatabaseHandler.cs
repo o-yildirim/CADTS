@@ -17,7 +17,15 @@ public class DatabaseHandler : MonoBehaviour
     public delegate void PostUserCallback();
     public delegate void GetUserCallback(User user);
     public delegate void GetUsersCallback(Dictionary<string, User> users);
-
+    /*
+    private void Update()
+    {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Debug.Log("Error. Check internet connection!");
+            AuthenticationManager.instance.setStatus("İnternet bağlantısı kurulamıyor.");
+        }
+    }*/
 
     /// <summary>
     /// Adds a user to the Firebase Database
@@ -42,21 +50,28 @@ public class DatabaseHandler : MonoBehaviour
     }
 
 
-    public static void registerUser(User user, string userId, GetUserCallback callback)
+    public static void registerUser(User userToRegister, string userId, GetUserCallback callback)
     {
-        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user2 => { callback(user2); AuthenticationManager.instance.setStatus("Bu e-maile ait bir hesap bulunmakta."); })
+        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); AuthenticationManager.instance.setStatus("Bu e-maile ait bir hesap bulunmakta."); })
             .Catch(error =>
-            handleJsonException(userId,user,error)
+            handleJsonException(userId, userToRegister, error)
             );
     }
 
     public static void handleJsonException(string userId, User user, System.Exception error)
     {
         Debug.Log(error);
-        if (error is Proyecto26.RequestException)
+        if (error.Message.Equals("JSON must represent an object type."))
         {
+            AuthenticationManager.instance.createTokenAsync();
             RestClient.Put<User>(databaseURL + "users/" + userId + ".json", user);
             AuthenticationManager.instance.setStatus("Hesap başarıyla kaydedildi");
+            LoginScreenManager.instance.switchToLogin();
+        }
+        
+        else if (error.Message.Equals("Cannot resolve destination host") || error.Message.Equals("Cannot connect to destination host"))
+        {
+            AuthenticationManager.instance.setStatus("İnternet bağlantısı kurulamıyor.");
         }
     }
 
@@ -80,6 +95,4 @@ public class DatabaseHandler : MonoBehaviour
             callback(users);
         });
     }
-
-   
 }
