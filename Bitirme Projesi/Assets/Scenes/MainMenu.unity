@@ -1409,7 +1409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2983161667560745246, guid: b2fe083c769e2264db38cec005e2d100, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.9400635
+      value: 0.94018555
       objectReference: {fileID: 0}
     - target: {fileID: 2983161667560745246, guid: b2fe083c769e2264db38cec005e2d100, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1778,15 +1778,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2983161667560745247, guid: b2fe083c769e2264db38cec005e2d100, type: 3}
       propertyPath: m_Name
-      value: Speed
+      value: ProblemSolving
       objectReference: {fileID: 0}
     - target: {fileID: 2983161668268529404, guid: b2fe083c769e2264db38cec005e2d100, type: 3}
       propertyPath: m_Text
-      value: "H\u0131z"
+      value: "Problem \xC7\xF6zme"
       objectReference: {fileID: 0}
     - target: {fileID: 2983161668268529404, guid: b2fe083c769e2264db38cec005e2d100, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2983161668268529406, guid: b2fe083c769e2264db38cec005e2d100, type: 3}
+      propertyPath: m_Name
+      value: ProblemSolvingText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2fe083c769e2264db38cec005e2d100, type: 3}

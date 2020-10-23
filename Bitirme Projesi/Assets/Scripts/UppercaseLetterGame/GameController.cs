@@ -53,7 +53,6 @@ public class GameController : MonoBehaviour
     void Start()
     {
         resetAttributes();
-        //newQuestion();
         StartCoroutine(tutorial());
     }
 
@@ -68,6 +67,7 @@ public class GameController : MonoBehaviour
         if(limitTime <= 0f)
         {
             finishGame();
+            
            
 
         }
@@ -197,7 +197,9 @@ public class GameController : MonoBehaviour
     {
         this.gamePaused = true;
         this.gamePanel.SetActive(false);
-        StatisticManager.instance.showStatistics();
+        StatisticManager.instance.InitializeStatistics();
+        StatisticManager.instance.ShowStatistics();
+        StatisticManager.instance.InsertStatistics();
     }
 
 }

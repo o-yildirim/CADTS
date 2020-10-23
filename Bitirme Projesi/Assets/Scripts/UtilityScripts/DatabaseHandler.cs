@@ -28,15 +28,15 @@ public class DatabaseHandler : MonoBehaviour
     }*/
 
 
-    public static void PostUser(User user, string userId, PostUserCallback callback)
+    public static void PostUser(User user, string userEmail, PostUserCallback callback)
     {
         //RestClient.Put<User>($"{databaseURL}users/{userId}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
-        RestClient.Put<User>(databaseURL +"users/"+userId+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
+        RestClient.Put<User>(databaseURL +"users/"+userEmail+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
     }
 
-    public static void GetUser(string userId, GetUserCallback callback)
+    public static void GetUser(string userEmail, GetUserCallback callback)
     {
-        RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("Email veya şifre yanlış"));
+        RestClient.Get<User>($"{databaseURL}users/{userEmail}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("Email veya şifre yanlış"));
     }
 
 
@@ -82,4 +82,16 @@ public class DatabaseHandler : MonoBehaviour
             callback(users);
         });
     }
+
+    public static void InsertStatistic(Statistic statistic)
+    {
+        RestClient.Put<Statistic>(databaseURL + "statistics/category/" 
+                                              + statistic.GetCategory() + "/"
+                                              +  statistic.GetMinigameName() + "/"  
+                                              + statistic.GetOwner().email.Replace(".", ",") + 
+                                              ".json",
+                                              statistic
+                                 );
+    }
+
 }
