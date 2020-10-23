@@ -6,8 +6,9 @@ public class Statistic
     protected User ownerOfTheStatistics;
     protected string minigameCategory;
     protected string minigameName;
+    public string datePerformed;
     public int minigameScore;
-   // public DateTime datePerformed;
+ 
 
    
 

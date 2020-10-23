@@ -14,8 +14,7 @@ public class UppercaseLetterStatistic : Statistic
 
         //SetScore(minigameScore);
 
-        //this.datePerformed = DateTime.Now.Date;
-        
+        this.datePerformed = DateTime.Now.ToString();
         this.minigameScore = minigameScore;
 
         //----------------------------------------------------
