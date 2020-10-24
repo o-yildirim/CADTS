@@ -92,7 +92,7 @@ public class DatabaseHandler
                                               + statistic.GetCategory() + "/"
                                               + statistic.GetMinigameName() + "/"
                                               + statistic.GetOwner().email.Replace(".", ",") + "/"
-                                              + DateTime.Now.ToString().Replace(".","-") + 
+                                              + statistic.GetDate().Replace(".","-") + 
                                               ".json",
                                               statistic
                                  );

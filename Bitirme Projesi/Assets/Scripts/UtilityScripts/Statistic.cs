@@ -6,7 +6,7 @@ public class Statistic
     protected User ownerOfTheStatistics;
     protected string minigameCategory;
     protected string minigameName;
-    public string datePerformed;
+    protected string datePerformed;
     public int minigameScore;
  
 
@@ -16,11 +16,11 @@ public class Statistic
 
     public string GetCategory()
     {
-        return this.minigameCategory;
+        return minigameCategory;
     }
     public string GetMinigameName()
     {
-        return this.minigameName;
+        return minigameName;
     }
     /*
     public int GetScore()
@@ -29,7 +29,12 @@ public class Statistic
     }*/
     public User GetOwner()
     {
-        return this.ownerOfTheStatistics;
+        return ownerOfTheStatistics;
+    }
+
+    public string GetDate()
+    {
+        return datePerformed;
     }
 
 
@@ -48,6 +53,11 @@ public class Statistic
     public void SetOwner(User owner)
     {
         this.ownerOfTheStatistics = owner;
+    }
+
+    public void SetDatePerformed(string date)
+    {
+        this.datePerformed = date;
     }
 
 }
