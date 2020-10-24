@@ -103,8 +103,8 @@ public class AuthenticationManager : MonoBehaviour
             return;
         }
 
-        email.text = encode(email.text); 
-        DatabaseHandler.GetUser(email.text, user =>
+        string emailEncoded = encode(email.text); 
+        DatabaseHandler.GetUser(emailEncoded, user =>
         {
             Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
 
