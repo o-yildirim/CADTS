@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Proyecto26;
 using FullSerializer;
-public class DatabaseHandler : MonoBehaviour
+public class DatabaseHandler
 {
 
     public static User loggedInUser;
@@ -85,10 +85,14 @@ public class DatabaseHandler : MonoBehaviour
 
     public static void InsertStatistic(Statistic statistic)
     {
-        RestClient.Put<Statistic>(databaseURL + "statistics/category/" 
+
+        Debug.Log(DateTime.Now.ToString().Replace(".","/"));
+
+        RestClient.Put<Statistic>(databaseURL + "statistics/category/"
                                               + statistic.GetCategory() + "/"
-                                              +  statistic.GetMinigameName() + "/"  
-                                              + statistic.GetOwner().email.Replace(".", ",") + 
+                                              + statistic.GetMinigameName() + "/"
+                                              + statistic.GetOwner().email.Replace(".", ",") + "/"
+                                              + DateTime.Now.ToString().Replace(".","-") + 
                                               ".json",
                                               statistic
                                  );

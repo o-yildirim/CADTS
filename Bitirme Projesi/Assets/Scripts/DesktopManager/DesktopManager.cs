@@ -133,12 +133,12 @@ public class DesktopManager : MonoBehaviour
         ActivatePanel(desktopButtons[0], desktopPanels[0]);
         ActivatePanel(gameCategoryButtons[0], gameCategoryPanels[0]);
 
-        Debug.Log("Name: " + DatabaseHandler.loggedInUser.name +
+        /*Debug.Log("Name: " + DatabaseHandler.loggedInUser.name +
                   " Surname: " + DatabaseHandler.loggedInUser.surname +
                   " Dob: " + DatabaseHandler.loggedInUser.dob +
                   " E-mail: " + DatabaseHandler.loggedInUser.email +
                   " Password: " + DatabaseHandler.loggedInUser.password
-                  );
+                  );*/
     }
 
     public void ResetButtonColors(Button[] buttons)
@@ -244,13 +244,13 @@ public class DesktopManager : MonoBehaviour
         for (int i = 0; i < desktopPanels.Length; i++)
         {
             panelButtonMatch.Add(desktopButtons[i], desktopPanels[i]);
-            Debug.Log(desktopButtons[i] + "  " + desktopPanels[i]);
+            //Debug.Log(desktopButtons[i] + "  " + desktopPanels[i]);
         }
         
         for(int i = 0; i<gameCategoryPanels.Length ; i++)
         {
             panelButtonMatch.Add(gameCategoryButtons[i], gameCategoryPanels[i]);
-            Debug.Log(gameCategoryButtons[i] + "  " + gameCategoryPanels[i]);
+           // Debug.Log(gameCategoryButtons[i] + "  " + gameCategoryPanels[i]);
         }
 
     }

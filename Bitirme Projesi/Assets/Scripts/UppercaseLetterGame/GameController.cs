@@ -135,7 +135,7 @@ public class GameController : MonoBehaviour
             this.score += 100;
         
             this.correctAnswered++;
-            Debug.Log(score);
+
         }
         else
         {
@@ -150,7 +150,7 @@ public class GameController : MonoBehaviour
         {
             this.score += 100;
             this.correctAnswered++;
-            Debug.Log(score);
+           // Debug.Log(score);
         }
         else
         {

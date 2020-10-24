@@ -961,7 +961,6 @@ GameObject:
   m_Component:
   - component: {fileID: 829556135}
   - component: {fileID: 829556134}
-  - component: {fileID: 829556133}
   - component: {fileID: 829556136}
   m_Layer: 0
   m_Name: UtilityManagers
@@ -970,18 +969,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &829556133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829556132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc615f4516266b4d94a211962c88444, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &829556134
 MonoBehaviour:
   m_ObjectHideFlags: 0

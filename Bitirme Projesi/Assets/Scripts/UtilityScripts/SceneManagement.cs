@@ -26,7 +26,6 @@ public class SceneManagement : MonoBehaviour
         AsyncOperation loading = SceneManager.LoadSceneAsync(index);
         while (!loading.isDone)
         {
-            Debug.Log("Loading");
             yield return null;
         }
         //loading screeni kaldır
