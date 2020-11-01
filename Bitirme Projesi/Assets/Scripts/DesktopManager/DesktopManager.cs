@@ -4,101 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-/*
-public class DesktopManager : MonoBehaviour
-{
-    public Button[] desktopButtons;
-    public GameObject[] desktopPanels;
 
-  
-
-    public Dictionary<Button,GameObject> panelButtonMatch; 
-
-    public Color selectedButtonColor;
-    public Color unselectedColor = Color.gray;
-   
-    public void Start()
-    {
-        panelButtonMatch = new Dictionary<Button, GameObject>();
-
-        AssignListenerToButtons();
-        AssignDictionary();
-
-        ResetButtonColors();
-        ResetPanels();
-
-        ActivatePanel(desktopButtons[0], desktopPanels[0]);
-    }
- 
-    public void ResetButtonColors()
-    {
-        for(int i = 0; i< desktopButtons.Length; i++)
-        {
-            Image buttonImage = desktopButtons[i].GetComponent<Image>();
-            buttonImage.color = unselectedColor;
-        }
-    }
-
-    public void ResetPanels()
-    {
-        for(int i = 0; i < desktopPanels.Length; i++)
-        {
-            desktopPanels[i].SetActive(false);
-        }
-    }
-
-    public void PanelSelect()
-    {
-        Debug.Log("PanelSelect");
-        GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
-        Button clickedPanelButton = selectedGameObject.GetComponent<Button>();
-        Debug.Log("Clicked the button: " + clickedPanelButton.transform.name);
-        if(clickedPanelButton != null)
-        {
-            GameObject panelToOpen;
-            panelButtonMatch.TryGetValue(clickedPanelButton,out panelToOpen);
-            Debug.Log("Panel to open: " + panelToOpen.transform.name);  
-            if(panelToOpen!= null && !panelToOpen.activeSelf)
-            {
-                ResetButtonColors();
-                ResetPanels();
-
-                ActivatePanel(clickedPanelButton, panelToOpen);
-               
-
-            }
-        }
-        else { Debug.Log("Null"); }
-    }
-
-    public void AssignListenerToButtons()
-    {
-        for(int i = 0; i < desktopButtons.Length; i++)
-        {
-            desktopButtons[i].onClick.AddListener(PanelSelect);
-        }
-    }
-    public void AssignDictionary()
-    {
-
-        for (int i = 0; i < desktopPanels.Length; i++)
-        {
-            panelButtonMatch.Add(desktopButtons[i], desktopPanels[i]);
-           // Debug.Log(desktopButtons[i] + "  " + desktopPanels[i]);
-        }
-    
-   }
-
-    public void ActivatePanel(Button button, GameObject panel)
-    {
-
-        Debug.Log("Activate panel");
-
-        button.GetComponent<Image>().color = selectedButtonColor;
-        panel.SetActive(true);
-    }
-}
-*/
 
 public class DesktopManager : MonoBehaviour
 {
@@ -109,6 +15,9 @@ public class DesktopManager : MonoBehaviour
     public GameObject[] gameCategoryPanels;
 
     public Button[] minigameButtons;
+
+    public Button openSettingsButton;
+    public GameObject settingsButtonsPanel;
 
 
     public Dictionary<Button, GameObject> panelButtonMatch;
@@ -260,5 +169,25 @@ public class DesktopManager : MonoBehaviour
 
         button.GetComponent<Image>().color = selectedButtonColor;
         panel.SetActive(true);
+    }
+
+    public void ManageSettingsButtonsPanel()
+    {
+
+        if (settingsButtonsPanel.activeSelf)
+        {
+            settingsButtonsPanel.SetActive(false);
+        }
+        else
+        {
+            settingsButtonsPanel.SetActive(true);
+        } 
+    }
+
+
+    public void OpenSettingsCanvas()
+    {
+        //Boş
+        Debug.Log("Button clicked");
     }
 }
