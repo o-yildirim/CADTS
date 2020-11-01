@@ -33,8 +33,15 @@ public class SettingsManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public static void QuitApplication()
+    public void QuitApplication()
     {
         Application.Quit();
+    }
+
+    public void LogOut()
+    {
+        DatabaseHandler.loggedInUser = null;
+        //TOKENI YOKET
+        SceneManagement.instance.loadLoginScreen();
     }
 }

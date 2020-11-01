@@ -1426,7 +1426,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1461036865}
         m_TargetAssemblyTypeName: DesktopManager, Assembly-CSharp
-        m_MethodName: OpenSettingsCanvas
+        m_MethodName: CallQuitRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1814,7 +1814,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1461036865}
         m_TargetAssemblyTypeName: DesktopManager, Assembly-CSharp
-        m_MethodName: OpenSettingsCanvas
+        m_MethodName: OpenAppSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2034,7 +2034,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1461036865}
         m_TargetAssemblyTypeName: DesktopManager, Assembly-CSharp
-        m_MethodName: OpenSettingsCanvas
+        m_MethodName: CallLogOut
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2976,7 +2976,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1461036865}
         m_TargetAssemblyTypeName: DesktopManager, Assembly-CSharp
-        m_MethodName: OpenSettingsCanvas
+        m_MethodName: OpenAccountSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

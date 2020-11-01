@@ -48,6 +48,8 @@ public class DesktopManager : MonoBehaviour
                   " E-mail: " + DatabaseHandler.loggedInUser.email +
                   " Password: " + DatabaseHandler.loggedInUser.password
                   );*/
+
+        openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
     }
 
     public void ResetButtonColors(Button[] buttons)
@@ -185,9 +187,25 @@ public class DesktopManager : MonoBehaviour
     }
 
 
-    public void OpenSettingsCanvas()
+    public void CallLogOut()
     {
-        //Boş
-        Debug.Log("Button clicked");
+        SettingsManager.instance.LogOut();
     }
+    public void CallQuitRequest()
+    {
+        SettingsManager.instance.QuitRequest();
+    }
+
+    public void OpenAccountSettings()
+    {
+        Debug.Log("Account Settings");
+        //Ayrı bir canvas falan açılır
+    }
+
+    public void OpenAppSettings()
+    {
+        Debug.Log("Application Settings");
+        //Ayrı bir canvas falan açılır
+    }
+
 }
