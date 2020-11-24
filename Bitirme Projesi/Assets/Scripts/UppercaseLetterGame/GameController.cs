@@ -19,7 +19,11 @@ public class GameController : MonoBehaviour
     public Text tutorialText;
 
     public GameObject gamePanel;
-    
+
+    public Image marker;
+    public Sprite check;
+    public Sprite cross;
+   
 
     public int score;
     public int questionsAsked;
@@ -27,6 +31,7 @@ public class GameController : MonoBehaviour
     public int correctAnswered;
 
     public float givenTime;
+    public float markerDisplayDuration = 0.25f;
 
     public int minLetters = 1;
     public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
@@ -35,7 +40,7 @@ public class GameController : MonoBehaviour
     public bool gamePaused = true;
 
     private float limitTime;
-    //private float timePassedSinceLastAnswer;
+    private float timePassedSinceLastAnswer;
     void Awake()
     {
         if (instance == null)
@@ -53,6 +58,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         resetAttributes();
+        marker.enabled = false;
         StartCoroutine(tutorial());
     }
 
@@ -67,9 +73,6 @@ public class GameController : MonoBehaviour
         if(limitTime <= 0f)
         {
             finishGame();
-            
-           
-
         }
 
         
@@ -133,13 +136,13 @@ public class GameController : MonoBehaviour
         if (!rightIsCorrect)
         {
             this.score += 100;
-        
             this.correctAnswered++;
+            StartCoroutine(displayMarker(markerDisplayDuration, check));
 
         }
         else
         {
-            //Dııt sesi belki yanlış bildiği için
+            StartCoroutine(displayMarker(markerDisplayDuration, cross));
         }
         this.questionAnswered++;
     }
@@ -150,11 +153,12 @@ public class GameController : MonoBehaviour
         {
             this.score += 100;
             this.correctAnswered++;
-           // Debug.Log(score);
+            // Debug.Log(score);
+            StartCoroutine(displayMarker(markerDisplayDuration, check));
         }
         else
         {
-            //Dııt sesi belki yanlış bildiği için
+            StartCoroutine(displayMarker(markerDisplayDuration, cross));
         }
         this.questionAnswered++;
     }
@@ -200,6 +204,14 @@ public class GameController : MonoBehaviour
         StatisticManager.instance.InitializeStatistics();
         StatisticManager.instance.ShowStatistics();
         StatisticManager.instance.InsertStatistics();
+    }
+
+    public IEnumerator displayMarker(float duration,Sprite markerToDisplay)
+    {
+        marker.sprite = markerToDisplay;
+        marker.enabled = true;
+        yield return new WaitForSeconds(duration);
+        marker.enabled = false;
     }
 
 }
