@@ -88,14 +88,14 @@ public class DatabaseHandler
 
         Debug.Log(DateTime.Now.ToString().Replace(".","/"));
 
-        RestClient.Put<Statistic>(databaseURL + "statistics/category/"
-                                              + statistic.GetCategory() + "/"
-                                              + statistic.GetMinigameName() + "/"
-                                              + statistic.GetOwner().email.Replace(".", ",") + "/"
-                                              + statistic.GetDate().Replace(".","-") + 
-                                              ".json",
-                                              statistic
-                                 );
+        RestClient.Put<Statistic>(databaseURL   + "statistics/"
+                                                + statistic.GetOwner().email.Replace(".", ",") + "/"
+                                                + statistic.GetCategory() + "/"
+                                                + statistic.GetMinigameName() + "/"
+                                                + statistic.GetDate().Replace(".", "-") 
+                                                + ".json",
+                                                statistic
+         );
     }
 
 }
