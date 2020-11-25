@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
 
     public float givenTime;
     public float markerDisplayDuration = 0.25f;
+    public float markerActiveTime = 0f;
 
     public int minLetters = 1;
     public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
@@ -69,11 +70,18 @@ public class GameController : MonoBehaviour
         this.limitTime -= Time.deltaTime;
         this.timeText.text = ((int) this.limitTime).ToString();
 
-
         if(limitTime <= 0f)
         {
             finishGame();
         }
+
+        markerActiveTime += Time.deltaTime;
+        if(marker.isActiveAndEnabled && markerActiveTime > markerDisplayDuration)
+        {
+            marker.enabled = false;
+        }
+
+
 
         
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -137,12 +145,14 @@ public class GameController : MonoBehaviour
         {
             this.score += 100;
             this.correctAnswered++;
-            StartCoroutine(displayMarker(markerDisplayDuration, check));
+            // StartCoroutine(displayMarker(markerDisplayDuration, check));
+            displayMarker(check);
 
         }
         else
         {
-            StartCoroutine(displayMarker(markerDisplayDuration, cross));
+            //StartCoroutine(displayMarker(markerDisplayDuration, cross));
+            displayMarker(cross);
         }
         this.questionAnswered++;
     }
@@ -154,11 +164,13 @@ public class GameController : MonoBehaviour
             this.score += 100;
             this.correctAnswered++;
             // Debug.Log(score);
-            StartCoroutine(displayMarker(markerDisplayDuration, check));
+            //StartCoroutine(displayMarker(markerDisplayDuration, check));
+            displayMarker(check);
         }
         else
         {
-            StartCoroutine(displayMarker(markerDisplayDuration, cross));
+            //StartCoroutine(displayMarker(markerDisplayDuration, cross));
+            displayMarker(cross);
         }
         this.questionAnswered++;
     }
@@ -206,12 +218,19 @@ public class GameController : MonoBehaviour
         StatisticManager.instance.InsertStatistics();
     }
 
-    public IEnumerator displayMarker(float duration,Sprite markerToDisplay)
+   /* public IEnumerator displayMarker(float duration,Sprite markerToDisplay)
     {
         marker.sprite = markerToDisplay;
         marker.enabled = true;
         yield return new WaitForSeconds(duration);
         marker.enabled = false;
+    }*/
+
+    public void displayMarker(Sprite markerToDisplay)
+    {
+        marker.sprite = markerToDisplay;
+        marker.enabled = true;
+        markerActiveTime = 0f;
     }
 
 }

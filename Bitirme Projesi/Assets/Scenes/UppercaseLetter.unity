@@ -667,7 +667,8 @@ MonoBehaviour:
   questionAnswered: 0
   correctAnswered: 0
   givenTime: 10
-  markerDisplayDuration: 0.25
+  markerDisplayDuration: 0.15
+  markerActiveTime: 0
   minLetters: 1
   maxLetters: 7
   rightIsCorrect: 0
