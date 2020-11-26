@@ -16,6 +16,8 @@ public class LoginScreenManager : MonoBehaviour
     private Image registerButtonImage;
 
     public Color defaultButtonColor;
+    public Color selectedColor;
+
 
     private void Awake()
     {
@@ -33,7 +35,7 @@ public class LoginScreenManager : MonoBehaviour
         loginButtonImage = loginPanelButton.GetComponent<Image>();
         registerButtonImage = registerPanelButton.GetComponent<Image>();
 
-        registerButtonImage.color = Color.gray;
+        defaultButtonColor = registerButtonImage.color;
     }
 
     public void switchToLogin()
@@ -41,8 +43,8 @@ public class LoginScreenManager : MonoBehaviour
         if (!loginPanel.activeSelf)
         {
             AuthenticationManager.instance.setStatus("");
-            registerButtonImage.color = Color.gray;
-            loginButtonImage.color = defaultButtonColor;
+            registerButtonImage.color = defaultButtonColor;
+            loginButtonImage.color = selectedColor;
 
             registerPanel.SetActive(false);
             loginPanel.SetActive(true);
@@ -54,8 +56,8 @@ public class LoginScreenManager : MonoBehaviour
         if (!registerPanel.activeSelf)
         {
             AuthenticationManager.instance.setStatus("");
-            loginButtonImage.color = Color.gray;
-            registerButtonImage.color = defaultButtonColor;
+            loginButtonImage.color = defaultButtonColor;
+            registerButtonImage.color = selectedColor;
             
 
             loginPanel.SetActive(false);
