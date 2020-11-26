@@ -11,7 +11,7 @@ public class UppercaseLetterStatistic : Statistic
         SetOwner(owner);
         SetCategory(minigameCategory);
         SetMinigameName(minigameName);
-        SetDatePerformed(DateTime.Now.ToString());
+        SetDatePerformed(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
         //SetScore(minigameScore);
 
         this.minigameScore = minigameScore;

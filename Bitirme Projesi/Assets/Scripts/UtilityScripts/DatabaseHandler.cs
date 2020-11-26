@@ -86,13 +86,13 @@ public class DatabaseHandler
     public static void InsertStatistic(Statistic statistic)
     {
 
-        Debug.Log(DateTime.Now.ToString().Replace(".","/"));
+        //Debug.Log(statistic.GetDate().Replace(".","/"));
 
         RestClient.Put<Statistic>(databaseURL   + "statistics/"
                                                 + statistic.GetOwner().email.Replace(".", ",") + "/"
                                                 + statistic.GetCategory() + "/"
                                                 + statistic.GetMinigameName() + "/"
-                                                + statistic.GetDate().Replace(".", "-") 
+                                                + statistic.GetDate()
                                                 + ".json",
                                                 statistic
          );
