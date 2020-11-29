@@ -249,11 +249,14 @@ public class GameController : MonoBehaviour
             yield return null;
         }
 
-        startGame();
-      
     }
     public void startGame()
     {
+        if (!gamePaused)
+        {
+            return;
+        }
+
         tutorialText.enabled = false;
         timeText.enabled = true;
         newQuestion();
