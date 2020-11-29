@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +7,7 @@ public class StaisticsPanelManager : MonoBehaviour
 {
     public Text percentageAmongUsers;
     public Text ownPerformanceText;
+  
 
     Dictionary<string, Statistic> statisticsToAnalyze;
     private void OnEnable()
@@ -44,8 +45,7 @@ public class StaisticsPanelManager : MonoBehaviour
         //Bu bilgiler Unity tarafından gelecek
         statisticsToAnalyze = new Dictionary<string, Statistic>();
         int average = 0;
-        int counter = 0;
-        string lastPerformanceDate = "";
+     
         DatabaseHandler.GetUserStatistics(email, category, game, statistics =>
         {
             if(statistics == null)
@@ -55,35 +55,31 @@ public class StaisticsPanelManager : MonoBehaviour
             }
 
             foreach (var statistic in statistics)
-            {
-                
-                //Debug.Log($"{statistic.Key} tarihindeki skor: {statistic.Value.minigameScore}");
+            {  
+                Debug.Log($"{statistic.Key} tarihindeki skor: {statistic.Value.minigameScore}");
                 statisticsToAnalyze.Add(statistic.Key, statistic.Value);
-                if(counter == statistics.Count)
-                {
-                    lastPerformanceDate = statistic.Key;
-                    Debug.Log(statistics.Count);
-                    break;
-                }
-                
                 average += statistic.Value.minigameScore;
-                counter++;
             }
 
-     
-            int currentPerformance = statisticsToAnalyze[lastPerformanceDate].minigameScore;
-            //int currentPerformanceScore =
+            average = (average - statistics.Values.Last().minigameScore)/(statisticsToAnalyze.Count-1);
+            int lastPerformance = statistics.Values.Last().minigameScore;
 
-            average = average / counter;
-            
-            Debug.Log(average);
-            Debug.Log(currentPerformance);
+            Debug.Log("Ortalama: " + average);
+            Debug.Log("Son performans" + lastPerformance);
 
-            /*foreach (var date in datesToAnalyze)
+            if(average > lastPerformance)
             {
-                Debug.Log($"{date.Key.ToString()} tarihindeki skor: {date.Value.minigameScore}");
-                //Local variable üzerinde işlem uygulayarak analiz yapılıp kullanıcıya bilgi verilebilir
-            }*/
+                int difference = average - lastPerformance;
+                int changePercentage = difference * 100 / average;
+                ownPerformanceText.text = "Son performansın, önceki performanslarına göre %" +
+                                            changePercentage.ToString() +
+                                            " daha kötü durumda.";
+            }
+            else if(average <= lastPerformance)
+            {
+                //İyiye gidiyor 
+            }
+   
         });
 
     }
