@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ public class StaisticsPanelManager : MonoBehaviour
     public Text ownPerformanceText;
   
 
-    Dictionary<string, Statistic> statisticsToAnalyze;
+    
     private void OnEnable()
     {
         //Sayfa her açıldığında databaseden istatistik çekecek
@@ -43,44 +44,55 @@ public class StaisticsPanelManager : MonoBehaviour
         string category = "attention";
         string game = "UppercaseLetterGame";
         //Bu bilgiler Unity tarafından gelecek
-        statisticsToAnalyze = new Dictionary<string, Statistic>();
+        Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
         int average = 0;
-     
+
         DatabaseHandler.GetUserStatistics(email, category, game, statistics =>
         {
-            if(statistics == null)
+            if (statistics == null)
             {
-                Debug.Log("Basaramadik abi");
-                return;
+                ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
+                 return;
             }
 
             foreach (var statistic in statistics)
-            {  
-                Debug.Log($"{statistic.Key} tarihindeki skor: {statistic.Value.minigameScore}");
+            {
+               //Debug.Log($"{statistic.Key} tarihindeki skor: {statistic.Value.minigameScore}");
                 statisticsToAnalyze.Add(statistic.Key, statistic.Value);
                 average += statistic.Value.minigameScore;
             }
 
-            average = (average - statistics.Values.Last().minigameScore)/(statisticsToAnalyze.Count-1);
+            average = (average - statistics.Values.Last().minigameScore) / (statisticsToAnalyze.Count - 1);
             int lastPerformance = statistics.Values.Last().minigameScore;
 
-            Debug.Log("Ortalama: " + average);
-            Debug.Log("Son performans" + lastPerformance);
+             Debug.Log("Ortalama: " + average);
+             Debug.Log("Son performans" + lastPerformance);
 
-            if(average > lastPerformance)
+            int difference = average - lastPerformance;
+            int changePercentage = Math.Abs(difference) * 100 / average;
+            if(difference > 0)//Kötü durum
             {
-                int difference = average - lastPerformance;
-                int changePercentage = difference * 100 / average;
-                ownPerformanceText.text = "Son performansın, önceki performanslarına göre %" +
-                                            changePercentage.ToString() +
-                                            " daha kötü durumda.";
+                
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre %" +
+                                           changePercentage.ToString() +
+                                           " daha kötü durumda.";
             }
-            else if(average <= lastPerformance)
+            else if(difference < 0)// iyi durum
             {
-                //İyiye gidiyor 
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre %" +
+                                           changePercentage.ToString() +
+                                           " daha iyi durumda.";
             }
-   
-        });
+            else
+            {
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza aynı seviyede seyretmiş.";
+            }
+
+         }
+      );
+       
+     
+        
 
     }
 }

@@ -107,7 +107,6 @@ public class DatabaseHandler
         RestClient.Get($"{databaseURL}/statistics/{email}/{category}/{game}.json").Then(response =>
         {
             var responseJson = response.Text;
-
             // Using the FullSerializer library: https://github.com/jacobdufault/fullserializer
             // to serialize more complex types (a Dictionary, in this case)
             var data = fsJsonParser.Parse(responseJson);
