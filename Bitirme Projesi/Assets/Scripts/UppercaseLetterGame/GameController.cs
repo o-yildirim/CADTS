@@ -234,13 +234,13 @@ public class GameController : MonoBehaviour
         marker.enabled = false;
 
         this.tutorialText.text = "Unutmayın ki cevapların doğruluğu kadar soruları hızlı cevaplamak da önemlidir.";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
         this.tutorialText.text = "Arka arkaya yapılan her 5 doğruda sürenize 2 saniye eklenmektedir.";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
         this.tutorialText.text = "Eğer arka arkaya 5 yanlış yaparsanız oyun doğrudan sonlanacaktır.";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
         this.tutorialText.text = "Oyunu başlatmak için herhangi bir tuşa basın.";
 
