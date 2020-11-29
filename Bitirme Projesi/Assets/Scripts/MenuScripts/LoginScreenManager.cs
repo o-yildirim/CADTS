@@ -66,4 +66,9 @@ public class LoginScreenManager : MonoBehaviour
         }
     }
 
+    public void callQuitRequest()
+    {
+        SettingsManager.instance.QuitRequest();
+    }
+
 }

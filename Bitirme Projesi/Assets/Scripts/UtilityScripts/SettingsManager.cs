@@ -21,6 +21,11 @@ public class SettingsManager : MonoBehaviour
         }
         
     }
+
+    public void Start()
+    {
+        quitCanvas = gameObject.transform.GetChild(0).gameObject;        
+    }
     public void QuitRequest()
     {
         Time.timeScale = 0f;
