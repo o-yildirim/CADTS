@@ -52,7 +52,12 @@ public class StaisticsPanelManager : MonoBehaviour
             if (statistics == null)
             {
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
-                 return;
+                return;
+            }
+            else if(statistics.Count == 1)
+            {
+                ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır";
+                return;
             }
 
             foreach (var statistic in statistics)
@@ -72,16 +77,16 @@ public class StaisticsPanelManager : MonoBehaviour
             int changePercentage = Math.Abs(difference) * 100 / average;
             if(difference > 0)//Kötü durum
             {
-                
-                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre %" +
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=red>%" +
                                            changePercentage.ToString() +
-                                           " daha kötü durumda.";
+                                           "</color> daha kötü durumda.";
             }
             else if(difference < 0)// iyi durum
             {
-                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre %" +
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=green>%" +
                                            changePercentage.ToString() +
-                                           " daha iyi durumda.";
+                                           "</color> daha iyi durumda.";
+
             }
             else
             {

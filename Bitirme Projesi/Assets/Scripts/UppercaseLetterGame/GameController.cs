@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
+    public Button skipTutorialButton;
+
     public string withUppercase;
     public string withoutUppercase;
 
@@ -30,9 +32,16 @@ public class GameController : MonoBehaviour
     public int questionAnswered;
     public int correctAnswered;
 
+    public int wrongStreakLimit = 5;
+    private int wrongStreak = 0;
+
+    public int correctStreakBonusReach = 5;
+    private int correctStreak = 0;
+
     public float givenTime;
     public float markerDisplayDuration = 0.25f;
     public float markerActiveTime = 0f;
+    public float bonusTime = 2f;
 
     public int minLetters = 1;
     public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
@@ -144,15 +153,30 @@ public class GameController : MonoBehaviour
         if (!rightIsCorrect)
         {
             this.score += 100;
-            this.correctAnswered++;
-            // StartCoroutine(displayMarker(markerDisplayDuration, check));
+            this.correctAnswered++;       
             displayMarker(check);
+
+           
+            wrongStreak = 0;
+            correctStreak++;
+            if(correctStreak == correctStreakBonusReach)
+            {
+                limitTime += bonusTime;
+                correctStreak = 0;
+            }
 
         }
         else
         {
             //StartCoroutine(displayMarker(markerDisplayDuration, cross));
             displayMarker(cross);
+            correctStreak = 0;
+            wrongStreak++;
+            if(wrongStreak == wrongStreakLimit)
+            {
+                //QUESTION ANSWERED I ARTTIRACAK MI
+                finishGame();
+            }
         }
         this.questionAnswered++;
     }
@@ -166,17 +190,33 @@ public class GameController : MonoBehaviour
             // Debug.Log(score);
             //StartCoroutine(displayMarker(markerDisplayDuration, check));
             displayMarker(check);
+
+            wrongStreak = 0;
+            correctStreak++;
+            if (correctStreak == correctStreakBonusReach)
+            {
+                limitTime += bonusTime;
+                correctStreak = 0;
+            }
         }
         else
         {
             //StartCoroutine(displayMarker(markerDisplayDuration, cross));
             displayMarker(cross);
+            correctStreak = 0;
+            wrongStreak++;
+            if (wrongStreak == wrongStreakLimit)
+            {
+                //QUESTION ANSWERED I ARTTIRACAK MI
+                finishGame();
+            }
         }
         this.questionAnswered++;
     }
 
     public  IEnumerator tutorial()
     {
+        skipTutorialButton.enabled = true;
        
         this.withUppercase = "A";
         this.withoutUppercase = "a";
@@ -188,11 +228,18 @@ public class GameController : MonoBehaviour
         {
             yield return null;
         }
-
+        displayMarker(check);
         this.tutorialText.text = "Harika!";
         yield return new WaitForSeconds(2f);
+        marker.enabled = false;
 
         this.tutorialText.text = "Unutmayın ki cevapların doğruluğu kadar soruları hızlı cevaplamak da önemlidir.";
+        yield return new WaitForSeconds(3f);
+
+        this.tutorialText.text = "Arka arkaya yapılan her 5 doğruda sürenize 2 saniye eklenmektedir.";
+        yield return new WaitForSeconds(3f);
+
+        this.tutorialText.text = "Eğer arka arkaya 5 yanlış yaparsanız oyun doğrudan sonlanacaktır.";
         yield return new WaitForSeconds(3f);
 
         this.tutorialText.text = "Oyunu başlatmak için herhangi bir tuşa basın.";
@@ -202,13 +249,16 @@ public class GameController : MonoBehaviour
             yield return null;
         }
 
+        startGame();
+      
+    }
+    public void startGame()
+    {
         tutorialText.enabled = false;
         timeText.enabled = true;
         newQuestion();
         gamePaused = false;
-
     }
-
     public void finishGame()
     {
         this.gamePaused = true;
@@ -218,19 +268,19 @@ public class GameController : MonoBehaviour
         StatisticManager.instance.InsertStatistics();
     }
 
-   /* public IEnumerator displayMarker(float duration,Sprite markerToDisplay)
-    {
-        marker.sprite = markerToDisplay;
-        marker.enabled = true;
-        yield return new WaitForSeconds(duration);
-        marker.enabled = false;
-    }*/
-
     public void displayMarker(Sprite markerToDisplay)
     {
         marker.sprite = markerToDisplay;
         marker.enabled = true;
         markerActiveTime = 0f;
+    }
+
+    public void skipTutorial()
+    {
+        skipTutorialButton.gameObject.SetActive(false);
+        StopCoroutine(tutorial());
+        startGame();
+
     }
 
 }
