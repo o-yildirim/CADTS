@@ -22,11 +22,6 @@ public class Statistic
     {
         return minigameName;
     }
-    /*
-    public int GetScore()
-    {
-        return this.minigameScore;
-    }*/
     public User GetOwner()
     {
         return ownerOfTheStatistics;
@@ -46,10 +41,6 @@ public class Statistic
     {
         this.minigameName = minigameName;
     }
-   /* public void SetScore(int score)
-    {
-        this.minigameScore = score;
-    }*/
     public void SetOwner(User owner)
     {
         this.ownerOfTheStatistics = owner;

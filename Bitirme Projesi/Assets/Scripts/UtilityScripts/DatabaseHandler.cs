@@ -19,7 +19,7 @@ public class DatabaseHandler
     public delegate void GetUsersCallback(Dictionary<string, User> users);
 
     public delegate void PostUserStatisticsCallback(); //**
-    public delegate void GetUserStatisticsCallback(Dictionary<string, Date> dates);
+    public delegate void GetUserStatisticsCallback(Dictionary<string, Statistic> dates);
     /*
     private void Update()
     {
@@ -52,7 +52,7 @@ public class DatabaseHandler
 
     public static void handleJsonException(string userId, User user, Exception error)
     {
-        Debug.Log(error);
+       // Debug.Log(error);
         if (error.Message.Equals("JSON must represent an object type."))
         {
             AuthenticationManager.instance.createTokenAsync();
@@ -85,7 +85,7 @@ public class DatabaseHandler
         });
     }
 
-    public static void GetUserStatistics(string email, string category, string game, GetUserStatisticsCallback callback)
+    /*public static void GetUserStatistics(string email, string category, string game, GetUserStatisticsCallback callback)
     {
         RestClient.Get($"{databaseURL}/statistics/{email}/{category}/{game}.json").Then(response =>
         {
@@ -100,10 +100,27 @@ public class DatabaseHandler
             var users = deserialized as Dictionary<string, Date>;
             callback(users);
         });
+    }*/
+
+    public static void GetUserStatistics(string email, string category, string game, GetUserStatisticsCallback callback)
+    {
+        RestClient.Get($"{databaseURL}/statistics/{email}/{category}/{game}.json").Then(response =>
+        {
+            var responseJson = response.Text;
+
+            // Using the FullSerializer library: https://github.com/jacobdufault/fullserializer
+            // to serialize more complex types (a Dictionary, in this case)
+            var data = fsJsonParser.Parse(responseJson);
+            object deserialized = null;
+            serializer.TryDeserialize(data, typeof(Dictionary<string, Statistic>), ref deserialized);
+
+            var users = deserialized as Dictionary<string, Statistic>;
+            callback(users);
+        });
+
     }
 
-
-    public static void InsertStatistic(Statistic statistic)
+        public static void InsertStatistic(Statistic statistic)
     {
         RestClient.Put<Statistic>(databaseURL + "statistics/"
                                                 + statistic.GetOwner().email.Replace(".", ",") + "/"

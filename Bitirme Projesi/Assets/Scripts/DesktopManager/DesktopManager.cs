@@ -198,13 +198,13 @@ public class DesktopManager : MonoBehaviour
 
     public void OpenAccountSettings()
     {
-        Debug.Log("Account Settings");
+       // Debug.Log("Account Settings");
         //Ayrı bir canvas falan açılır
     }
 
     public void OpenAppSettings()
     {
-        Debug.Log("Application Settings");
+       // Debug.Log("Application Settings");
         //Ayrı bir canvas falan açılır
     }
 

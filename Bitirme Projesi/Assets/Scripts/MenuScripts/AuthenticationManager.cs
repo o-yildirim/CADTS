@@ -83,7 +83,7 @@ public class AuthenticationManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(e.Message);
+           // Debug.Log(e.Message);
         }
     }
 
@@ -106,7 +106,7 @@ public class AuthenticationManager : MonoBehaviour
         string emailEncoded = encode(email.text); 
         DatabaseHandler.GetUser(emailEncoded, user =>
         {
-            Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
+           // Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
 
             if (user.password.Equals(password.text))
             {

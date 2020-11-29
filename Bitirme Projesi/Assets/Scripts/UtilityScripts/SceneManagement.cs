@@ -21,7 +21,7 @@ public class SceneManagement : MonoBehaviour
 
     public IEnumerator loadScene(int index)
     {
-        Debug.Log("Korutinin içi");
+        //Debug.Log("Korutinin içi");
         //loading screen aktifleşir
         AsyncOperation loading = SceneManager.LoadSceneAsync(index);
         while (!loading.isDone)
