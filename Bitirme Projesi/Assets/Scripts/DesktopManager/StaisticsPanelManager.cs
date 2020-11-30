@@ -56,7 +56,7 @@ public class StaisticsPanelManager : MonoBehaviour
             }
             else if(statistics.Count == 1)
             {
-                ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır";
+                ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
                 return;
             }
 
@@ -67,7 +67,16 @@ public class StaisticsPanelManager : MonoBehaviour
                 average += statistic.Value.minigameScore;
             }
 
+        
+  
             average = (average - statistics.Values.Last().minigameScore) / (statisticsToAnalyze.Count - 1);
+
+            if (average == 0)//Önceki istatistiklerinin ortalaması 0 ise % hesaplayamayız.
+            {
+                ownPerformanceText.text = "Son performansınız önceki performanslarınıza göre çok daha iyi durumda.";
+                return;
+            }
+
             int lastPerformance = statistics.Values.Last().minigameScore;
 
              Debug.Log("Ortalama: " + average);
