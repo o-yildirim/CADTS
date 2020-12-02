@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class StatisticManager : MonoBehaviour
+public class UppercaseLetterStatisticManager : MonoBehaviour
 {
-    public static StatisticManager instance;
+    public static UppercaseLetterStatisticManager instance;
 
     public GameObject statisticPanel;
     private UppercaseLetterStatistic statistic;
@@ -11,6 +11,7 @@ public class StatisticManager : MonoBehaviour
     public Text scoreText;
     public Text questionAskedText;
     public Text correctAnsweredText;
+    public Text averageReactionTimeText;
 
     public Button returnToMenuButton;
 
@@ -38,6 +39,7 @@ public class StatisticManager : MonoBehaviour
                                          GameController.instance.score,
                                          GameController.instance.questionsAsked,
                                          GameController.instance.correctAnswered,
+                                         GameController.instance.reactionTimeAverage,
                                          GameController.instance.questionsAsked - GameController.instance.correctAnswered - 1 //mantık hatası olabilir
                                         );
     }
@@ -46,6 +48,7 @@ public class StatisticManager : MonoBehaviour
     {
         this.questionAskedText.text = "Toplam sorulan soru sayısı: " +  statistic.questionsAsked.ToString();
         this.correctAnsweredText.text ="Doğru cevaplanan soru sayısı:  " +statistic.correctAnswers.ToString();
+       // this.averageReactionTimeText.text = "Ortalama tepki süresi: " + statistic.averageReactionTime.ToString();
         this.scoreText.text ="Toplam skor: " + statistic.minigameScore.ToString();
         this.statisticPanel.SetActive(true);
     }

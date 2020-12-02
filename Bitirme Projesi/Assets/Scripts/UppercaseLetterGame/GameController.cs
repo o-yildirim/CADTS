@@ -32,6 +32,10 @@ public class GameController : MonoBehaviour
     public int questionAnswered;
     public int correctAnswered;
 
+    public float questionAskedTime;
+    public float questionAnsweredTime;
+    public float reactionTimeAverage;
+
     public int wrongStreakLimit = 5;
     private int wrongStreak = 0;
 
@@ -95,12 +99,18 @@ public class GameController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            questionAnsweredTime = Time.time;
+            reactionTimeAverage += questionAskedTime - questionAnsweredTime;
+
             checkLeft();//Soldaki doğru cevap mı diye kontrol et
             newQuestion();
-            //timePassedSinceLastAnswer = 0f;
+            
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            questionAskedTime = Time.time;
+            reactionTimeAverage += questionAskedTime - questionAnsweredTime;
+
             checkRight();//Sağdaki doğru cevap mı diye kontrol et
             newQuestion();
             //this.timePassedSinceLastAnswer = 0f;
@@ -135,6 +145,7 @@ public class GameController : MonoBehaviour
         }
 
         this.questionsAsked++;
+        questionAskedTime = Time.time;
 
 
     }
@@ -266,9 +277,10 @@ public class GameController : MonoBehaviour
     {
         this.gamePaused = true;
         this.gamePanel.SetActive(false);
-        StatisticManager.instance.InitializeStatistics();
-        StatisticManager.instance.ShowStatistics();
-        StatisticManager.instance.InsertStatistics();
+        reactionTimeAverage = reactionTimeAverage / questionAnswered;
+        UppercaseLetterStatisticManager.instance.InitializeStatistics();
+        UppercaseLetterStatisticManager.instance.ShowStatistics();
+        UppercaseLetterStatisticManager.instance.InsertStatistics();
     }
 
     public void displayMarker(Sprite markerToDisplay)
