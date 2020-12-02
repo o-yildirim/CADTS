@@ -48,7 +48,7 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
     {
         this.questionAskedText.text = "Toplam sorulan soru sayısı: " +  statistic.questionsAsked.ToString();
         this.correctAnsweredText.text ="Doğru cevaplanan soru sayısı:  " +statistic.correctAnswers.ToString();
-       // this.averageReactionTimeText.text = "Ortalama tepki süresi: " + statistic.averageReactionTime.ToString();
+        this.averageReactionTimeText.text = "Ortalama tepki süresi: " + statistic.averageReactionTime.ToString("F4") + " s";
         this.scoreText.text ="Toplam skor: " + statistic.minigameScore.ToString();
         this.statisticPanel.SetActive(true);
     }

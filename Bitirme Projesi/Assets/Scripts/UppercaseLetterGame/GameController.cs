@@ -32,9 +32,12 @@ public class GameController : MonoBehaviour
     public int questionAnswered;
     public int correctAnswered;
 
-    public float questionAskedTime;
-    public float questionAnsweredTime;
+    //  public float questionAskedTime;
+    //  public float questionAnsweredTime;
+    //  public float reactionTimeAverage;
+
     public float reactionTimeAverage;
+    public float reactionTimeCounter = 0;
 
     public int wrongStreakLimit = 5;
     private int wrongStreak = 0;
@@ -80,6 +83,8 @@ public class GameController : MonoBehaviour
     {
         if (gamePaused) return;
 
+        reactionTimeCounter += Time.deltaTime;
+
         this.limitTime -= Time.deltaTime;
         this.timeText.text = ((int) this.limitTime).ToString();
 
@@ -99,8 +104,10 @@ public class GameController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            questionAnsweredTime = Time.time;
-            reactionTimeAverage += questionAskedTime - questionAnsweredTime;
+            // questionAnsweredTime = Time.time;
+            // reactionTimeAverage += questionAskedTime - questionAnsweredTime;
+            reactionTimeAverage += reactionTimeCounter;
+            reactionTimeCounter = 0f;
 
             checkLeft();//Soldaki doğru cevap mı diye kontrol et
             newQuestion();
@@ -108,8 +115,10 @@ public class GameController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            questionAskedTime = Time.time;
-            reactionTimeAverage += questionAskedTime - questionAnsweredTime;
+            reactionTimeAverage += reactionTimeCounter;
+            reactionTimeCounter = 0f;
+           // questionAskedTime = Time.time;
+           // reactionTimeAverage += questionAskedTime - questionAnsweredTime;
 
             checkRight();//Sağdaki doğru cevap mı diye kontrol et
             newQuestion();
@@ -145,7 +154,7 @@ public class GameController : MonoBehaviour
         }
 
         this.questionsAsked++;
-        questionAskedTime = Time.time;
+        //questionAskedTime = Time.time;
 
 
     }
