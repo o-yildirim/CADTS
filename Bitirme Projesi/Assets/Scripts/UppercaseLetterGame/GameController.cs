@@ -25,9 +25,9 @@ public class GameController : MonoBehaviour
     public Image marker;
     public Sprite check;
     public Sprite cross;
-   
 
-    public int score;
+
+    public float score = 0f;
     public int questionsAsked;
     public int questionAnswered;
     public int correctAnswered;
@@ -106,8 +106,7 @@ public class GameController : MonoBehaviour
         {
             // questionAnsweredTime = Time.time;
             // reactionTimeAverage += questionAskedTime - questionAnsweredTime;
-            reactionTimeAverage += reactionTimeCounter;
-            reactionTimeCounter = 0f;
+            
 
             checkLeft();//Soldaki doğru cevap mı diye kontrol et
             newQuestion();
@@ -115,8 +114,7 @@ public class GameController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            reactionTimeAverage += reactionTimeCounter;
-            reactionTimeCounter = 0f;
+   
            // questionAskedTime = Time.time;
            // reactionTimeAverage += questionAskedTime - questionAnsweredTime;
 
@@ -172,7 +170,9 @@ public class GameController : MonoBehaviour
     {
         if (!rightIsCorrect)
         {
-            this.score += 100;
+            reactionTimeAverage += reactionTimeCounter;
+            reactionTimeCounter = 0f;
+
             this.correctAnswered++;       
             displayMarker(check);
 
@@ -205,7 +205,9 @@ public class GameController : MonoBehaviour
     {
         if (rightIsCorrect)
         {
-            this.score += 100;
+            reactionTimeAverage += reactionTimeCounter;
+            reactionTimeCounter = 0f;
+
             this.correctAnswered++;
             // Debug.Log(score);
             //StartCoroutine(displayMarker(markerDisplayDuration, check));

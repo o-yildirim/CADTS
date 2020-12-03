@@ -45,7 +45,7 @@ public class StaisticsPanelManager : MonoBehaviour
         string game = "UppercaseLetterGame";
         //Bu bilgiler Unity tarafından gelecek
         Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
-        int average = 0;
+        float average = 0;
 
         DatabaseHandler.GetUserStatistics(email, category, game, statistics =>
         {
@@ -71,29 +71,29 @@ public class StaisticsPanelManager : MonoBehaviour
   
             average = (average - statistics.Values.Last().minigameScore) / (statisticsToAnalyze.Count - 1);
 
-            if (average == 0)//Önceki istatistiklerinin ortalaması 0 ise % hesaplayamayız.
+            if (average == 0f)//Önceki istatistiklerinin ortalaması 0 ise % hesaplayamayız.
             {
                 ownPerformanceText.text = "Son performansınız önceki performanslarınıza göre çok daha iyi durumda.";
                 return;
             }
 
-            int lastPerformance = statistics.Values.Last().minigameScore;
+            float lastPerformance = statistics.Values.Last().minigameScore;
 
              Debug.Log("Ortalama: " + average);
-             Debug.Log("Son performans" + lastPerformance);
+             Debug.Log("Son performans " + lastPerformance);
 
-            int difference = average - lastPerformance;
-            int changePercentage = Math.Abs(difference) * 100 / average;
+            float difference = average - lastPerformance;
+            float changePercentage = Math.Abs(difference) * 100f / average;
             if(difference > 0)//Kötü durum
             {
                 ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=red>%" +
-                                           changePercentage.ToString() +
+                                           changePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
             }
             else if(difference < 0)// iyi durum
             {
                 ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=green>%" +
-                                           changePercentage.ToString() +
+                                           changePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.";
 
             }

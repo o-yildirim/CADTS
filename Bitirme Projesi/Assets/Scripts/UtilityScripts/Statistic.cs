@@ -7,7 +7,7 @@ public class Statistic
     protected string minigameCategory;
     protected string minigameName;
     protected string datePerformed;
-    public int minigameScore;
+    public float minigameScore;
  
 
    

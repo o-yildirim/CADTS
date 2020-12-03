@@ -6,7 +6,7 @@ public class UppercaseLetterStatistic : Statistic
     public int wrongAnswers;
     public float averageReactionTime;
 
-    public UppercaseLetterStatistic(User owner,string minigameCategory,string minigameName,int minigameScore,int questionsAsked,int correctAnswers,float averageReactionTime,int wrongAnswers)
+    public UppercaseLetterStatistic(User owner,string minigameCategory,string minigameName,float minigameScore,int questionsAsked,int correctAnswers,float averageReactionTime,int wrongAnswers)
     {
         //----------------Super class attributeları---------
         SetOwner(owner);

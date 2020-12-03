@@ -5,6 +5,10 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
 {
     public static UppercaseLetterStatisticManager instance;
 
+
+    public float reactionTimeMultiplier = 5f;
+    public float correctAnswerMultiplier = 5f;
+
     public GameObject statisticPanel;
     private UppercaseLetterStatistic statistic;
 
@@ -30,8 +34,13 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
 
     public void InitializeStatistics()
     {
-       
+
         //ALTTAKİ SATIRDA MİNİGAME OBJESİ KULLANILABİLİR BELKİ
+
+
+        GameController.instance.score = (GameController.instance.reactionTimeAverage * reactionTimeMultiplier) +
+                                        (GameController.instance.correctAnswered * correctAnswerMultiplier);
+
         statistic = new UppercaseLetterStatistic(
                                         DatabaseHandler.loggedInUser,
                                         "attention",
