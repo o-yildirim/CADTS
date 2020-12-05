@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ServiceAccount : MonoBehaviour
+﻿
+public class ServiceAccount 
 {
     public string type { get; set; }
     public string project_id { get; set; }

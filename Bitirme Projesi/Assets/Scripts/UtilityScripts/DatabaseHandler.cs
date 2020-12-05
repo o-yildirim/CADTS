@@ -20,6 +20,7 @@ public class DatabaseHandler
 
     public delegate void PostUserStatisticsCallback(); //**
     public delegate void GetUserStatisticsCallback(Dictionary<string, Statistic> dates);
+    public delegate void GetGlobalStatisticCallback(GlobalStatistic globalStatistic);
     /*
     private void Update()
     {
@@ -119,7 +120,7 @@ public class DatabaseHandler
 
     }
 
-        public static void InsertStatistic(Statistic statistic)
+    public static void InsertStatistic(Statistic statistic)
     {
         RestClient.Put<Statistic>(databaseURL + "statistics/"
                                                 + statistic.GetOwner().email.Replace(".", ",") + "/"
@@ -129,6 +130,12 @@ public class DatabaseHandler
                                                 + ".json",
                                                 statistic
          );
+    }
+
+    public static void GetGlobalStatistic(string category,string game,int ageGapLower,int ageGapUpper, GetGlobalStatisticCallback callback)
+    {
+       RestClient.Get<GlobalStatistic>(databaseURL + "globalStatistics/" +ageGapLower +"-" + ageGapUpper +  "/" + category + "/" + game +".json").Then(globalStatistic => { callback(globalStatistic); });
+        //RestClient.Get<GlobalStatistic>(databaseURL + "globalStatistics/18-24/attention/UppercaseLetterGame.json").Then(globalStatistic => { callback(globalStatistic); });
     }
 
 }

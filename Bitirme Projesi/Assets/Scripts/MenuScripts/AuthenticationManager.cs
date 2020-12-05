@@ -89,7 +89,17 @@ public class AuthenticationManager : MonoBehaviour
 
     public void register()
     {
-        var registeredUser = new User(registerName.text,registerSurname.text,dateOfBirth.text,registerEmail.text, registerPassword.text);
+        string unparsedDob = dateOfBirth.text;
+
+        DateTime date = DateTime.Parse(unparsedDob);
+
+        string parsedDob = date.ToString("yyyy-M-dd");
+
+     
+
+
+
+        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, registerPassword.text);
         string email = encode(registerEmail.text); 
         DatabaseHandler.registerUser(registeredUser, email, user => { });
 

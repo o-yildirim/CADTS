@@ -38,7 +38,7 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
         //ALTTAKİ SATIRDA MİNİGAME OBJESİ KULLANILABİLİR BELKİ
 
 
-        GameController.instance.score = (GameController.instance.reactionTimeAverage * reactionTimeMultiplier) +
+        GameController.instance.score = ((1/GameController.instance.reactionTimeAverage) * reactionTimeMultiplier) +
                                         (GameController.instance.correctAnswered * correctAnswerMultiplier);
 
         statistic = new UppercaseLetterStatistic(
