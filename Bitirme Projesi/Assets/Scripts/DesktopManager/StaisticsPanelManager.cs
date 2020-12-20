@@ -20,7 +20,7 @@ public class StaisticsPanelManager : MonoBehaviour
     private float lastPerformance;
 
 
-
+    private int userPerformanceCount = 0;
 
     private float globalAverage;
 
@@ -63,7 +63,7 @@ private void OnEnable()
             }
 
             this.globalStatistic = globalStatistic;
-            globalAverage = globalStatistic.totalScore / globalStatistic.totalGamesPlayed;
+            this.globalAverage = globalStatistic.totalScore / globalStatistic.totalGamesPlayed;
             InformUserAboutGlobal();
 
         }
@@ -73,9 +73,15 @@ private void OnEnable()
 
     private void InformUserAboutGlobal()
     {
+        
         float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
         float globalLastPerformanceDifference =  (globalAverageWithoutLastIncluded-lastPerformance);
         float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
+        //Debug.Log("Last peformance: " + lastPerformance);
+        //Debug.Log("Global average without last included: "+ globalAverageWithoutLastIncluded);
+        //Debug.Log("Global last Performance Difference: " + globalLastPerformanceDifference);
+        //Debug.Log("Global last performance change percentage: " + globalLastPerformanceChangePercentage);
+
 
         //Debug.Log(globalStatistic.averageScore);
 
@@ -117,6 +123,11 @@ private void OnEnable()
      
         float globalOverallPerformanceDifference = globalAverage - userAverageOverall;
         float globalOverallPerformanceChangePercentage = Math.Abs(globalOverallPerformanceDifference) * 100f / globalAverage;
+        Debug.Log("global average: " + globalAverage);
+        Debug.Log("user average overall: "+ userAverageOverall);
+        Debug.Log("Global overall performance difference: " + globalOverallPerformanceDifference);
+        Debug.Log("Global overall performance change percentage: " + globalOverallPerformanceChangePercentage);
+
 
         if (globalOverallPerformanceDifference > 0)//Kötü durum
         {
@@ -148,7 +159,7 @@ private void OnEnable()
 
         DatabaseHandler.GetUserStatistics(email, category, game, statistics =>
         {
-            if (statistics == null)
+            if (statistics == null || statistics.Count == 0)
             {
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
                 return;
@@ -156,7 +167,8 @@ private void OnEnable()
             else if (statistics.Count == 1)
             {
                 ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
-                return;
+                lastPerformance = statistics.Values.Last().minigameScore;
+                //return;
             }
 
             foreach (var statistic in statistics)
@@ -164,12 +176,14 @@ private void OnEnable()
                 //Debug.Log($"{statistic.Key} tarihindeki skor: {statistic.Value.minigameScore}");
                 statisticsToAnalyze.Add(statistic.Key, statistic.Value);
                 userAverageOverall += statistic.Value.minigameScore;
+                userPerformanceCount++;
             }
 
 
 
             userAverageLastPerformanceExcluded = (userAverageOverall - statistics.Values.Last().minigameScore) / (statisticsToAnalyze.Count - 1);
             userAverageOverall = userAverageOverall / statisticsToAnalyze.Count;
+            Debug.Log(statisticsToAnalyze.Count);
 
             if (userAverageLastPerformanceExcluded == 0f)//Önceki istatistiklerinin ortalaması 0 ise % hesaplayamayız.
             {
@@ -177,8 +191,8 @@ private void OnEnable()
                 return;
             }
 
-            lastPerformance = statistics.Values.Last().minigameScore;
-
+            //lastPerformance = statistics.Values.Last().minigameScore;
+            Debug.Log("Last performance " + lastPerformance);
             InformUserComparedToHisOwn();
 
         }
@@ -202,9 +216,13 @@ private void OnEnable()
                                        "</color> daha iyi durumda.";
 
         }
+
         else
         {
-            ownPerformanceText.text = "Son performansınız, önceki performanslarınıza aynı seviyede seyretmiş.";
+            if (userPerformanceCount >= 2)
+            {
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza aynı seviyede seyretmiş.";
+            }
         }
     }
 

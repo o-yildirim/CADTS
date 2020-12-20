@@ -109,7 +109,7 @@ public class AuthenticationManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(email.text) || string.IsNullOrEmpty(password.text))
         {
-            status.text = "Username or password cannot be empty";
+            status.text = "E-mail veya şifre boş olamaz.";
             return;
         }
 
@@ -126,7 +126,7 @@ public class AuthenticationManager : MonoBehaviour
             }
             else if (user.password.Equals(password.text))
             {
-                status.text = "Password is incorrect";
+                status.text = "Şifre yanlış.";
             }
         });     
     }
