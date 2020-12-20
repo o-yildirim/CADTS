@@ -3,10 +3,10 @@ public class UppercaseLetterStatistic : Statistic
 {
     public int questionsAsked;
     public int correctAnswers;
-    public int wrongAnswers;
+    //public int wrongAnswers;
     public float averageReactionTime;
 
-    public UppercaseLetterStatistic(User owner,string minigameCategory,string minigameName,float minigameScore,int questionsAsked,int correctAnswers,float averageReactionTime,int wrongAnswers)
+    public UppercaseLetterStatistic(User owner,string minigameCategory,string minigameName,float minigameScore,int questionsAsked,int correctAnswers,float averageReactionTime)
     {
         //----------------Super class attributeları---------
         SetOwner(owner);
@@ -24,6 +24,6 @@ public class UppercaseLetterStatistic : Statistic
         this.averageReactionTime = averageReactionTime;
         this.questionsAsked = questionsAsked;
         this.correctAnswers = correctAnswers;
-        this.wrongAnswers = wrongAnswers;
+        //this.wrongAnswers = wrongAnswers;
     }
 }

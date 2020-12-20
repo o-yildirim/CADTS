@@ -28,7 +28,7 @@ public class StaisticsPanelManager : MonoBehaviour
     private int ageGapLower;
     private int ageGapUpper;
 
-    public int[,] ageGaps = new int[,] { { 0, 17 }, { 18, 24 }, { 25, 36 } };
+    public int[,] ageGaps = new int[,] { { 0, 14 }, { 15, 24 }, { 25, 64 } ,{ 65, 150 } };
 
 
 private void OnEnable()
@@ -77,7 +77,7 @@ private void OnEnable()
         float globalLastPerformanceDifference =  (globalAverageWithoutLastIncluded-lastPerformance);
         float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
 
-        Debug.Log(globalStatistic.averageScore);
+        //Debug.Log(globalStatistic.averageScore);
 
 
 
@@ -224,7 +224,7 @@ private void OnEnable()
     {
         int userAge = calculateUserAge(DatabaseHandler.loggedInUser.dob);
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < 4; i++)
         {
             if (userAge >= ageGaps[i, 0] && userAge < ageGaps[i, 1])
             {

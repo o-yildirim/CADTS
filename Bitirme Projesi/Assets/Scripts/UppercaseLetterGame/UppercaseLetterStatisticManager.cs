@@ -6,8 +6,9 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
     public static UppercaseLetterStatisticManager instance;
 
 
-    public float reactionTimeMultiplier = 5f;
-    public float correctAnswerMultiplier = 5f;
+    public float reactionTimeMultiplier = 4f;
+    public float correctAnswerMultiplier = 4f;
+    public float wrongAnswerMultiplier = 2f;
 
     public GameObject statisticPanel;
     private UppercaseLetterStatistic statistic;
@@ -39,7 +40,8 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
 
 
         GameController.instance.score = ((1/GameController.instance.reactionTimeAverage) * reactionTimeMultiplier) +
-                                        (GameController.instance.correctAnswered * correctAnswerMultiplier);
+                                        (GameController.instance.correctAnswered * correctAnswerMultiplier) - 
+                                        (wrongAnswerMultiplier * (GameController.instance.questionsAsked -GameController.instance.correctAnswered - 1));
 
         statistic = new UppercaseLetterStatistic(
                                         DatabaseHandler.loggedInUser,
@@ -48,8 +50,7 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
                                          GameController.instance.score,
                                          GameController.instance.questionsAsked,
                                          GameController.instance.correctAnswered,
-                                         GameController.instance.reactionTimeAverage,
-                                         GameController.instance.questionsAsked - GameController.instance.correctAnswered - 1 //mantık hatası olabilir
+                                         GameController.instance.reactionTimeAverage                              
                                         );
     }
  
