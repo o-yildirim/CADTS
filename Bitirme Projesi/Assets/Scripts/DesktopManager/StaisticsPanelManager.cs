@@ -29,6 +29,8 @@ public class StaisticsPanelManager : MonoBehaviour
     private bool ageGapsDetermined = false;
     private bool globalInitialized = false;
 
+    private bool doNotTouchOwnText = false;
+    private bool doNotTouchGlobalText = false;
 
     private int ageGapLower;
     private int ageGapUpper;
@@ -70,6 +72,7 @@ private void OnEnable()
             {
                 percentageAmongUsers.text = "Bu oyuna ait yaş aralığınıza (" + ageGapLower + "-" + ageGapUpper + ") ait hiç bir istatistik bulunmamaktadır.";
                 globalInitialized = true;
+                doNotTouchGlobalText = true;
                 return;
             }
 
@@ -100,68 +103,71 @@ private void OnEnable()
 
 
 
-        if (globalLastPerformanceDifference > 0)//Kötü durum
+        if (!doNotTouchGlobalText)
         {
-            percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                      "diğer oyuncuların performanslarına göre <color=red>%" +
-                                       globalLastPerformanceChangePercentage.ToString("F1") +
-                                       "</color> daha kötü durumda.\n\n";
-        }
-        else if (globalLastPerformanceDifference < 0)// iyi durum
-        {
-            percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                      "diğer oyuncuların performanslarına göre <color=green>%" +
-                                       globalLastPerformanceChangePercentage.ToString("F1") +
-                                       "</color> daha iyi durumda.\n\n";
+            if (globalLastPerformanceDifference > 0)//Kötü durum
+            {
+                percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                                          "diğer oyuncuların performanslarına göre <color=red>%" +
+                                           globalLastPerformanceChangePercentage.ToString("F1") +
+                                           "</color> daha kötü durumda.\n\n";
+            }
+            else if (globalLastPerformanceDifference < 0)// iyi durum
+            {
+                percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                                          "diğer oyuncuların performanslarına göre <color=green>%" +
+                                           globalLastPerformanceChangePercentage.ToString("F1") +
+                                           "</color> daha iyi durumda.\n\n";
 
-        }
-        else
-        {
-            percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                      "diğer oyuncuların performanslarına tamamen aynı seyretmiş.\n\n";
+            }
+            else
+            {
+                percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                                          "diğer oyuncuların performanslarına tamamen aynı seyretmiş.\n\n";
 
-        }
-
-
-        //Genel oyuncu ortalamasını global ile yani genelle kıyaslamak
-
-        /* float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
-         float globalLastPerformanceDifference = (globalStatistic.totalScore - globalAverageWithoutLastIncluded) / (globalStatistic.totalGamesPlayed - 1);
-         float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalStatistic.averageScore;
-         */
+            }
 
 
+            //Genel oyuncu ortalamasını global ile yani genelle kıyaslamak
+
+            /* float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
+             float globalLastPerformanceDifference = (globalStatistic.totalScore - globalAverageWithoutLastIncluded) / (globalStatistic.totalGamesPlayed - 1);
+             float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalStatistic.averageScore;
+             */
 
 
-     
-        float globalOverallPerformanceDifference = globalAverage - userAverageOverall;
-        float globalOverallPerformanceChangePercentage = Math.Abs(globalOverallPerformanceDifference) * 100f / globalAverage;
-        //Debug.Log("global average: " + globalAverage);
-       //Debug.Log("user average overall: "+ userAverageOverall);
-       //Debug.Log("Global overall performance difference: " + globalOverallPerformanceDifference);
-       //Debug.Log("Global overall performance change percentage: " + globalOverallPerformanceChangePercentage);
 
 
-        if (globalOverallPerformanceDifference > 0)//Kötü durum
-        {
-            percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                      "diğer oyuncuların performanslarına göre <color=red>%" +
-                                       globalOverallPerformanceChangePercentage.ToString("F1") +
-                                       "</color> daha kötü durumda.";
-        }
-        else if (globalOverallPerformanceDifference < 0)// iyi durum
-        {
-            percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                      "diğer oyuncuların performanslarına göre <color=green>%" +
-                                       globalOverallPerformanceChangePercentage.ToString("F1") +
-                                       "</color> daha iyi durumda.";
 
-        }
-        else
-        {
-            percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                        "diğer oyuncuların performanslarına tamamen aynı seyretmiş";
+            float globalOverallPerformanceDifference = globalAverage - userAverageOverall;
+            float globalOverallPerformanceChangePercentage = Math.Abs(globalOverallPerformanceDifference) * 100f / globalAverage;
+            //Debug.Log("global average: " + globalAverage);
+            //Debug.Log("user average overall: "+ userAverageOverall);
+            //Debug.Log("Global overall performance difference: " + globalOverallPerformanceDifference);
+            //Debug.Log("Global overall performance change percentage: " + globalOverallPerformanceChangePercentage);
 
+
+            if (globalOverallPerformanceDifference > 0)//Kötü durum
+            {
+                percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                                          "diğer oyuncuların performanslarına göre <color=red>%" +
+                                           globalOverallPerformanceChangePercentage.ToString("F1") +
+                                           "</color> daha kötü durumda.";
+            }
+            else if (globalOverallPerformanceDifference < 0)// iyi durum
+            {
+                percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                                          "diğer oyuncuların performanslarına göre <color=green>%" +
+                                           globalOverallPerformanceChangePercentage.ToString("F1") +
+                                           "</color> daha iyi durumda.";
+
+            }
+            else
+            {
+                percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                                            "diğer oyuncuların performanslarına tamamen aynı seyretmiş";
+
+            }
         }
     }
 
@@ -176,12 +182,14 @@ private void OnEnable()
             {
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
                 userStatsInitialized = true;
+                doNotTouchOwnText = true;
                 return;
             }
             else if (statistics.Count == 1)
             {
                 ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
                 lastPerformance = statistics.Values.Last().minigameScore;
+                doNotTouchOwnText = true;
                 //return;
             }
 
@@ -216,27 +224,30 @@ private void OnEnable()
 
     private void InformUserComparedToHisOwn()
     {
-        float difference = userAverageLastPerformanceExcluded - lastPerformance;
-        float changePercentage = Math.Abs(difference) * 100f / userAverageLastPerformanceExcluded;
-        if (difference > 0)//Kötü durum
+        if (!doNotTouchOwnText)
         {
-            ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=red>%" +
-                                       changePercentage.ToString("F1") +
-                                       "</color> daha kötü durumda.";
-        }
-        else if (difference < 0)// iyi durum
-        {
-            ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=green>%" +
-                                       changePercentage.ToString("F1") +
-                                       "</color> daha iyi durumda.";
-
-        }
-
-        else
-        {
-            if (userPerformanceCount >= 2)
+            float difference = userAverageLastPerformanceExcluded - lastPerformance;
+            float changePercentage = Math.Abs(difference) * 100f / userAverageLastPerformanceExcluded;
+            if (difference > 0)//Kötü durum
             {
-                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza aynı seviyede seyretmiş.";
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=red>%" +
+                                           changePercentage.ToString("F1") +
+                                           "</color> daha kötü durumda.";
+            }
+            else if (difference < 0)// iyi durum
+            {
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=green>%" +
+                                           changePercentage.ToString("F1") +
+                                           "</color> daha iyi durumda.";
+
+            }
+
+            else
+            {
+                if (userPerformanceCount >= 2)
+                {
+                    ownPerformanceText.text = "Son performansınız, önceki performanslarınıza aynı seviyede seyretmiş.";
+                }
             }
         }
     }
@@ -304,6 +315,9 @@ private void OnEnable()
         userStatsInitialized = false;
         globalInitialized = false;
         ageGapsDetermined = false;
+
+        doNotTouchOwnText = false;
+        doNotTouchGlobalText = false;
 
         userAverageOverall = 0f;
         userAverageLastPerformanceExcluded = 0f;
