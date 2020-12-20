@@ -69,6 +69,7 @@ private void OnEnable()
             if (globalStatistic == null)
             {
                 percentageAmongUsers.text = "Bu oyuna ait yaş aralığınıza (" + ageGapLower + "-" + ageGapUpper + ") ait hiç bir istatistik bulunmamaktadır.";
+                globalInitialized = true;
                 return;
             }
 
@@ -174,6 +175,7 @@ private void OnEnable()
             if (statistics == null || statistics.Count == 0)
             {
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
+                userStatsInitialized = true;
                 return;
             }
             else if (statistics.Count == 1)
