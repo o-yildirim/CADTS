@@ -7,6 +7,7 @@ using System.Collections;
 
 public class StaisticsPanelManager : MonoBehaviour
 {
+    public GameObject panelToDisplay;
 
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
@@ -31,6 +32,8 @@ public class StaisticsPanelManager : MonoBehaviour
 
     private int ageGapLower;
     private int ageGapUpper;
+
+    public Text loadingText;
 
     public int[,] ageGaps = new int[,] { { 0, 14 }, { 15, 24 }, { 25, 64 } ,{ 65, 150 } };
 
@@ -70,7 +73,7 @@ private void OnEnable()
             }
 
             this.globalStatistic = globalStatistic;
-            this.globalAverage = globalStatistic.totalScore / globalStatistic.totalGamesPlayed;
+            globalAverage = globalStatistic.totalScore / globalStatistic.totalGamesPlayed;
             InformUserAboutGlobal();
 
         }
@@ -266,6 +269,8 @@ private void OnEnable()
 
     public IEnumerator initDatabaseValues(string email,string category,string game)
     {
+        panelToDisplay.SetActive(false);
+        loadingText.enabled = true;
         statisticsToAnalyze.Clear();
         clearValues();
 
@@ -285,6 +290,8 @@ private void OnEnable()
         {
             yield return null;
         }
+        loadingText.enabled = false;
+        panelToDisplay.SetActive(true);
         //InformUserComparedToHisOwn();
         //InformUserAboutGlobal();
         
@@ -292,7 +299,11 @@ private void OnEnable()
 
     public void clearValues()
     {
-       userAverageOverall = 0f;
+        userStatsInitialized = false;
+        globalInitialized = false;
+        ageGapsDetermined = false;
+
+        userAverageOverall = 0f;
         userAverageLastPerformanceExcluded = 0f;
         lastPerformance = 0f;
         userPerformanceCount = 0;

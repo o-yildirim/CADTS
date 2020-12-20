@@ -6,9 +6,9 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
     public static UppercaseLetterStatisticManager instance;
 
 
-    public float reactionTimeMultiplier = 4f;
-    public float correctAnswerMultiplier = 4f;
-    public float wrongAnswerMultiplier = 2f;
+    public float reactionTimeMultiplier = 2.5f;
+    public float correctAnswerMultiplier = 5f;
+    public float wrongAnswerMultiplier = 2.5f;
 
     public GameObject statisticPanel;
     private UppercaseLetterStatistic statistic;
