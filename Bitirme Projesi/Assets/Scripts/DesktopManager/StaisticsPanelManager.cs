@@ -266,6 +266,9 @@ private void OnEnable()
 
     public IEnumerator initDatabaseValues(string email,string category,string game)
     {
+        statisticsToAnalyze.Clear();
+        clearValues();
+
         InitializeUserAverageAndLastPerformance(email, category, game);
         while (!userStatsInitialized)
         {
@@ -285,6 +288,16 @@ private void OnEnable()
         //InformUserComparedToHisOwn();
         //InformUserAboutGlobal();
         
+    }
+
+    public void clearValues()
+    {
+       userAverageOverall = 0f;
+        userAverageLastPerformanceExcluded = 0f;
+        lastPerformance = 0f;
+        userPerformanceCount = 0;
+        globalAverage = 0f;
+
     }
 
 }
