@@ -189,7 +189,7 @@ private void OnEnable()
             {
                 ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
                 lastPerformance = statistics.Values.Last().minigameScore;
-                doNotTouchOwnText = true;
+                //doNotTouchOwnText = true;
                 //return;
             }
 
