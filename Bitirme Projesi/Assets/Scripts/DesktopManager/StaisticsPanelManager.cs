@@ -123,10 +123,10 @@ private void OnEnable()
      
         float globalOverallPerformanceDifference = globalAverage - userAverageOverall;
         float globalOverallPerformanceChangePercentage = Math.Abs(globalOverallPerformanceDifference) * 100f / globalAverage;
-        Debug.Log("global average: " + globalAverage);
-        Debug.Log("user average overall: "+ userAverageOverall);
-        Debug.Log("Global overall performance difference: " + globalOverallPerformanceDifference);
-        Debug.Log("Global overall performance change percentage: " + globalOverallPerformanceChangePercentage);
+        //Debug.Log("global average: " + globalAverage);
+       //Debug.Log("user average overall: "+ userAverageOverall);
+       //Debug.Log("Global overall performance difference: " + globalOverallPerformanceDifference);
+       //Debug.Log("Global overall performance change percentage: " + globalOverallPerformanceChangePercentage);
 
 
         if (globalOverallPerformanceDifference > 0)//Kötü durum
@@ -191,7 +191,7 @@ private void OnEnable()
                 return;
             }
 
-            //lastPerformance = statistics.Values.Last().minigameScore;
+            lastPerformance = statistics.Values.Last().minigameScore;
             Debug.Log("Last performance " + lastPerformance);
             InformUserComparedToHisOwn();
 
