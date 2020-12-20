@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class StaisticsPanelManager : MonoBehaviour
 {
@@ -24,6 +24,10 @@ public class StaisticsPanelManager : MonoBehaviour
 
     private float globalAverage;
 
+    private bool userStatsInitialized = false;
+    private bool ageGapsDetermined = false;
+    private bool globalInitialized = false;
+
 
     private int ageGapLower;
     private int ageGapUpper;
@@ -32,7 +36,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
 
 private void OnEnable()
-    {
+   {
 
         string email = DatabaseHandler.loggedInUser.email;
         email = email.Replace(".", ",");
@@ -41,14 +45,17 @@ private void OnEnable()
 
 
 
-        InitializeUserAverageAndLastPerformance(email, category, game);
-        DetermineAgeGaps();
-        InitializeGlobalAverage(category, game);
+        StartCoroutine(initDatabaseValues(email,category,game));
+
+       // InitializeUserAverageAndLastPerformance(email, category, game);
+       // DetermineAgeGaps();
+       // InitializeGlobalAverage(category, game);
 
 
-    }
+   }
 
-
+    
+   
 
 
     public void InitializeGlobalAverage(string category, string game)
@@ -67,8 +74,10 @@ private void OnEnable()
             InformUserAboutGlobal();
 
         }
-
+       
         );
+
+        globalInitialized = true;
     }
 
     private void InformUserAboutGlobal()
@@ -193,6 +202,7 @@ private void OnEnable()
 
             lastPerformance = statistics.Values.Last().minigameScore;
             Debug.Log("Last performance " + lastPerformance);
+            userStatsInitialized = true;
             InformUserComparedToHisOwn();
 
         }
@@ -251,6 +261,30 @@ private void OnEnable()
                 break;
             }
         }
+        ageGapsDetermined = true;
+    }
+
+    public IEnumerator initDatabaseValues(string email,string category,string game)
+    {
+        InitializeUserAverageAndLastPerformance(email, category, game);
+        while (!userStatsInitialized)
+        {
+            yield return null;
+
+        }
+        DetermineAgeGaps();
+        while (!ageGapsDetermined)
+        {
+            yield return null;
+        }
+        InitializeGlobalAverage(category, game);
+        while (!globalInitialized)
+        {
+            yield return null;
+        }
+        //InformUserComparedToHisOwn();
+        //InformUserAboutGlobal();
+        
     }
 
 }
