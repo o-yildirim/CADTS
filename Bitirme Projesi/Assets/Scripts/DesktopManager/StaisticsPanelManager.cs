@@ -89,7 +89,8 @@ private void OnEnable()
 
     private void InformUserAboutGlobal()
     {
-        
+      if (!doNotTouchGlobalText && !doNotTouchOwnText)
+      {
         float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
         float globalLastPerformanceDifference =  (globalAverageWithoutLastIncluded-lastPerformance);
         float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
@@ -103,8 +104,7 @@ private void OnEnable()
 
 
 
-        if (!doNotTouchGlobalText)
-        {
+        
             if (globalLastPerformanceDifference > 0)//Kötü durum
             {
                 percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
