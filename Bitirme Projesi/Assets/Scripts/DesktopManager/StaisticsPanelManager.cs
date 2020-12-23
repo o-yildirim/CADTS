@@ -110,7 +110,7 @@ public class StaisticsPanelManager : MonoBehaviour
                                           "diğer oyuncuların performanslarına göre <color=red>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.\n\n";
-                succesPercentageLastToOverall = 100f - globalLastPerformanceChangePercentage;
+                succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
                 
             }
             else if (globalLastPerformanceDifference < 0)// iyi durum
@@ -119,7 +119,7 @@ public class StaisticsPanelManager : MonoBehaviour
                                           "diğer oyuncuların performanslarına göre <color=green>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.\n\n";
-                succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
+                succesPercentageLastToOverall = 100f - globalLastPerformanceChangePercentage;
 
 
             }
@@ -135,7 +135,7 @@ public class StaisticsPanelManager : MonoBehaviour
             float globalOverallPerformanceDifference = globalAverage - userAverageOverall;
             float globalOverallPerformanceChangePercentage = Math.Abs(globalOverallPerformanceDifference) * 100f / globalAverage;
            
-            successPercentageOverallToOverall = 100f - globalOverallPerformanceChangePercentage;
+          
 
         
 
@@ -146,7 +146,7 @@ public class StaisticsPanelManager : MonoBehaviour
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
 
-                successPercentageOverallToOverall = globalOverallPerformanceChangePercentage;
+                successPercentageOverallToOverall = 100f - globalOverallPerformanceChangePercentage;
             }
             else if (globalOverallPerformanceDifference < 0)// iyi durum
             {
@@ -155,7 +155,7 @@ public class StaisticsPanelManager : MonoBehaviour
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.";
 
-                successPercentageOverallToOverall = 100f - globalOverallPerformanceChangePercentage;
+                successPercentageOverallToOverall = globalOverallPerformanceChangePercentage;
 
             }
             else
