@@ -141,7 +141,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
             if (globalOverallPerformanceDifference > 0)//Kötü durum
             {
-                percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=red>%" +
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
@@ -150,7 +150,7 @@ public class StaisticsPanelManager : MonoBehaviour
             }
             else if (globalOverallPerformanceDifference < 0)// iyi durum
             {
-                percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=green>%" +
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.";
@@ -160,7 +160,7 @@ public class StaisticsPanelManager : MonoBehaviour
             }
             else
             {
-                percentageAmongUsers.text += "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                             "diğer oyuncuların performanslarına tamamen aynı seyretmiş";
 
             }
