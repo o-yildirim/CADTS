@@ -111,7 +111,8 @@ public class StaisticsPanelManager : MonoBehaviour
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.\n\n";
                 succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
-                
+                StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall, Color.red));
+
             }
             else if (globalLastPerformanceDifference < 0)// iyi durum
             {
@@ -119,8 +120,8 @@ public class StaisticsPanelManager : MonoBehaviour
                                           "diğer oyuncuların performanslarına göre <color=green>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.\n\n";
-                succesPercentageLastToOverall = 100f - globalLastPerformanceChangePercentage;
-
+                succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
+                StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall, Color.green));
 
             }
             else
@@ -146,7 +147,8 @@ public class StaisticsPanelManager : MonoBehaviour
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
 
-                successPercentageOverallToOverall = 100f - globalOverallPerformanceChangePercentage;
+                successPercentageOverallToOverall = globalOverallPerformanceChangePercentage;
+                StartCoroutine(drawPie(successPercentageOverallToOverall, pieOverallToOverall, Color.red));
             }
             else if (globalOverallPerformanceDifference < 0)// iyi durum
             {
@@ -156,7 +158,7 @@ public class StaisticsPanelManager : MonoBehaviour
                                            "</color> daha iyi durumda.";
 
                 successPercentageOverallToOverall = globalOverallPerformanceChangePercentage;
-
+                StartCoroutine(drawPie(successPercentageOverallToOverall, pieOverallToOverall, Color.green));
             }
             else
             {
@@ -304,8 +306,8 @@ public class StaisticsPanelManager : MonoBehaviour
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
 
-        StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
-        StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
+       // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
+      //  StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
        
         //InformUserComparedToHisOwn();
         //InformUserAboutGlobal();
@@ -329,10 +331,11 @@ public class StaisticsPanelManager : MonoBehaviour
 
     }
 
-    public IEnumerator drawPie(float percentage,Image pieImage)
+    public IEnumerator drawPie(float percentage,Image pieImage, Color color)
     {
         overallToOverallPie.SetActive(true);
         pieImage.fillAmount = 0f;
+        pieImage.color = color;
         float angleToFill = percentage / 100f;
         
 
