@@ -13,6 +13,7 @@ public class StaisticsPanelManager : MonoBehaviour
     private GlobalStatistic globalStatistic;
 
     public Text percentageAmongUsers;
+    public Text lastPerformancePercentageAmongUsers;
     public Text ownPerformanceText;
 
     private float userAverageOverall;
@@ -36,31 +37,37 @@ public class StaisticsPanelManager : MonoBehaviour
     private int ageGapUpper;
 
     public Text loadingText;
+    public float timeToFill = 3f;
+    public float increaseTick = 0.2f;
 
-    public int[,] ageGaps = new int[,] { { 0, 14 }, { 15, 24 }, { 25, 64 } ,{ 65, 150 } };
+    public GameObject overallToOverallPie;
+    public Image pieOverallToOverall;
+
+    public GameObject lastToOverallPie;
+    public Image pieLastToOverall;
+
+    private float successPercentageOverallToOverall;
+    private float succesPercentageLastToOverall;
 
 
-private void OnEnable()
-   {
+    public int[,] ageGaps = new int[,] { { 0, 14 }, { 15, 24 }, { 25, 64 }, { 65, 150 } };
+
+
+    private void OnEnable()
+    {
 
         string email = DatabaseHandler.loggedInUser.email;
         email = email.Replace(".", ",");
         string category = "attention"; //BURALAR
-        string game = "UppercaseLetterGame"; // MINIGAME SCRIPTINDEN ATTRIBUTE OLARAK ÇEKİLECEK
+        string game = "UppercaseLetterGame"; // MINIGAME SCRIPTINDEN ATTRIBUTE OLARAK ÇEKİLECEK 
+
+        StartCoroutine(initDatabaseValues(email, category, game));
+
+
+    }
 
 
 
-        StartCoroutine(initDatabaseValues(email,category,game));
-
-       // InitializeUserAverageAndLastPerformance(email, category, game);
-       // DetermineAgeGaps();
-       // InitializeGlobalAverage(category, game);
-
-
-   }
-
-    
-   
 
 
     public void InitializeGlobalAverage(string category, string game)
@@ -79,73 +86,58 @@ private void OnEnable()
             this.globalStatistic = globalStatistic;
             globalAverage = globalStatistic.totalScore / globalStatistic.totalGamesPlayed;
             InformUserAboutGlobal();
+            globalInitialized = true;
 
         }
-       
+
         );
 
-        globalInitialized = true;
+        
     }
 
     private void InformUserAboutGlobal()
     {
-      if (!doNotTouchGlobalText && !doNotTouchOwnText)
-      {
-        float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
-        float globalLastPerformanceDifference =  (globalAverageWithoutLastIncluded-lastPerformance);
-        float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
-        //Debug.Log("Last peformance: " + lastPerformance);
-        //Debug.Log("Global average without last included: "+ globalAverageWithoutLastIncluded);
-        //Debug.Log("Global last Performance Difference: " + globalLastPerformanceDifference);
-        //Debug.Log("Global last performance change percentage: " + globalLastPerformanceChangePercentage);
+        if (!doNotTouchGlobalText && !doNotTouchOwnText)
+        {
+            float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
+            float globalLastPerformanceDifference = (globalAverageWithoutLastIncluded - lastPerformance);
+            float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
+            
 
-
-        //Debug.Log(globalStatistic.averageScore);
-
-
-
-        
             if (globalLastPerformanceDifference > 0)//Kötü durum
             {
-                percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=red>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.\n\n";
+                succesPercentageLastToOverall = 100f - globalLastPerformanceChangePercentage;
+                
             }
             else if (globalLastPerformanceDifference < 0)// iyi durum
             {
-                percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=green>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.\n\n";
+                succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
+
 
             }
             else
             {
-                percentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
+                lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına tamamen aynı seyretmiş.\n\n";
 
             }
+          
 
-
-            //Genel oyuncu ortalamasını global ile yani genelle kıyaslamak
-
-            /* float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
-             float globalLastPerformanceDifference = (globalStatistic.totalScore - globalAverageWithoutLastIncluded) / (globalStatistic.totalGamesPlayed - 1);
-             float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalStatistic.averageScore;
-             */
-
-
-
-
-
+          
             float globalOverallPerformanceDifference = globalAverage - userAverageOverall;
             float globalOverallPerformanceChangePercentage = Math.Abs(globalOverallPerformanceDifference) * 100f / globalAverage;
-            //Debug.Log("global average: " + globalAverage);
-            //Debug.Log("user average overall: "+ userAverageOverall);
-            //Debug.Log("Global overall performance difference: " + globalOverallPerformanceDifference);
-            //Debug.Log("Global overall performance change percentage: " + globalOverallPerformanceChangePercentage);
+           
+            successPercentageOverallToOverall = 100f - globalOverallPerformanceChangePercentage;
 
+        
 
             if (globalOverallPerformanceDifference > 0)//Kötü durum
             {
@@ -153,6 +145,8 @@ private void OnEnable()
                                           "diğer oyuncuların performanslarına göre <color=red>%" +
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
+
+                successPercentageOverallToOverall = globalOverallPerformanceChangePercentage;
             }
             else if (globalOverallPerformanceDifference < 0)// iyi durum
             {
@@ -161,6 +155,8 @@ private void OnEnable()
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.";
 
+                successPercentageOverallToOverall = 100f - globalOverallPerformanceChangePercentage;
+
             }
             else
             {
@@ -168,10 +164,11 @@ private void OnEnable()
                                             "diğer oyuncuların performanslarına tamamen aynı seyretmiş";
 
             }
+
         }
     }
 
- 
+
 
     private void InitializeUserAverageAndLastPerformance(string email, string category, string game)
     {
@@ -215,8 +212,9 @@ private void OnEnable()
 
             lastPerformance = statistics.Values.Last().minigameScore;
             Debug.Log("Last performance " + lastPerformance);
-            userStatsInitialized = true;
+            
             InformUserComparedToHisOwn();
+            userStatsInitialized = true;
 
         }
       );
@@ -258,8 +256,8 @@ private void OnEnable()
         DateTime dateOfBirthDate = DateTime.Parse(dateOfBirth);
 
         TimeSpan diffTime = now.Subtract(dateOfBirthDate);
-        int age = Mathf.RoundToInt((float) diffTime.TotalDays / 365f) ;
-        
+        int age = Mathf.RoundToInt((float)diffTime.TotalDays / 365f);
+
         return age;
     }
 
@@ -280,7 +278,7 @@ private void OnEnable()
         ageGapsDetermined = true;
     }
 
-    public IEnumerator initDatabaseValues(string email,string category,string game)
+    public IEnumerator initDatabaseValues(string email, string category, string game)
     {
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
@@ -305,9 +303,13 @@ private void OnEnable()
         }
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
+
+        StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
+        StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
+       
         //InformUserComparedToHisOwn();
         //InformUserAboutGlobal();
-        
+
     }
 
     public void clearValues()
@@ -327,5 +329,26 @@ private void OnEnable()
 
     }
 
+    public IEnumerator drawPie(float percentage,Image pieImage)
+    {
+        overallToOverallPie.SetActive(true);
+        pieImage.fillAmount = 0f;
+        float angleToFill = percentage / 100f;
+        
+
+        while(pieImage.fillAmount <= angleToFill)
+        {
+            //float next = Mathf.Lerp(0f, angleToFill, Time.time * timeToFill );
+            float next = Mathf.MoveTowards(pieImage.fillAmount, angleToFill, increaseTick * Time.deltaTime);
+            pieImage.fillAmount = next;
+            //yield return new WaitForSeconds(increaseTick);
+            yield return null;
+        }
+        
+    }
+
+   
 }
+
+
 
