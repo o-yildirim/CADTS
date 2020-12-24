@@ -8,6 +8,7 @@ using System.Collections;
 public class StaisticsPanelManager : MonoBehaviour
 {
     public GameObject panelToDisplay;
+    public GameObject legend;
 
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
@@ -37,7 +38,6 @@ public class StaisticsPanelManager : MonoBehaviour
     private int ageGapUpper;
 
     public Text loadingText;
-    public float timeToFill = 3f;
     public float increaseTick = 0.2f;
 
     public GameObject overallToOverallPie;
@@ -99,6 +99,8 @@ public class StaisticsPanelManager : MonoBehaviour
     {
         if (!doNotTouchGlobalText && !doNotTouchOwnText)
         {
+            activatePies();
+
             float globalAverageWithoutLastIncluded = (globalStatistic.totalScore - lastPerformance) / (globalStatistic.totalGamesPlayed - 1);
             float globalLastPerformanceDifference = (globalAverageWithoutLastIncluded - lastPerformance);
             float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
@@ -226,6 +228,8 @@ public class StaisticsPanelManager : MonoBehaviour
     {
         if (!doNotTouchOwnText)
         {
+           
+
             float difference = userAverageLastPerformanceExcluded - lastPerformance;
             float changePercentage = Math.Abs(difference) * 100f / userAverageLastPerformanceExcluded;
             if (difference > 0)//Kötü durum
@@ -316,6 +320,13 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public void clearValues()
     {
+        resetPies();
+        deactivatePies();
+
+        ownPerformanceText.text = "";
+        percentageAmongUsers.text = "";
+        lastPerformancePercentageAmongUsers.text = "";
+
         userStatsInitialized = false;
         globalInitialized = false;
         ageGapsDetermined = false;
@@ -349,6 +360,26 @@ public class StaisticsPanelManager : MonoBehaviour
         }
         
     }
+
+    public void activatePies()
+    {
+        legend.SetActive(true);
+        lastToOverallPie.SetActive(true);
+        overallToOverallPie.SetActive(true);
+    }
+    public void deactivatePies()
+    {
+        legend.SetActive(false);
+        lastToOverallPie.SetActive(false);
+        overallToOverallPie.SetActive(false);
+    }
+
+    public void resetPies()
+    {
+        pieLastToOverall.fillAmount = 0f;
+        pieOverallToOverall.fillAmount = 0f;
+    }
+   
 
    
 }
