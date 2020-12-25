@@ -270,6 +270,8 @@ public class GameController : MonoBehaviour
         {
             yield return null;
         }
+        skipTutorialButton.gameObject.SetActive(false);
+        startGame();
 
     }
     public void startGame()
