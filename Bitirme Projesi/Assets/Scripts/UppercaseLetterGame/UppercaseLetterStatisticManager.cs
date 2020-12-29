@@ -38,11 +38,16 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
 
         //ALTTAKİ SATIRDA MİNİGAME OBJESİ KULLANILABİLİR BELKİ
 
-
-        GameController.instance.score = ((1/GameController.instance.reactionTimeAverage) * reactionTimeMultiplier) +
-                                        (GameController.instance.correctAnswered * correctAnswerMultiplier) - 
-                                        (wrongAnswerMultiplier * (GameController.instance.questionsAsked -GameController.instance.correctAnswered - 1));
-
+        if (GameController.instance.reactionTimeAverage == 0f)
+        {
+            GameController.instance.score = 0f;
+        }
+        else
+        {
+            GameController.instance.score = ((1 / GameController.instance.reactionTimeAverage) * reactionTimeMultiplier) +
+                                            (GameController.instance.correctAnswered * correctAnswerMultiplier) -
+                                            (wrongAnswerMultiplier * (GameController.instance.questionsAsked - GameController.instance.correctAnswered - 1));
+        }
         statistic = new UppercaseLetterStatistic(
                                         DatabaseHandler.loggedInUser,
                                         "attention",

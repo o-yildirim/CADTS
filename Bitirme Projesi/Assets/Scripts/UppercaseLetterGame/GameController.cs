@@ -290,7 +290,10 @@ public class GameController : MonoBehaviour
     {
         this.gamePaused = true;
         this.gamePanel.SetActive(false);
-        reactionTimeAverage = reactionTimeAverage / questionAnswered;
+        if (reactionTimeAverage != 0)
+        {
+            reactionTimeAverage = reactionTimeAverage / questionAnswered;
+        }
         UppercaseLetterStatisticManager.instance.InitializeStatistics();
         UppercaseLetterStatisticManager.instance.ShowStatistics();
         UppercaseLetterStatisticManager.instance.InsertStatistics();
