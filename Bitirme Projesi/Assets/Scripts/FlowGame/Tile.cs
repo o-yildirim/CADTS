@@ -15,17 +15,15 @@ public class Tile : MonoBehaviour
     public bool Ltype;
     public bool Itype;
 
+    public LayerMask tileMask;
+
     public float rotationRate = 0.75f;
   
     void Start()
-    {
-        
-        
+    {             
         AssignStateDictionary();
         //AssignEdgeDictionary();
-
         init();
-
     }
 
     public void RotationCall()
@@ -128,5 +126,22 @@ public class Tile : MonoBehaviour
             edges[(stateBeingPreparedTo + 2) % totalStates] = true;
         }
     }
+
+
+    public void checkTransmission()
+    {     
+        RaycastHit hit;
+    
+        if (Physics.Raycast(transform.position, transform.right, out hit, Mathf.Infinity, tileMask))
+        {
+            Tile hitTile = hit.transform.GetComponent<Tile>();
+            if (hitTile != null)
+            {
+                hitTile.RotationCall();
+            }
+        }
+    }
+
+
 
 }

@@ -19,8 +19,8 @@ public class PlayerInputManager : MonoBehaviour
             { 
                 Tile hitTile = hit.transform.GetComponent<Tile>();
                 if(hitTile != null)
-                {   
-                    hitTile.RotationCall();
+                {             
+                    hitTile.RotationCall();               
                 }
             }
         }
