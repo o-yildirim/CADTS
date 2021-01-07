@@ -15,8 +15,6 @@ public class Tile : MonoBehaviour
     public bool Ltype;
     public bool Itype;
 
-    public LayerMask tileMask;
-
     public float rotationRate = 0.75f;
   
     void Start()
@@ -128,18 +126,76 @@ public class Tile : MonoBehaviour
     }
 
 
-    public void checkTransmission()
+    public void checkTransmission(int inputEdge)
     {     
-        RaycastHit hit;
-    
-        if (Physics.Raycast(transform.position, transform.right, out hit, Mathf.Infinity, tileMask))
+        
+
+        if (!edges[(inputEdge)])
         {
-            Tile hitTile = hit.transform.GetComponent<Tile>();
-            if (hitTile != null)
+            return;
+        }
+        Debug.Log(transform.name);
+
+
+        int outputEdge = 0;
+        for (int i = 0; i < edges.Length; i++)
+        {
+            if (edges[i] && i != inputEdge)
             {
-                hitTile.RotationCall();
+                outputEdge = i;
+                break;
             }
         }
+
+        //Debug.Log(outputEdge);
+
+        RaycastHit hit = new RaycastHit();
+        switch (outputEdge)
+        {
+            case 0:
+                if (!Physics.Raycast(transform.position, Vector2.up, out hit))
+                {
+                    return;
+                }       
+                break;
+            case 1:
+                if (!Physics.Raycast(transform.position, Vector2.right, out hit))
+                {
+                    return;
+                }         
+                break;
+            case 2:
+                if (!Physics.Raycast(transform.position, -Vector2.up, out hit))
+                {
+                    return;
+                }
+                break;
+            case 3:
+                if (!Physics.Raycast(transform.position, -Vector2.right, out hit))
+                { 
+                    return;
+                }
+                break;
+        }
+
+      
+
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        {
+           Tile hitTile = hit.transform.GetComponent<Tile>();
+           if (hitTile != null)
+           {
+               // Debug.Log("Send from " +outputEdge+". edge.");
+               // Debug.Log("To "+(outputEdge + 2) % totalStates + ". edge.");
+                hitTile.checkTransmission((outputEdge + 2 ) % totalStates);
+            }
+         }  
+         else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Finish"))
+         {
+           ProblemSolvingGameManager.instance.fullyLinked = true;
+         }
+        
+     
     }
 
 

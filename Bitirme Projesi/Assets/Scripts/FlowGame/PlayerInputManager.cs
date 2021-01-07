@@ -15,12 +15,19 @@ public class PlayerInputManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
-            if(Physics.Raycast(ray,out hit, Mathf.Infinity,clickAvaliableLayer))
+            if(Physics.Raycast(ray,out hit))
             { 
-                Tile hitTile = hit.transform.GetComponent<Tile>();
-                if(hitTile != null)
-                {             
-                    hitTile.RotationCall();               
+                if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Tile"))
+                {
+                    Tile hitTile = hit.transform.GetComponent<Tile>();
+                    if (hitTile != null)
+                    {
+                        hitTile.RotationCall();
+                    }
+                }
+                else if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Sink"))
+                {
+                    ProblemSolvingGameManager.instance.startCheckingSequence();
                 }
             }
         }
