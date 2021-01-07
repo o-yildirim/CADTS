@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+
 public class SceneManagement : MonoBehaviour
 {
     public static SceneManagement instance;
@@ -36,16 +37,23 @@ public class SceneManagement : MonoBehaviour
         StartCoroutine(loadScene(buildIndex));
     }
 
+    /*
     public void loadMinigame()
     {
         GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
+        Debug.Log(selectedGameObject.name);
         Minigame minigame = selectedGameObject.GetComponent<Minigame>();
+
         if (minigame != null)
         {
+            Debug.Log("Clicked on " + minigame.transform.name);
             int buildIndex = minigame.sceneIndex;
             loadSceneCall(buildIndex);
         }
+    
     }
+
+    */
 
     public void loadLoginScreen()
     {

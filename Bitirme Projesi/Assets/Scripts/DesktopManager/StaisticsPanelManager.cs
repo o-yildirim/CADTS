@@ -206,7 +206,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
             userAverageLastPerformanceExcluded = (userAverageOverall - statistics.Values.Last().minigameScore) / (statisticsToAnalyze.Count - 1);
             userAverageOverall = userAverageOverall / statisticsToAnalyze.Count;
-            Debug.Log(statisticsToAnalyze.Count);
+            //Debug.Log(statisticsToAnalyze.Count);
 
             if (userAverageLastPerformanceExcluded == 0f)//Önceki istatistiklerinin ortalaması 0 ise % hesaplayamayız.
             {
@@ -215,7 +215,7 @@ public class StaisticsPanelManager : MonoBehaviour
             }
 
             lastPerformance = statistics.Values.Last().minigameScore;
-            Debug.Log("Last performance " + lastPerformance);
+            //Debug.Log("Last performance " + lastPerformance);
             
             InformUserComparedToHisOwn();
             userStatsInitialized = true;

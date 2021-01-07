@@ -79,7 +79,7 @@ public class AuthenticationManager : MonoBehaviour
             }.FromPrivateKey(cr.private_key));
             string accessToken = await xCred.GetAccessTokenForRequestAsync();
             RestClient.DefaultRequestHeaders["Authorization"] = "Bearer " + accessToken;
-            Debug.Log("Access token: " + accessToken);
+            //Debug.Log("Access token: " + accessToken);
         }
         catch (Exception e)
         {

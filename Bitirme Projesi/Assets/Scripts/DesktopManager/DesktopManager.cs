@@ -39,15 +39,12 @@ public class DesktopManager : MonoBehaviour
         ResetButtonColors(gameCategoryButtons);
         ResetPanels(gameCategoryPanels);
 
-        ActivatePanel(desktopButtons[0], desktopPanels[0]);
-        ActivatePanel(gameCategoryButtons[0], gameCategoryPanels[0]);
+       
 
-        /*Debug.Log("Name: " + DatabaseHandler.loggedInUser.name +
-                  " Surname: " + DatabaseHandler.loggedInUser.surname +
-                  " Dob: " + DatabaseHandler.loggedInUser.dob +
-                  " E-mail: " + DatabaseHandler.loggedInUser.email +
-                  " Password: " + DatabaseHandler.loggedInUser.password
-                  );*/
+        ActivatePanel(desktopButtons[0], desktopPanels[0]);
+
+        int startingWindow = 0;
+        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow]);
 
         openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
     }
@@ -142,9 +139,13 @@ public class DesktopManager : MonoBehaviour
             gameCategoryButtons[i].onClick.AddListener(PanelSelect);
         }
 
+     
         for(int i = 0; i < minigameButtons.Length; i++)
         {
-            minigameButtons[i].onClick.AddListener(SceneManagement.instance.loadMinigame);
+            Minigame minigameScript = minigameButtons[i].GetComponent<Minigame>();
+            int indexOfThisMinigame = minigameScript.sceneIndex;
+            minigameButtons[i].onClick.AddListener(() => { SceneManagement.instance.loadSceneCall(indexOfThisMinigame); });
+            Debug.Log("Added listener to: " + minigameButtons[i].name + "with scene index:" + indexOfThisMinigame);
         }
 
     }
