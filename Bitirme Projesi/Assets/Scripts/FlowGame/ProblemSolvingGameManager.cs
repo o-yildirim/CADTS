@@ -7,6 +7,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public bool fullyLinked = false;
     public GameObject sink;
     public FlowingWaterManager waterManagerScript;
+    public MapGenerator mapGenerator;
     public List<Vector3> pipesPassedTrough;
 
     public static ProblemSolvingGameManager instance;
@@ -16,12 +17,15 @@ public class ProblemSolvingGameManager : MonoBehaviour
         {
             instance = this;
         }
+       
     }
     private void Start()
     {
         pipesPassedTrough = new List<Vector3>();
         pipesPassedTrough.Add(sink.transform.position);
         waterManagerScript = GetComponent<FlowingWaterManager>();
+        mapGenerator = GetComponent<MapGenerator>();
+        mapGenerator.GenerateMap();
     }
 
     public void startCheckingSequence()

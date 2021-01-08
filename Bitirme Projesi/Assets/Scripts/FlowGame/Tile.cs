@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour
     public IEnumerator Rotate(float rotationRate)
     {
 
-        Debug.Log("Rotate called");
+        //Debug.Log("Rotate called");
        
         int nextState =  (currentState + 1) % totalStates;
         
@@ -42,9 +42,9 @@ public class Tile : MonoBehaviour
         float targetZ = stateAngleMatch[nextState];
         float t = 0;
      
-        Debug.Log("Current Z:" +currentZ);
-        Debug.Log("Euler z: " + (transform.rotation.eulerAngles.z - 360f) % 360);
-        Debug.Log("Target Z:" + targetZ);
+        //Debug.Log("Current Z:" +currentZ);
+        //Debug.Log("Euler z: " + (transform.rotation.eulerAngles.z - 360f) % 360);
+        //Debug.Log("Target Z:" + targetZ);
 
         
 
