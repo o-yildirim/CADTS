@@ -6,6 +6,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
 {
     public bool fullyLinked = false;
     public GameObject sink;
+    public FlowingWaterManager waterManagerScript;
+    public List<Vector3> pipesPassedTrough;
 
     public static ProblemSolvingGameManager instance;
     private void Awake()
@@ -15,6 +17,13 @@ public class ProblemSolvingGameManager : MonoBehaviour
             instance = this;
         }
     }
+    private void Start()
+    {
+        pipesPassedTrough = new List<Vector3>();
+        pipesPassedTrough.Add(sink.transform.position);
+        waterManagerScript = GetComponent<FlowingWaterManager>();
+    }
+
     public void startCheckingSequence()
     {
         RaycastHit hitTile;
@@ -30,10 +39,13 @@ public class ProblemSolvingGameManager : MonoBehaviour
         if (fullyLinked)
         {
             Debug.Log("GAME FINISHED");
+            waterManagerScript.drawWater(pipesPassedTrough);
         }
         else
         {
             Debug.Log("WRONG!");
+            pipesPassedTrough.Clear();
+            pipesPassedTrough.Add(sink.transform.position);
         }
 
     }
