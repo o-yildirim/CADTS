@@ -24,8 +24,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
         pipesPassedTrough = new List<Vector3>();
         pipesPassedTrough.Add(sink.transform.position);
         waterManagerScript = GetComponent<FlowingWaterManager>();
-        mapGenerator = GetComponent<MapGenerator>();
-        mapGenerator.GenerateMap();
+        //mapGenerator = GetComponent<MapGenerator>();
+        //mapGenerator.GenerateMap();
     }
 
     public void startCheckingSequence()

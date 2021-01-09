@@ -26,6 +26,7 @@ public class MapGenerator : MonoBehaviour
         tileLengthY = pipes[0].GetComponent<BoxCollider>().size.y;
         possiblePipeStateCount = pipes[0].GetComponent<Tile>().totalStates;
         map = new GameObject[rows,columns];
+        GenerateMap();
         
     }
 
@@ -49,9 +50,11 @@ public class MapGenerator : MonoBehaviour
 
                 Debug.Log("Random pipe type: " + randomPipeType + " Random State: " + randomState);
 
-                map[i,j] = Instantiate(pipes[randomPipeType], nextSpawn, Quaternion.identity);
-                map[i,j].GetComponent<Tile>().currentState = randomState;
-              
+                if (!map[i, j])
+                {
+                    map[i, j] = Instantiate(pipes[randomPipeType], nextSpawn, Quaternion.identity);
+                    map[i, j].GetComponent<Tile>().currentState = randomState;
+                }
             }
         }
         
