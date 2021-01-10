@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4323424995917017306}
   - component: {fileID: 4323424995917017305}
   m_Layer: 8
-  m_Name: UTile
+  m_Name: LType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,5 +118,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.333, y: 1.333, z: 0}
+  m_Size: {x: 1.35, y: 1.35, z: 0}
   m_Center: {x: 0, y: 0, z: 0}

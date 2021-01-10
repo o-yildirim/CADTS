@@ -8,6 +8,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public bool inputUnavailable = false;
 
     public GameObject sink;
+    public GameObject finish;
+
     public FlowingWaterManager waterManagerScript;
     public MapGenerator mapGenerator;
     public List<Vector3> pipesPassedTrough;
