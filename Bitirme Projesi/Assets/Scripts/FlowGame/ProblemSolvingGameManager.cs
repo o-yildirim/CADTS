@@ -5,10 +5,14 @@ using UnityEngine;
 public class ProblemSolvingGameManager : MonoBehaviour
 {
     public bool fullyLinked = false;
+    public bool inputUnavailable = false;
+
     public GameObject sink;
     public FlowingWaterManager waterManagerScript;
     public MapGenerator mapGenerator;
     public List<Vector3> pipesPassedTrough;
+
+
 
     public static ProblemSolvingGameManager instance;
     private void Awake()
@@ -22,7 +26,6 @@ public class ProblemSolvingGameManager : MonoBehaviour
     private void Start()
     {
         pipesPassedTrough = new List<Vector3>();
-        pipesPassedTrough.Add(sink.transform.position);
         waterManagerScript = GetComponent<FlowingWaterManager>();
         //mapGenerator = GetComponent<MapGenerator>();
         //mapGenerator.GenerateMap();
@@ -30,6 +33,9 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     public void startCheckingSequence()
     {
+        inputUnavailable = true;
+        pipesPassedTrough.Add(sink.transform.position);
+
         RaycastHit hitTile;
         if(Physics.Raycast(sink.transform.position,-sink.transform.up,out hitTile))
         {
@@ -43,13 +49,15 @@ public class ProblemSolvingGameManager : MonoBehaviour
         if (fullyLinked)
         {
             Debug.Log("GAME FINISHED");
-            waterManagerScript.drawWater(pipesPassedTrough);
+            //waterManagerScript.drawWater(pipesPassedTrough);
+            StartCoroutine(waterManagerScript.drawWaterSlow(pipesPassedTrough));
         }
         else
         {
             Debug.Log("WRONG!");
             pipesPassedTrough.Clear();
-            pipesPassedTrough.Add(sink.transform.position);
+            inputUnavailable = false;
+            //pipesPassedTrough.Add(sink.transform.position);
         }
 
     }
