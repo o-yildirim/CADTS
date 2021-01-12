@@ -19,8 +19,7 @@ public class Tile : MonoBehaviour
   
     void Start()
     {             
-        AssignStateDictionary();
-        //AssignEdgeDictionary();
+  
         init();
     }
 
@@ -89,6 +88,8 @@ public class Tile : MonoBehaviour
 
     public void init()
     {
+        AssignStateDictionary();
+
         if (Ltype)
         {
             edges[currentState] = true;
@@ -178,8 +179,6 @@ public class Tile : MonoBehaviour
                 }
                 break;
         }
-
-      
 
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Tile"))
         {
