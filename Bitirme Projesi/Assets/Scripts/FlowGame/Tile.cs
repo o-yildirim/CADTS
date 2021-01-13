@@ -71,20 +71,6 @@ public class Tile : MonoBehaviour
             stateAngleMatch.Add(i, stateAngles[i]);
         }
     }
-    /*public void AssignEdgeDictionary()
-    {
-        stateEdgeMatch = new Dictionary<int, bool[]>();
-        for(int i = 0; i< totalStates; i++)
-        {
-            stateEdgeMatch.Add(i, new[] { false,false,false,false });
-            
-        }
-
-        Debug.Log(stateEdgeMatch[0].Length);
-
-      
-
-    }*/
 
     public void init()
     {

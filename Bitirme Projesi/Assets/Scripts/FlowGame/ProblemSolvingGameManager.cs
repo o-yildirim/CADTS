@@ -9,9 +9,12 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     public GameObject sink;
     public GameObject finish;
+    public GameObject valve;
 
     public FlowingWaterManager waterManagerScript;
     public MapGenerator mapGenerator;
+    public Valve valveScript;
+
     public List<Vector3> pipesPassedTrough;
 
 
@@ -29,6 +32,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
     {
         pipesPassedTrough = new List<Vector3>();
         waterManagerScript = GetComponent<FlowingWaterManager>();
+        valveScript = valve.GetComponentInChildren<Valve>();
         //mapGenerator = GetComponent<MapGenerator>();
         //mapGenerator.GenerateMap();
     }
@@ -51,8 +55,9 @@ public class ProblemSolvingGameManager : MonoBehaviour
         if (fullyLinked)
         {
             Debug.Log("GAME FINISHED");
-            //waterManagerScript.drawWater(pipesPassedTrough);
-            StartCoroutine(waterManagerScript.drawWaterSlow(pipesPassedTrough));
+
+            Coroutine valveRotating = StartCoroutine(valveScript.Rotate(2f));        
+            StartCoroutine(waterManagerScript.drawWaterSlow(pipesPassedTrough,valveRotating));
         }
         else
         {

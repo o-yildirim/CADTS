@@ -5,12 +5,16 @@ using UnityEngine;
 public class FlowingWaterManager : MonoBehaviour
 {
     public LineRenderer water;
+    public ParticleSystem waterEffect;
     public float offset = 0.1f;
     public float flowSpeed = 3f;
     
-    public IEnumerator drawWaterSlow(List<Vector3> positionList)
+    public IEnumerator drawWaterSlow(List<Vector3> positionList,Coroutine valveRotating)
     {
-      
+        yield return valveRotating;
+
+        waterEffect.Play();
+
         int passedPipesLength = ProblemSolvingGameManager.instance.pipesPassedTrough.Count;
         water.positionCount = 2;
         water.SetPosition(0, positionList[0]);
@@ -41,7 +45,7 @@ public class FlowingWaterManager : MonoBehaviour
     }
     
 
-    public void drawWater(List<Vector3> positionList)
+    /*public void drawWater(List<Vector3> positionList)
     {
         int passedPipesLength = positionList.Count;
 
@@ -50,6 +54,6 @@ public class FlowingWaterManager : MonoBehaviour
         {
             water.SetPosition(i, positionList[i]);
         }
-    }
+    }*/
 
 }

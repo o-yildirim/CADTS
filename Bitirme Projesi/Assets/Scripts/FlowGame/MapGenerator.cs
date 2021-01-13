@@ -15,17 +15,22 @@ public class MapGenerator : MonoBehaviour
     private int LCounter = 0;
 
     public GameObject[,] map;
+    public GameObject mapGameObject;
 
     public int rows;
     public int columns; // 2D Array with capacity mapLength x mapHeight
     public float finishOffsetY = -2f;
     public float sinkOffsetY = 2f;
+    public float valveOffsetX = 2f;
+    public float valveOffsetY = 1f;
+
 
     private float tileLengthX;
     private float tileLengthY;
+
+
     private int possiblePipeStateCount;
 
-    public int debugCounter = 1;
     
 
     void Start()
@@ -41,10 +46,12 @@ public class MapGenerator : MonoBehaviour
 
         PositionSink();
         PositionFinish();
+        PositionValve();
         CreateCorners();
         GenerateSolution();
-        MixSolution();
-        GenerateMap();
+        //MixSolution();
+       // GenerateMap();
+       // RepositionCamera();
     }
 
     public void GenerateMap()
@@ -66,6 +73,7 @@ public class MapGenerator : MonoBehaviour
                     int randomState = (int)Random.Range(0, possiblePipeStateCount);
                     map[i, j] = Instantiate(pipes[randomPipeType], nextSpawn, Quaternion.identity);
                     map[i, j].GetComponent<Tile>().currentState = randomState;
+                    map[i, j].transform.parent = mapGameObject.transform;
                 }
             }
         }
@@ -73,7 +81,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    private void PositionFinish()
+    public void PositionFinish()
     {
         float finishSpawnXoffset = 0;
         if (columns % 2 == 0)
@@ -89,17 +97,30 @@ public class MapGenerator : MonoBehaviour
         float finishSpawnY = firstSpawnPoint.position.y - (rows * tileLengthY) + finishOffsetY;
         Vector3 finishSpawnPoint = new Vector3(finishSpawnX, finishSpawnY, 0f);
         ProblemSolvingGameManager.instance.finish.transform.position = finishSpawnPoint;
+        ProblemSolvingGameManager.instance.finish.transform.parent = mapGameObject.transform;
     }
 
-    private void PositionSink()
+    public void PositionSink()
     {
         float sinkSpawnX = firstSpawnPoint.position.x;
         float sinkSpawnY = firstSpawnPoint.position.y + sinkOffsetY;
         Vector3 sinkSpawnPoint = new Vector3(sinkSpawnX, sinkSpawnY, 0f);
         ProblemSolvingGameManager.instance.sink.transform.position = sinkSpawnPoint;
+        ProblemSolvingGameManager.instance.sink.transform.parent = mapGameObject.transform;
+    }
+    public void PositionValve()
+    {
+        float valveSpawnX = firstSpawnPoint.position.x + valveOffsetX;
+        float valveSpawnY = firstSpawnPoint.position.y + valveOffsetY;
+        Vector3 valveSpawnPoint = new Vector3(valveSpawnX, valveSpawnY, 0f);
+        ProblemSolvingGameManager.instance.valve.transform.position = valveSpawnPoint;
+        ProblemSolvingGameManager.instance.valve.transform.parent = mapGameObject.transform;
+       
+
     }
 
-    private void CreateCorners()
+
+    public void CreateCorners()
     {
         //SOL ALT KOSE
 
@@ -111,17 +132,20 @@ public class MapGenerator : MonoBehaviour
         Vector3 cornerSpawn = new Vector3(leftBottomCornerX, leftBottomCornerY, 0f);
         map[rows - 1, 0] = Instantiate(pipes[0], cornerSpawn, Quaternion.identity);
         map[rows - 1, 0].GetComponent<Tile>().currentState = randomState;
-     
+        map[rows-1,0].transform.parent = mapGameObject.transform;
+
         randomState = Random.Range(0, possiblePipeStateCount);
         cornerSpawn.x += (columns * tileLengthX) - tileLengthX;
         map[rows - 1, columns - 1] = Instantiate(pipes[0], cornerSpawn, Quaternion.identity);
         map[rows - 1, columns-1].GetComponent<Tile>().currentState = randomState;
+        map[rows - 1, columns-1].transform.parent = mapGameObject.transform;
 
         //SAG UST KOSE
         randomState = Random.Range(0, possiblePipeStateCount);
         cornerSpawn.y += (rows * tileLengthY) - tileLengthY;
         map[0, columns - 1] = Instantiate(pipes[0], cornerSpawn, Quaternion.identity);
         map[0, columns - 1].GetComponent<Tile>().currentState = randomState;
+        map[0, columns-1].transform.parent = mapGameObject.transform;
     }
 
     
@@ -131,32 +155,31 @@ public class MapGenerator : MonoBehaviour
         float currentTileY = firstSpawnPoint.position.y - (rows * tileLengthY) + tileLengthY; //burasi + n * tileLengthY falan olabilir
 
         int currentRowIndex = rows-1;        //finish oncesinden basliyorum;
-        int currentColumnIndex = columns/2;
-        //Debug.Log(debugCounter.ToString() + ".tile, Row :" + currentRowIndex + " Column: " + currentColumnIndex);
+        int currentColumnIndex = columns/2;      
 
         Vector3 nextTileSpawnPoint = new Vector3(currentTileX, currentTileY, 0f);
 
-        int pipeType = (int) Random.Range(0, pipes.Length);
-        //int pipeType = 0;
-        //int startingState = (int)Random.Range(0, possiblePipeStateCount);
-        int startingState = 0;
+        int pipeType = (int) Random.Range(0, pipes.Length);    
+        int startingState = (int)Random.Range(0, possiblePipeStateCount);  
         map[currentRowIndex,currentColumnIndex] = Instantiate(pipes[pipeType], nextTileSpawnPoint, Quaternion.identity);
         Tile createdTile = map[currentRowIndex, currentColumnIndex].GetComponent<Tile>();
-        createdTile.transform.name = debugCounter.ToString();
-        debugCounter++;    
         createdTile.currentState = startingState;
-        createdTile.init();
-
+        createdTile.transform.parent = mapGameObject.transform;
+        
         int input = 2;
-        int roll = (int)Random.Range(0, 2);
         int desiredOutput = 0;
+        int roll = (int)Random.Range(0, 3);
         if (roll == 0)
         {
             desiredOutput = 0; //SOL
         }
-        else
+        else if(roll == 1)
         {
-            desiredOutput = 3; //YUKARI
+            desiredOutput = 1; //YUKARI
+        }
+        else if(roll == 2)
+        {
+            desiredOutput = 3;
         }
 
         bool isDone = false;
@@ -181,11 +204,12 @@ public class MapGenerator : MonoBehaviour
             Destroy(map[currentRowIndex, currentColumnIndex]);
             map[currentRowIndex, currentColumnIndex] = Instantiate(pipes[pipeType], nextTileSpawnPoint, Quaternion.identity);
             createdTile = map[currentRowIndex, currentColumnIndex].GetComponent<Tile>();
+
             createdTile.currentState = startingState;
             createdTile.init();
-            createdTile.transform.name = debugCounter.ToString();
-            debugCounter++;
-            
+
+            createdTile.transform.parent = mapGameObject.transform;
+           
         }
 
 
@@ -233,19 +257,16 @@ public class MapGenerator : MonoBehaviour
     {
 
         if(tile.gameObject.transform.position == firstSpawnPoint.position && output == 0 )
-        {
-            Debug.Log(tile.transform.name + " Row: " + currentRowIndex + " Column: " + currentColumnIndex);
+        {            
             return;
         }
 
-        int pipeType = 0;
-        bool pipeTypeDetermined = false;
-
+    
+ 
         int desiredOutput = 0;
         bool isOutputDetermined = false;
 
-       
-        
+           
 
         if (output == 0) //ACIL MUDAHALE GEREKIR
         {
@@ -326,36 +347,18 @@ public class MapGenerator : MonoBehaviour
         if (currentColumnIndex == 0 && currentRowIndex > 0)
         {
             desiredOutput = 0;
-            pipeType = 1;
-            pipeTypeDetermined = true;
             isOutputDetermined = true;
         }
-        else if (currentColumnIndex == columns - 1 || currentColumnIndex == 1)
-        {
-            pipeType = 0;
-            pipeTypeDetermined = true;
-        }
-        /*else if(currentColumnIndex == columns-1 || currentColumnIndex == 1)
-        {
-            pipeType = 0;
-            pipeTypeDetermined = true;
-        }*/
-
-
-
-
+       
 
 
 
         int input = (output + 2) % possiblePipeStateCount;
 
-        if (!pipeTypeDetermined)
-        {
-            pipeType = (int)Random.Range(0, pipes.Length);
-        }
+     
+        int pipeType = (int)Random.Range(0, pipes.Length);
         int startingState = 0;
-        //int pipeType = 0;
-        //int startingState = (int)Random.Range(0, possiblePipeStateCount);
+    
 
         float currentTileX = firstSpawnPoint.transform.position.x + (currentColumnIndex * tileLengthX);
         float currentTileY = firstSpawnPoint.transform.position.y - (currentRowIndex * tileLengthY);
@@ -367,10 +370,6 @@ public class MapGenerator : MonoBehaviour
         
         Tile createdTile = map[currentRowIndex, currentColumnIndex].GetComponent<Tile>();
         createdTile.currentState = startingState;
-        createdTile.init();
-        createdTile.transform.name = debugCounter.ToString();
-        //Debug.Log(debugCounter.ToString() + ".tile, Row :" + currentRowIndex+ " Column: "+ currentColumnIndex);
-        debugCounter++;
 
         bool isDone = false;
         while (!isDone)
@@ -396,9 +395,10 @@ public class MapGenerator : MonoBehaviour
             map[currentRowIndex, currentColumnIndex] = Instantiate(pipes[pipeType], nextTileSpawnPoint, Quaternion.identity);
             createdTile = map[currentRowIndex, currentColumnIndex].GetComponent<Tile>();
             createdTile.currentState = startingState;
-            createdTile.init();         
+            createdTile.init();
+           
         }
-
+        createdTile.transform.parent = mapGameObject.transform;
 
 
 
@@ -432,235 +432,25 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
-    /*public void GenerateSolution()
+    public void RepositionCamera()
     {
-        float currentTileX = firstSpawnPoint.position.x + (columns / 2f * tileLengthX);
-        float currentTileY = firstSpawnPoint.position.y - (rows * tileLengthY) + tileLengthY; //burasi + n * tileLengthY falan olabilir
+        
+        float xLength = (columns * tileLengthX)/2f;
+        float yLength = ((rows * tileLengthY) + finishOffsetY + sinkOffsetY)/2f;
 
-        int currentRowIndex = rows-1;        //finish oncesinden basliyorum;
-        int currentColumnIndex = columns/2;
-        //Debug.Log(debugCounter.ToString() + ".tile, Row :" + currentRowIndex + " Column: " + currentColumnIndex);
+        float sum = Mathf.Pow(xLength, 2) + Mathf.Pow(yLength, 2);       
+        float newCamSize = Mathf.Sqrt(sum);
 
-        Vector3 nextTileSpawnPoint = new Vector3(currentTileX, currentTileY, 0f);
+        Camera.main.orthographicSize = newCamSize/2f;
+       
 
-        int pipeType = (int) Random.Range(0, pipes.Length);
-        //int pipeType = 0;
-        int startingState = (int)Random.Range(0, possiblePipeStateCount);
-        map[currentRowIndex,currentColumnIndex] = Instantiate(pipes[pipeType], nextTileSpawnPoint, Quaternion.identity);
-        Tile createdTile = map[currentRowIndex, currentColumnIndex].GetComponent<Tile>();
-        createdTile.transform.name = debugCounter.ToString();
-        debugCounter++;    
-        createdTile.currentState = startingState;
-        createdTile.init();
-        while (!createdTile.edges[2])
-        {
-            createdTile.manageEdges();
-            createdTile.currentState = (createdTile.currentState+1) % possiblePipeStateCount;
-            
-        }
 
-        int output = 0;
-        for(int i = 0; i < possiblePipeStateCount; i++)
-        {
-            if(createdTile.edges[i] && i != 2)
-            {
-                output = i;
-                break;
-            }
+        Vector3 newCamPos = map[rows / 2, columns / 2].transform.position;
+        newCamPos.z = Camera.main.transform.position.z;
 
-        }
-
-      
-        CreateAdjacentTile(createdTile, output, currentRowIndex, currentColumnIndex);
-
+        Camera.main.transform.position = newCamPos;
+        
+       
+    
     }
-
-
-
-
-
-    public void CreateAdjacentTile(Tile tile, int output, int currentRowIndex, int currentColumnIndex)
-    {
-
-        if (tile.gameObject.transform.position == firstSpawnPoint.position && output == 0)
-        {
-            return;
-        }
-
-        if (debugCounter == 5)
-        {
-            return;
-        }
-        if ((currentColumnIndex == columns - 1 && output == 1) || (currentColumnIndex == 0 && output == 3))
-        {
-            return;
-        }
-
-
-
-
-
-        if (output == 0)
-        {
-            if (currentRowIndex > 0) //YUKARI YARATMAYA CALISIYOR
-            {
-                currentRowIndex--;
-            }
-
-        }
-
-        else if (output == 1)
-        {
-            if (currentColumnIndex < columns - 1) //SAĞA YARATMAYA CALISIYOR
-            {
-                currentColumnIndex++;
-            }
-
-        }
-        else if (output == 2)
-        {
-            if (currentRowIndex < rows - 1)  //ASAGI YARATMAYA CALISIYOR
-            {
-
-                currentRowIndex++;
-
-            }
-
-        }
-        else if (output == 3)
-        {
-            if (currentColumnIndex > 0)   //SOLA YARATMAYA CALISIYOR
-            {
-                currentColumnIndex--;
-            }
-
-        }
-
-
-
-
-        int pipeType = (int)Random.Range(0, pipes.Length);
-        //int pipeType = 0;
-        int startingState = (int)Random.Range(0, possiblePipeStateCount);
-
-        float currentTileX = firstSpawnPoint.transform.position.x + (currentColumnIndex * tileLengthX);
-        float currentTileY = firstSpawnPoint.transform.position.y - (currentRowIndex * tileLengthY);
-        Vector3 nextTileSpawnPoint = new Vector3(currentTileX, currentTileY, 0f);
-        if (!map[currentRowIndex, currentColumnIndex])
-        {
-            map[currentRowIndex, currentColumnIndex] = Instantiate(pipes[pipeType], nextTileSpawnPoint, Quaternion.identity);
-        }
-
-        Tile createdTile = map[currentRowIndex, currentColumnIndex].GetComponent<Tile>();
-        createdTile.transform.name = debugCounter.ToString();
-        Debug.Log(debugCounter.ToString() + ".tile, Row :" + currentRowIndex + " Column: " + currentColumnIndex);
-        debugCounter++;
-
-        int input = (output + 2) % createdTile.edges.Length;
-
-
-        if (createdTile != null)
-        {
-            if (currentRowIndex == 0 || currentRowIndex == rows - 1 || currentColumnIndex == columns - 1 || currentColumnIndex == 0)
-            {
-                if (currentColumnIndex == 0)
-                {
-                    while (true)
-                    {
-                        if (createdTile.edges[input] && !createdTile.edges[3])
-                        {
-                            break;
-                        }
-                        createdTile.manageEdges();
-                        createdTile.currentState = (createdTile.currentState + 1) % possiblePipeStateCount;
-
-                    }
-                }
-                else if (currentColumnIndex == columns - 1)
-                {
-                    while (true)
-                    {
-                        if (createdTile.edges[input] && !createdTile.edges[1])
-                        {
-                            break;
-                        }
-                        createdTile.manageEdges();
-                        createdTile.currentState = (createdTile.currentState + 1) % possiblePipeStateCount;
-
-                    }
-                }
-
-                if (currentRowIndex == rows - 1)
-                {
-                    while (true)
-                    {
-                        if (createdTile.edges[input] && !createdTile.edges[2])
-                        {
-                            break;
-                        }
-
-                        createdTile.manageEdges();
-                        createdTile.currentState = (createdTile.currentState + 1) % possiblePipeStateCount;
-
-                    }
-                }
-                else if (currentRowIndex == 0)
-                {
-                    while (true)
-                    {
-                        if (createdTile.edges[input] && !createdTile.edges[0])
-                        {
-                            break;
-                        }
-                        createdTile.manageEdges();
-                        createdTile.currentState = (createdTile.currentState + 1) % possiblePipeStateCount;
-                    }
-                }
-            }
-            else
-            {
-                bool isDone = false;
-                while (!isDone)
-                {
-                    for (int i = 0; i < possiblePipeStateCount; i++)
-                    {
-                        if (createdTile.edges[input])
-                        {
-                            isDone = true;
-                            break;
-                        }
-                        createdTile.manageEdges();
-                        createdTile.currentState = (createdTile.currentState + 1) % possiblePipeStateCount;
-
-                    }
-                    //pipeType = (pipeType + 1) % pipes.Length;
-                    //Destroy(map[currentRowIndex, currentColumnIndex]);
-                    //map[currentRowIndex, currentColumnIndex] = null;
-                    //map[currentRowIndex, currentColumnIndex] = Instantiate(pipes[pipeType], nextTileSpawnPoint, Quaternion.identity);
-                }
-
-            }
-
-        }
-
-        int outputForCreatedTile = 0;
-
-        for (int i = 0; i < possiblePipeStateCount; i++)
-        {
-            if (createdTile.edges[i] && i != input && i != 2)
-            {
-                outputForCreatedTile = i;
-                break;
-            }
-
-        }
-
-        Debug.Log("Output for " + debugCounter.ToString() + " : " + outputForCreatedTile);
-
-        CreateAdjacentTile(createdTile, outputForCreatedTile, currentRowIndex, currentColumnIndex);
-
-    }
-    */
-
 }
