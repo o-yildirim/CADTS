@@ -6,11 +6,6 @@ public class Valve : MonoBehaviour
 {
     public float rotationSpeed = 3f;
 
-    void Update()
-    {
-        
-    }
-
     public IEnumerator Rotate(float duration)
     {
         float time = 0f;

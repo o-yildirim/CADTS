@@ -49,8 +49,8 @@ public class MapGenerator : MonoBehaviour
         PositionValve();
         CreateCorners();
         GenerateSolution();
-        //MixSolution();
-       // GenerateMap();
+        MixSolution();
+        GenerateMap();
        // RepositionCamera();
     }
 
@@ -84,15 +84,11 @@ public class MapGenerator : MonoBehaviour
     public void PositionFinish()
     {
         float finishSpawnXoffset = 0;
-        if (columns % 2 == 0)
-        {
-            finishSpawnXoffset = 0;
-        }
-        else
+        if (columns % 2 != 0)
         {
             finishSpawnXoffset = tileLengthX / 2;
         }
-
+       
         float finishSpawnX = firstSpawnPoint.position.x + (columns / 2f * tileLengthX) - finishSpawnXoffset;
         float finishSpawnY = firstSpawnPoint.position.y - (rows * tileLengthY) + finishOffsetY;
         Vector3 finishSpawnPoint = new Vector3(finishSpawnX, finishSpawnY, 0f);
@@ -151,7 +147,13 @@ public class MapGenerator : MonoBehaviour
     
     public void GenerateSolution()
     {
-        float currentTileX = firstSpawnPoint.position.x + (columns / 2f * tileLengthX);
+        float spawnOffsetX = 0;
+        if (columns % 2 != 0)
+        {
+            spawnOffsetX = tileLengthX / 2;
+        }
+
+        float currentTileX = firstSpawnPoint.position.x + (columns / 2f * tileLengthX) - spawnOffsetX;
         float currentTileY = firstSpawnPoint.position.y - (rows * tileLengthY) + tileLengthY; //burasi + n * tileLengthY falan olabilir
 
         int currentRowIndex = rows-1;        //finish oncesinden basliyorum;

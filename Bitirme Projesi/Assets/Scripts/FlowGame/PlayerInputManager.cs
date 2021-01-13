@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
-
-    public LayerMask clickAvaliableLayer;
     
     // Update is called once per frame
     void Update()

@@ -221,9 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d76c5b1c48f414fb01a91f910ef96e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickAvaliableLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!4 &155414576
 Transform:
   m_ObjectHideFlags: 0
@@ -296,7 +293,7 @@ MonoBehaviour:
   columns: 12
   finishOffsetY: -1
   sinkOffsetY: 3
-  valveOffsetX: 2
+  valveOffsetX: 1.5
   valveOffsetY: 1.8
 --- !u!1 &483868465
 GameObject:
@@ -648,8 +645,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.35
-      minScalar: 0.2
+      scalar: 0.25
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5218,7 +5215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1380175951}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8, y: 4.3, z: 0}
+  m_LocalPosition: {x: -8, y: 7.4025, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5597,7 +5594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5862295794215145753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9416752, y: 5.295, z: 0}
+  m_LocalPosition: {x: -3.9416752, y: 8.3975, z: 0}
   m_LocalScale: {x: 1.3333, y: 2, z: 1}
   m_Children:
   - {fileID: 483868466}

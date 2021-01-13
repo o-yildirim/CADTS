@@ -33,8 +33,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         pipesPassedTrough = new List<Vector3>();
         waterManagerScript = GetComponent<FlowingWaterManager>();
         valveScript = valve.GetComponentInChildren<Valve>();
-        //mapGenerator = GetComponent<MapGenerator>();
-        //mapGenerator.GenerateMap();
+        mapGenerator = GetComponent<MapGenerator>();
     }
 
     public void startCheckingSequence()
