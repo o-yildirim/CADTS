@@ -51,7 +51,7 @@ public class MapGenerator : MonoBehaviour
         GenerateSolution();
         MixSolution();
         GenerateMap();
-       // RepositionCamera();
+        //RepositionCamera();
     }
 
     public void GenerateMap()
@@ -444,7 +444,7 @@ public class MapGenerator : MonoBehaviour
         float newCamSize = Mathf.Sqrt(sum);
 
         Camera.main.orthographicSize = newCamSize/2f;
-       
+        //Camera.main.orthographicSize = rows;
 
 
         Vector3 newCamPos = map[rows / 2, columns / 2].transform.position;
