@@ -1274,6 +1274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProblemSolvingMinigame
       objectReference: {fileID: 0}
+    - target: {fileID: 6275595817622673262, guid: 228df847d0571114fb3cef30d561cfc1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6275595817622673263, guid: 228df847d0571114fb3cef30d561cfc1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

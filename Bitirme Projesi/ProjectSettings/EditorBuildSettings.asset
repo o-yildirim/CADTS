@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Memory.unity
     guid: 0c474c1e5c1a3ab4b8dba2892a3bbc69
   - enabled: 1
-    path: Assets/Scenes/Math.unity
+    path: Assets/Scenes/Math2.unity
     guid: d1d1be7ff681f1a48a930d0cbc1a5987
   m_configObjects: {}
