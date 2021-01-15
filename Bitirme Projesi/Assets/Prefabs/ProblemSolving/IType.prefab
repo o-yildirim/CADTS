@@ -119,4 +119,4 @@ MonoBehaviour:
   - -270
   Ltype: 0
   Itype: 1
-  rotationRate: 3
+  rotationTime: 0.3

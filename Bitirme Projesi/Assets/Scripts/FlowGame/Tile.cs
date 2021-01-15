@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
     public int totalStates = 4;
     public int currentState = 0;
     public Dictionary<int, float> stateAngleMatch;
+    
     //public Dictionary<int, bool[]> stateEdgeMatch;
 
 
@@ -15,8 +16,11 @@ public class Tile : MonoBehaviour
     public bool Ltype;
     public bool Itype;
 
-    public float rotationRate = 0.75f;
-  
+    public float rotationTime = 1.2f;
+    float rotationAngle = -90f;
+
+    bool isRotating = false;
+
     void Start()
     {             
   
@@ -25,40 +29,60 @@ public class Tile : MonoBehaviour
 
     public void RotationCall()
     {
-        StartCoroutine(Rotate(rotationRate));
+        if (isRotating) return;
+        StartCoroutine(Rotate(rotationAngle,rotationTime));
     }
 
-    public IEnumerator Rotate(float rotationRate)
+    public IEnumerator Rotate(float rotationAngle,float rotationTime)
     {
 
-        //Debug.Log("Rotate called");
-       
+
+        isRotating = true;
         int nextState =  (currentState + 1) % totalStates;
-        
-
-        //float currentZ = states[stateCurrent];
-        float currentZ = (transform.rotation.eulerAngles.z - 360f ) % 360;
-        float targetZ = stateAngleMatch[nextState];
-        float t = 0;
      
-        //Debug.Log("Current Z:" +currentZ);
-        //Debug.Log("Euler z: " + (transform.rotation.eulerAngles.z - 360f) % 360);
-        //Debug.Log("Target Z:" + targetZ);
 
-        
+        Quaternion currentRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + (Vector3.forward * rotationAngle));
 
-        while ((transform.rotation.eulerAngles.z - 360f) % 360 >= targetZ + 0.03f || (transform.rotation.eulerAngles.z - 360f) % 360 <= targetZ - 0.03f)
+
+        for (var t = 0f; t < 1; t += Time.deltaTime / rotationTime)
+        {
+            transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, t);
+            yield return null;
+        }
+
+        transform.rotation = Quaternion.Euler(0f,0f,stateAngleMatch[nextState]);
+
+
+
+        /*while ()
+        {
+
+            t += rotationRate * Time.deltaTime;
+            float nextZ = Mathf.Lerp(currentZ, targetZ, t);
+            transform.rotation = Quaternion.AngleAxis(nextZ,Vector3.forward);
+            yield return null;
+        }*/
+
+
+
+
+        /*while ((transform.rotation.eulerAngles.z - 360f) % 360 >= targetZ + 0.03f || (transform.rotation.eulerAngles.z - 360f) % 360 <= targetZ - 0.03f)
         {
            
             t += rotationRate * Time.deltaTime;
             float nextZ = Mathf.Lerp(currentZ, targetZ, t);
             transform.rotation = Quaternion.Euler(0f, 0f, nextZ);
             yield return null;
-        }
+        }*/
+
+
+
 
         manageEdges();
-
         currentState = nextState;
+
+        isRotating = false;
 
     }
 

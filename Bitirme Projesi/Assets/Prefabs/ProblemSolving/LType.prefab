@@ -106,7 +106,7 @@ MonoBehaviour:
   - -270
   Ltype: 1
   Itype: 0
-  rotationRate: 3
+  rotationTime: 0.3
 --- !u!65 &4323424995917017305
 BoxCollider:
   m_ObjectHideFlags: 0
