@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+
+    public GameObject rotateEffect;
+
     public int totalStates = 4;
     public int currentState = 0;
     public Dictionary<int, float> stateAngleMatch;
@@ -53,35 +56,11 @@ public class Tile : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f,0f,stateAngleMatch[nextState]);
 
-
-
-        /*while ()
-        {
-
-            t += rotationRate * Time.deltaTime;
-            float nextZ = Mathf.Lerp(currentZ, targetZ, t);
-            transform.rotation = Quaternion.AngleAxis(nextZ,Vector3.forward);
-            yield return null;
-        }*/
-
-
-
-
-        /*while ((transform.rotation.eulerAngles.z - 360f) % 360 >= targetZ + 0.03f || (transform.rotation.eulerAngles.z - 360f) % 360 <= targetZ - 0.03f)
-        {
-           
-            t += rotationRate * Time.deltaTime;
-            float nextZ = Mathf.Lerp(currentZ, targetZ, t);
-            transform.rotation = Quaternion.Euler(0f, 0f, nextZ);
-            yield return null;
-        }*/
-
-
-
-
         manageEdges();
         currentState = nextState;
 
+        GameObject effect = Instantiate(rotateEffect, transform.position,Quaternion.identity);
+        Destroy(effect, 0.15f);
         isRotating = false;
 
     }

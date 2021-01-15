@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57342689a2c6b434ebc9e345cebcd77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateEffect: {fileID: 137808397599488108, guid: 5d2c85a4c0dccfc4d9145580848e198c, type: 3}
   totalStates: 4
   currentState: 0
   edges: 00000000
