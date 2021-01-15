@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class StatisticPanelManager : MonoBehaviour
 {
     public static StatisticPanelManager instance;
+    public GameObject gameCanvas;
     public GameObject statisticPanel;
-    public bool isActive = false;
+    //public bool isActive = false;
 
     void Awake()
     {
@@ -27,10 +28,10 @@ public class StatisticPanelManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {/*
         if (isActive)
         {
             statisticPanel.SetActive(true);
-        }
+        }*/
     }
 }

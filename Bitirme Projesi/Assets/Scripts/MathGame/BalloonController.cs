@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BaloonController : MonoBehaviour
+public class BalloonController : MonoBehaviour
 {
     [SerializeField]
     public string mathOperator;
@@ -11,7 +11,7 @@ public class BaloonController : MonoBehaviour
     public int firstNum, secondNum;
     public Text operationTxt;
     public float answer = -1111;
-    public static BaloonController instance;
+    public static BalloonController instance;
 
     void Awake()
     {
@@ -36,13 +36,6 @@ public class BaloonController : MonoBehaviour
     {
         transform.position = new Vector2(transform.position.x, transform.position.y + 0.005f);
     }
-    /*
-    private void OnMouseDown()
-    {
-        if (gameObject.CompareTag("Baloon")) {
-            Destroy(gameObject);
-        }
-    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -55,14 +48,25 @@ public class BaloonController : MonoBehaviour
 
     public void createOperation(string mathOperator, int firstNum, int secondNum)
     {
-        string[] operatorArr = {"+","-","/","X" };
+        string[] operatorArr = { "+", "-", "/", "X" };
         mathOperator = operatorArr[Random.Range(0, operatorArr.Length)];
         firstNum = Random.Range(1, 9);
         secondNum = Random.Range(1, 9);
+
+        if (mathOperator == "/")
+            firstNum = checkDivision(mathOperator, firstNum, secondNum);
+
         findAnswer(mathOperator, firstNum, secondNum);
         string firstStr = firstNum.ToString();
         string secondStr = secondNum.ToString();
         operationTxt.text = firstStr + "\n" + mathOperator + "\n" + secondStr;
+    }
+
+    public int checkDivision(string mathOperator, int firstNum, int secondNum)
+    {
+        if (firstNum % secondNum != 0)
+            firstNum = secondNum * Random.Range(1, 9);
+        return firstNum;
     }
 
     public void findAnswer(string mathOperator, int firstNum, int secondNum)
@@ -75,7 +79,7 @@ public class BaloonController : MonoBehaviour
             case "-":
                 answer = firstNum - secondNum;
                 break;
-            case "/":
+            case "/": 
                 answer = firstNum / secondNum;
                 break;
             case "X":

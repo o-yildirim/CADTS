@@ -10,11 +10,13 @@ public class MathGameController : MonoBehaviour
     public int health = 5;
     [SerializeField]
     public InputField answer;
+    public Text scoreTxt;
     bool finished = false;
+    private int score = 0;
 
     void Start()
     {
-        
+        answer.Select();
     }
 
     void Awake()
@@ -32,25 +34,32 @@ public class MathGameController : MonoBehaviour
     void Update()
     {
         checkHealth();
-        if (Input.GetKeyUp(KeyCode.Return)) {
+        if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter)) {
             TapYourSubmitFunction();
         }
+        answer.Select();
+        answer.ActivateInputField();
     }
 
     public void TapYourSubmitFunction()
     {
-        if (answer.text == BaloonController.instance.answer.ToString())
+        if (answer.text == BalloonController.instance.answer.ToString())
         {
-            Destroy(BaloonController.instance.gameObject);
+            score += 10;
+            Destroy(BalloonController.instance.gameObject);
         }
         answer.text = "";
     }
 
     public void checkHealth()
     {
-        if (health <= 0)
+        if (health <= 0) //Sorunlu
         {
-            StatisticPanelManager.instance.isActive = true;
+            //health = 5;
+            StatisticPanelManager.instance.gameCanvas.SetActive(false);
+            //Debug.Log(score);
+            //scoreTxt.text = "Your score: " + score.ToString();
+            StatisticPanelManager.instance.statisticPanel.SetActive(true);
         }
     }  
 }
