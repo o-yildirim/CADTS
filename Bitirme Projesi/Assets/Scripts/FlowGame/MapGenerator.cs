@@ -216,7 +216,7 @@ public class MapGenerator : MonoBehaviour
 
 
 
-        Debug.Log("Input: " + input + " Output: " + desiredOutput + " for " + createdTile.transform.name);
+        //Debug.Log("Input: " + input + " Output: " + desiredOutput + " for " + createdTile.transform.name);
         CreateAdjacentTile(createdTile, desiredOutput, currentRowIndex, currentColumnIndex);
 
     }
@@ -404,7 +404,7 @@ public class MapGenerator : MonoBehaviour
 
 
 
-        Debug.Log("Input: "+input + " Output: " + desiredOutput +  " for " + createdTile.transform.name);
+        //Debug.Log("Input: "+input + " Output: " + desiredOutput +  " for " + createdTile.transform.name);
 
         CreateAdjacentTile(createdTile, desiredOutput, currentRowIndex, currentColumnIndex);
 

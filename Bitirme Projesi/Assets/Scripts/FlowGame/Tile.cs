@@ -121,8 +121,8 @@ public class Tile : MonoBehaviour
         {
             return;
         }
-        Debug.Log(transform.name);
-        ProblemSolvingGameManager.instance.pipesPassedTrough.Add(transform.position);
+        //Debug.Log(transform.name);
+        ProblemSolvingGameManager.instance.pipesPassedTrough.Add(this.gameObject);
 
 
         int outputEdge = 0;
@@ -178,7 +178,7 @@ public class Tile : MonoBehaviour
          }  
          else if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Finish"))
          {
-           ProblemSolvingGameManager.instance.pipesPassedTrough.Add(hit.transform.position);
+           ProblemSolvingGameManager.instance.pipesPassedTrough.Add(hit.transform.gameObject);
            ProblemSolvingGameManager.instance.fullyLinked = true;
          }
         
