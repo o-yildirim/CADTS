@@ -11,70 +11,38 @@ public class Spawner : MonoBehaviour
     private float timeRemaining = 5;
     Rigidbody2D rb;
     float velocity = 0.2f;
-    float spawnDelay = 0.5f;
+    float spawnDelay = 3f;
+    float time=0f, timeLimit=2f;
 
     void Start()
     {
-        StartCoroutine(Spawn());
-        //InvokeRepeating("spawning", 0, rate);
+       
     }
 
     void Update()
-    { 
-        speedUp();
-       /* if (finished())
-            CancelInvoke();*/
-    }
-
-    public bool finished()
     {
-        if (MathGameController.instance.health <= 0)
-            return true;
 
-        else
-            return false;
-    }
-
-    public void speedUp()
-    {
-        if (timeRemaining > 0)
+        if (MathGameController.instance.isFinished)
         {
-            timeRemaining -= Time.deltaTime;
+            return;
         }
 
-        else
-        {
-            Debug.Log("Time has run out!");
-            timeRemaining = 5;
-        }
-    }
-    
-    IEnumerator Spawn()
-    {
-        if (finished())
-            yield break;
-        else
+        time += Time.deltaTime;
+        if (time > timeLimit)
         {
             SpawnBalloon();
-            rate = rate - 0.5f;
-            yield return new WaitForSeconds(spawnDelay);
-            StartCoroutine(Spawn());
-            yield return null;
-        } 
+            time = 0f;
+        }
     }
-    
+
     void SpawnBalloon()
     {
         //Instantiate(balloon, new Vector2(Random.Range(transform.position.x + rangeMax, transform.position.x + rangeMin), transform.position.y), Quaternion.identity);
-        GameObject obj = Instantiate(balloon, new Vector2(Random.Range(gameObject.transform.position.x - rangeMax, gameObject.transform.position.x - rangeMin), gameObject.transform.position.y), Quaternion.identity);
+        GameObject obj = Instantiate(balloon, new Vector2(Random.Range(gameObject.transform.position.x + rangeMax, gameObject.transform.position.x + rangeMin), gameObject.transform.position.y), Quaternion.identity);
         rb = obj.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0f, velocity);
         velocity *= 1.01f;
         spawnDelay *= 0.999f;
-    }
-
-    void spawning()
-    {
-        Instantiate(balloon, new Vector2(Random.Range(transform.position.x + rangeMax, transform.position.x + rangeMin), transform.position.y), Quaternion.identity);
+        MathGameController.instance.balloons.Add(obj.GetComponent<Balloon>());
     }
 }

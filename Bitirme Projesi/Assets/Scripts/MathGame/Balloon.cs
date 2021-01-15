@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BalloonController : MonoBehaviour
+public class Balloon : MonoBehaviour
 {
     [SerializeField]
     public string mathOperator;
@@ -11,20 +11,7 @@ public class BalloonController : MonoBehaviour
     public int firstNum, secondNum;
     public Text operationTxt;
     public float answer = -1111;
-    public static BalloonController instance;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
+    
     void Start()
     {
         operationTxt = GetComponentInChildren<Text>();
@@ -42,6 +29,8 @@ public class BalloonController : MonoBehaviour
         if (collision.gameObject.tag == "Barrier")
         {
             MathGameController.instance.health--;
+            MathGameController.instance.checkHealth();
+            MathGameController.instance.balloons.Remove(this);
             Destroy(gameObject); 
         }
     }

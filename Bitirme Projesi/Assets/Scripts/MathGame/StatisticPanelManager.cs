@@ -28,10 +28,7 @@ public class StatisticPanelManager : MonoBehaviour
     }
 
     void Update()
-    {/*
-        if (isActive)
-        {
-            statisticPanel.SetActive(true);
-        }*/
+    {
+
     }
 }
