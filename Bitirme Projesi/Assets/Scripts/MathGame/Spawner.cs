@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     public int rangeMin=-7, rangeMax=-2;
     Rigidbody2D rb;
-    float velocity = 0.002f;
+    float velocity = 1.0f;
     [SerializeField]
     float time=0f, timeLimit=2f, timeToStart=0f;
 
@@ -43,8 +43,8 @@ public class Spawner : MonoBehaviour
     {
         GameObject obj = Instantiate(balloon, new Vector2(Random.Range(gameObject.transform.position.x + rangeMax, gameObject.transform.position.x + rangeMin), gameObject.transform.position.y), Quaternion.identity);
         rb = obj.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(0f, velocity);
-        velocity *= 1.05f;
+        rb.velocity = new Vector2(0f, velocity * Time.deltaTime);
+        velocity *= 1.01f;
         MathGameController.instance.balloons.Add(obj.GetComponent<Balloon>());
     }
 
