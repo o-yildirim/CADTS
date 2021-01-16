@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5617960988109265487}
   - component: {fileID: 5973229778721499118}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Balloon
   m_TagString: Baloon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

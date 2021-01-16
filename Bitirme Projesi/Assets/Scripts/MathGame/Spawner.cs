@@ -7,42 +7,49 @@ public class Spawner : MonoBehaviour
     public GameObject balloon;
     [SerializeField]
     public int rangeMin=-7, rangeMax=-2;
-    private float rate = 4.0f;
-    private float timeRemaining = 5;
     Rigidbody2D rb;
-    float velocity = 0.2f;
-    float spawnDelay = 3f;
-    float time=0f, timeLimit=2f;
-
-    void Start()
-    {
-       
-    }
+    float velocity = 0.002f;
+    [SerializeField]
+    float time=0f, timeLimit=2f, timeToStart=0f;
 
     void Update()
     {
-
-        if (MathGameController.instance.isFinished)
+        if (timeToStart > 0f)
         {
-            return;
+            timeToStart -= Time.deltaTime;
+            StartCoroutine(Wait());
         }
 
-        time += Time.deltaTime;
-        if (time > timeLimit)
+        else
         {
-            SpawnBalloon();
-            time = 0f;
+            if (MathGameController.instance.isFinished)
+            {
+                return;
+            }
+
+            time += Time.deltaTime;
+            if (time > timeLimit)
+            {
+                SpawnBalloon();
+                time = 0f;
+                timeLimit -= 0.01f;
+            }
         }
+
+        
     }
 
     void SpawnBalloon()
     {
-        //Instantiate(balloon, new Vector2(Random.Range(transform.position.x + rangeMax, transform.position.x + rangeMin), transform.position.y), Quaternion.identity);
         GameObject obj = Instantiate(balloon, new Vector2(Random.Range(gameObject.transform.position.x + rangeMax, gameObject.transform.position.x + rangeMin), gameObject.transform.position.y), Quaternion.identity);
         rb = obj.GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(0f, velocity);
-        velocity *= 1.01f;
-        spawnDelay *= 0.999f;
+        velocity *= 1.05f;
         MathGameController.instance.balloons.Add(obj.GetComponent<Balloon>());
+    }
+
+    public IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(timeToStart);
     }
 }

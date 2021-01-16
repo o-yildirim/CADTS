@@ -36,13 +36,13 @@ public class MathGameController : MonoBehaviour
     {
         
         if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter)) {
-            TapYourSubmitFunction();
+            submitButton();
         }
         answer.Select();
         answer.ActivateInputField();
     }
 
-    public void TapYourSubmitFunction()
+    public void submitButton()
     {
         for (int i=0; i<balloons.Count; i++)
         {
@@ -64,7 +64,7 @@ public class MathGameController : MonoBehaviour
         if (health <= 0) 
         {
             isFinished = true;
-            stopBalloons();
+            destroyBalloons();
             StatisticPanelManager.instance.gameCanvas.SetActive(false);
             Debug.Log(score);
             scoreTxt.text += score.ToString();
@@ -72,7 +72,7 @@ public class MathGameController : MonoBehaviour
         }
     }
 
-    public void stopBalloons()
+    public void destroyBalloons()
     {
         for (int i = 0; i < balloons.Count; i++)
         {

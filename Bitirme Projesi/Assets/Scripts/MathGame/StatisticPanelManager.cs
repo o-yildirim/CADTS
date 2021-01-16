@@ -8,8 +8,7 @@ public class StatisticPanelManager : MonoBehaviour
     public static StatisticPanelManager instance;
     public GameObject gameCanvas;
     public GameObject statisticPanel;
-    //public bool isActive = false;
-
+    
     void Awake()
     {
         if (instance == null)
@@ -20,15 +19,5 @@ public class StatisticPanelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-
     }
 }

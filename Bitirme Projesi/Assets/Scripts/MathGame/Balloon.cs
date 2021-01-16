@@ -11,17 +11,18 @@ public class Balloon : MonoBehaviour
     public int firstNum, secondNum;
     public Text operationTxt;
     public float answer = -1111;
-    
+    public float velocity;
     void Start()
     {
+        velocity = GetComponent<Rigidbody2D>().velocity.y;
         operationTxt = GetComponentInChildren<Text>();
         createOperation(mathOperator, firstNum, secondNum);
-        Destroy(gameObject, 8f);
+        Destroy(gameObject, 30f);
     }
 
     void Update()
     {
-        transform.position = new Vector2(transform.position.x, transform.position.y + 0.005f);
+        transform.position = new Vector2(transform.position.x, transform.position.y + velocity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
