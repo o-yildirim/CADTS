@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProblemSolvingGameManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public Valve valveScript;
 
     public List<GameObject> pipesPassedTrough;
+
+    public GameObject gameOverCanvas;
 
 
 
@@ -34,6 +37,9 @@ public class ProblemSolvingGameManager : MonoBehaviour
         waterManagerScript = GetComponent<FlowingWaterManager>();
         valveScript = valve.GetComponentInChildren<Valve>();
         mapGenerator = GetComponent<MapGenerator>();
+
+        //gameOverCanvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
+        gameOverCanvas.GetComponentInChildren<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
     }
 
     public void startCheckingSequence()
@@ -50,27 +56,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
                 hitTileScript.checkTransmission(0);
             }
         }
-
-        /* if (fullyLinked)
-         {
-             Debug.Log("GAME FINISHED");
-
-             Coroutine valveRotating = StartCoroutine(valveScript.Rotate(2f));        
-             StartCoroutine(waterManagerScript.drawWaterSlow(pipesPassedTrough,valveRotating));
-         }
-         else
-         {
-             Debug.Log("WRONG!");
-             pipesPassedTrough.Clear();
-             inputUnavailable = false;
-             //pipesPassedTrough.Add(sink.transform.position);
-         }*/
-
-        //Coroutine valveRotating = StartCoroutine(valveScript.Rotate(2f));
-        //StartCoroutine(waterManagerScript.drawWaterSlow(pipesPassedTrough, valveRotating));
         StartCoroutine(initiateWater());
-        //pipesPassedTrough.Clear();
-        //pipesPassedTrough.Add(sink.transform.position);
+       
     }
     public IEnumerator initiateWater()
     {
@@ -85,7 +72,14 @@ public class ProblemSolvingGameManager : MonoBehaviour
         }
         else
         {
-            //ISTATISTIK GOSTER
+            finishGame();
         }
+
+    }
+    public void finishGame()
+    {
+        inputUnavailable = true;
+        //BURADA ISTATISTIK MANAGERDEN FALAN METOD CAGIRILIR
+        gameOverCanvas.SetActive(true);
     }
 }

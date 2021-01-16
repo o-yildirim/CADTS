@@ -59,14 +59,14 @@ public class FlowingWaterManager : MonoBehaviour
                     }
                 }
 
-                Debug.Log("Input: " + input + "  Output: " + output);
+               // Debug.Log("Input: " + input + "  Output: " + output);
 
                 float xOffset = 0f;
                 float yOffset = 0f;
                 float xLength = lastPipe.GetComponent<BoxCollider>().size.x;
                 float yLength = lastPipe.GetComponent<BoxCollider>().size.y;
 
-                Debug.Log("xLength: " + xLength + "  yLength: " + yLength);
+              //  Debug.Log("xLength: " + xLength + "  yLength: " + yLength);
        
 
                 if (output == 0)

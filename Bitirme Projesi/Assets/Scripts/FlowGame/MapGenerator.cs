@@ -7,8 +7,6 @@ public class MapGenerator : MonoBehaviour
     public GameObject[] pipes;
     public Transform firstSpawnPoint;
 
-    //private int Lpercentage = 70;
-    //private int Ipercentage = 30;
     private int maxI;
     private int maxL;
     private int ICounter = 0;
@@ -51,7 +49,7 @@ public class MapGenerator : MonoBehaviour
         GenerateSolution();
         MixSolution();
         GenerateMap();
-        //RepositionCamera();
+        RepositionCamera();
     }
 
     public void GenerateMap()
@@ -436,20 +434,19 @@ public class MapGenerator : MonoBehaviour
 
     public void RepositionCamera()
     {
-        
-        float xLength = (columns * tileLengthX)/2f;
-        float yLength = ((rows * tileLengthY) + finishOffsetY + sinkOffsetY)/2f;
+
+        /*float xLength = (columns * tileLengthX);
+        float yLength = (rows * tileLengthY) + finishOffsetY - sinkOffsetY;
 
         float sum = Mathf.Pow(xLength, 2) + Mathf.Pow(yLength, 2);       
-        float newCamSize = Mathf.Sqrt(sum);
+        float newCamSize = Mathf.Sqrt(sum)/2f;
 
-        Camera.main.orthographicSize = newCamSize/2f;
-        //Camera.main.orthographicSize = rows;
+        Camera.main.orthographicSize = newCamSize;
+        */
 
 
         Vector3 newCamPos = map[rows / 2, columns / 2].transform.position;
         newCamPos.z = Camera.main.transform.position.z;
-
         Camera.main.transform.position = newCamPos;
         
        
