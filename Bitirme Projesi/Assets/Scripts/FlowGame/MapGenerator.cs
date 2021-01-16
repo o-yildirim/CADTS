@@ -41,15 +41,6 @@ public class MapGenerator : MonoBehaviour
         maxI = (rows * columns) / 6;
         maxL = (rows * columns) - maxI;
 
-
-        PositionSink();
-        PositionFinish();
-        PositionValve();
-        CreateCorners();
-        GenerateSolution();
-        MixSolution();
-        GenerateMap();
-        RepositionCamera();
     }
 
     public void GenerateMap()
@@ -444,6 +435,7 @@ public class MapGenerator : MonoBehaviour
         Camera.main.orthographicSize = newCamSize;
         */
 
+        Camera.main.orthographicSize = 5.1f;
 
         Vector3 newCamPos = map[rows / 2, columns / 2].transform.position;
         newCamPos.z = Camera.main.transform.position.z;
