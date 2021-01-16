@@ -144,7 +144,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         yield return isWaterDrawn;
         fullyLinked = false;
 
-        tutorialText.text = "\tHarika!\nOyuna başlamak için herhangi bir tuşa basın.";
+        tutorialText.text = "\t\t\tHarika!\nOyuna başlamak için herhangi bir tuşa basın.";
         while (!Input.anyKeyDown)
         {
             yield return null;
@@ -173,6 +173,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         tutorialCanvas.SetActive(false);
         inputUnavailable = false;
         inTutorial = false;
+        fullyLinked = false;
         
         StartGame();
     }
