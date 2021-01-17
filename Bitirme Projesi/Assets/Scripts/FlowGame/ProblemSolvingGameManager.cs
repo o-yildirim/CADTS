@@ -88,8 +88,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
             }
             else
             {
-                pipesPassedTrough.Clear();
-                waterManagerScript.ResetElements();
+               // pipesPassedTrough.Clear();
+               // waterManagerScript.ResetElements();
                 inputUnavailable = false;
             }
             
