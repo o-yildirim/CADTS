@@ -95,11 +95,9 @@ public class AuthenticationManager : MonoBehaviour
 
         string parsedDob = date.ToString("yyyy-M-dd");
 
-     
+        string hashedPwd = GetMD5HashString(registerPassword.text);
 
-
-
-        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, registerPassword.text);
+        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, hashedPwd);
         string email = encode(registerEmail.text); 
         DatabaseHandler.registerUser(registeredUser, email, user => { });
 
@@ -112,19 +110,18 @@ public class AuthenticationManager : MonoBehaviour
             status.text = "E-mail veya şifre boş olamaz.";
             return;
         }
-
-        string emailEncoded = encode(email.text); 
+      
+        string emailEncoded = encode(email.text);
+        string hashedPwd = GetMD5HashString(password.text);
         DatabaseHandler.GetUser(emailEncoded, user =>
         {
-           // Debug.Log($"Your e-mail is {user.email} and password is {user.password}");
-
-            if (user.password.Equals(password.text))
+            if (user.password.Equals(hashedPwd))
             {
                 User loggedInUser = new User(user.name, user.surname, user.dob, user.email, user.password);
                 DatabaseHandler.loggedInUser = loggedInUser;
                 SceneManagement.instance.loadMainMenu();
             }
-            else if (user.password.Equals(password.text))
+            else if (!user.password.Equals(hashedPwd))
             {
                 status.text = "Şifre yanlış.";
             }
@@ -148,53 +145,66 @@ public class AuthenticationManager : MonoBehaviour
         status.text = sentence;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /* public void getAllUsers()
+    public static string GetMD5HashString(string unhashed)
     {
-
-        DatabaseHandler.GetUser(registerEmail.text, user =>
+        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(unhashed);
+        System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+        byte[] hash = md5.ComputeHash(inputBytes);
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        for (int i = 0; i < hash.Length; i++)
         {
-            Debug.Log($"{user.name}'s mail is {user.email} and password is {user.password}");
-        });
-
-        DatabaseHandler.GetUsers(users =>
-        {
-            foreach (var user in users)
-            {
-                Debug.Log($"{user.Value.name} {user.Value.email} {user.Value.password}");
-            }
-        });
-    });
+            sb.Append(hash[i].ToString("x2"));
+        }
+        return sb.ToString();
     }
-    */
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* public void getAllUsers()
+     {
+
+         DatabaseHandler.GetUser(registerEmail.text, user =>
+         {
+             Debug.Log($"{user.name}'s mail is {user.email} and password is {user.password}");
+         });
+
+         DatabaseHandler.GetUsers(users =>
+         {
+             foreach (var user in users)
+             {
+                 Debug.Log($"{user.Value.name} {user.Value.email} {user.Value.password}");
+             }
+         });
+     });
+     }
+     */
+
 }
