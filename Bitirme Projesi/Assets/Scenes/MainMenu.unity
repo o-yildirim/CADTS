@@ -3277,7 +3277,6 @@ GameObject:
   - component: {fileID: 901030693}
   - component: {fileID: 901030695}
   - component: {fileID: 901030694}
-  - component: {fileID: 901030696}
   m_Layer: 5
   m_Name: StatisticsPanel
   m_TagString: Untagged
@@ -3352,30 +3351,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901030692}
   m_CullTransparentMesh: 0
---- !u!114 &901030696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 901030692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d82d18e7e010984a94d1460de2061b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelToDisplay: {fileID: 715143577}
-  legend: {fileID: 1957931034}
-  titleText: {fileID: 1015115745}
-  percentageAmongUsers: {fileID: 1495314527}
-  lastPerformancePercentageAmongUsers: {fileID: 1103299361}
-  ownPerformanceText: {fileID: 192310158}
-  loadingText: {fileID: 877617705}
-  increaseTick: 0.2
-  overallToOverallPie: {fileID: 1810588216}
-  pieOverallToOverall: {fileID: 743789480}
-  lastToOverallPie: {fileID: 769704590}
-  pieLastToOverall: {fileID: 1021086469}
 --- !u!1 &1001071585
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,6 +5358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1461036866}
   - component: {fileID: 1461036865}
+  - component: {fileID: 1461036867}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -5456,6 +5432,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1461036867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461036864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d82d18e7e010984a94d1460de2061b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelToDisplay: {fileID: 715143577}
+  legend: {fileID: 1957931034}
+  titleText: {fileID: 1015115745}
+  percentageAmongUsers: {fileID: 1495314527}
+  lastPerformancePercentageAmongUsers: {fileID: 1103299361}
+  ownPerformanceText: {fileID: 192310158}
+  loadingText: {fileID: 877617705}
+  increaseTick: 0.2
+  overallToOverallPie: {fileID: 1810588216}
+  pieOverallToOverall: {fileID: 743789480}
+  lastToOverallPie: {fileID: 769704590}
+  pieLastToOverall: {fileID: 1021086469}
 --- !u!1 &1495314525
 GameObject:
   m_ObjectHideFlags: 0

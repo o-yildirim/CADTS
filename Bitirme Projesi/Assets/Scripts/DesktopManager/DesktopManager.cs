@@ -49,14 +49,25 @@ public class DesktopManager : MonoBehaviour
         ResetButtonColors(gameCategoryButtons);
         ResetPanels(gameCategoryPanels);
 
-       
+
 
         ActivatePanel(desktopButtons[0], desktopPanels[0]);
 
         int startingWindow = 0;
         ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow]);
 
+        ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow]);
+        ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null);
+
+        Debug.Log("Calling invoke");
+
+       
+        displayStatisticMiniGameButtons[startingWindow].onClick.Invoke();
+        
+        //StaisticsPanelManager.instance.DisplayForMinigame(displayStatisticMiniGameButtons[startingWindow].GetComponent<Minigame>());
+
         openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
+
     }
 
     public void ResetButtonColors(Button[] buttons)
@@ -198,7 +209,7 @@ public class DesktopManager : MonoBehaviour
         {
             Minigame minigameScript = displayStatisticMiniGameButtons[i].GetComponent<Minigame>();
             displayStatisticMiniGameButtons[i].onClick.AddListener(() => { StaisticsPanelManager.instance.DisplayForMinigame(minigameScript); });
-            //Debug.Log("Added listener to: " + minigameButtons[i].name + "with scene index:" + indexOfThisMinigame);
+            Debug.Log("Added listener to: " + displayStatisticMiniGameButtons[i].name);
         }
      
         for(int i = 0; i < minigameButtons.Length; i++)
@@ -206,7 +217,7 @@ public class DesktopManager : MonoBehaviour
             Minigame minigameScript = minigameButtons[i].GetComponent<Minigame>();
             int indexOfThisMinigame = minigameScript.sceneIndex;
             minigameButtons[i].onClick.AddListener(() => { SceneManagement.instance.loadSceneCall(indexOfThisMinigame); });
-            Debug.Log("Added listener to: " + minigameButtons[i].name + "with scene index:" + indexOfThisMinigame);
+            //Debug.Log("Added listener to: " + minigameButtons[i].name + "with scene index:" + indexOfThisMinigame);
         }
 
     }
