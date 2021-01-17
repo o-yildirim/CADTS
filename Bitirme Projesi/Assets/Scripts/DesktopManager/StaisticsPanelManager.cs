@@ -7,12 +7,16 @@ using System.Collections;
 
 public class StaisticsPanelManager : MonoBehaviour
 {
+
+    public static StaisticsPanelManager instance;
+
     public GameObject panelToDisplay;
     public GameObject legend;
 
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
 
+    public Text titleText;
     public Text percentageAmongUsers;
     public Text lastPerformancePercentageAmongUsers;
     public Text ownPerformanceText;
@@ -53,7 +57,19 @@ public class StaisticsPanelManager : MonoBehaviour
     public int[,] ageGaps = new int[,] { { 0, 14 }, { 15, 24 }, { 25, 64 }, { 65, 150 } };
 
 
-    private void OnEnable()
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            Destroy(this);
+        }
+    }
+
+    /*private void OnEnable()
     {
 
         string email = DatabaseHandler.loggedInUser.email;
@@ -64,7 +80,7 @@ public class StaisticsPanelManager : MonoBehaviour
         StartCoroutine(initDatabaseValues(email, category, game));
 
 
-    }
+    }*/
 
 
 
@@ -307,6 +323,9 @@ public class StaisticsPanelManager : MonoBehaviour
         {
             yield return null;
         }
+
+        
+
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
 
@@ -381,6 +400,18 @@ public class StaisticsPanelManager : MonoBehaviour
     }
    
 
+    public void DisplayForMinigame(Minigame gameToDisplay)
+    {
+        string email = DatabaseHandler.loggedInUser.email;
+        email = email.Replace(".", ",");
+        string category = gameToDisplay.minigameCategory;
+        string game = gameToDisplay.minigameName;
+
+        titleText.text = game;
+
+        StartCoroutine(initDatabaseValues(email, category, game));
+
+    }
    
 }
 
