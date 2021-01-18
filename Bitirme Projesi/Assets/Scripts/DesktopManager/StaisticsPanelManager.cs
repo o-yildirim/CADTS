@@ -53,6 +53,8 @@ public class StaisticsPanelManager : MonoBehaviour
     private float successPercentageOverallToOverall;
     private float succesPercentageLastToOverall;
 
+    public bool operatingForDisplay = false;
+
 
     public int[,] ageGaps = new int[,] { { 0, 14 }, { 15, 24 }, { 25, 64 }, { 65, 150 } };
 
@@ -96,6 +98,7 @@ public class StaisticsPanelManager : MonoBehaviour
                 percentageAmongUsers.text = "Bu oyuna ait yaş aralığınıza (" + ageGapLower + "-" + ageGapUpper + ") ait hiç bir istatistik bulunmamaktadır.";
                 globalInitialized = true;
                 doNotTouchGlobalText = true;
+                operatingForDisplay = false;
                 return;
             }
 
@@ -200,6 +203,7 @@ public class StaisticsPanelManager : MonoBehaviour
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
                 userStatsInitialized = true;
                 doNotTouchOwnText = true;
+                operatingForDisplay = false;
                 return;
             }
             else if (statistics.Count == 1)
@@ -232,9 +236,10 @@ public class StaisticsPanelManager : MonoBehaviour
 
             lastPerformance = statistics.Values.Last().minigameScore;
             //Debug.Log("Last performance " + lastPerformance);
-            
-            InformUserComparedToHisOwn();
+
             userStatsInitialized = true;
+            InformUserComparedToHisOwn();
+            
 
         }
       );
@@ -302,6 +307,9 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public IEnumerator initDatabaseValues(string email, string category, string game)
     {
+        //if(operatingForDisplay) yield break;
+
+        operatingForDisplay = true;
 
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
@@ -329,6 +337,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
+        operatingForDisplay = false;
 
        // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
       //  StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
@@ -404,6 +413,10 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public void DisplayForMinigame(Minigame gameToDisplay)
     {
+        Debug.Log(operatingForDisplay);
+
+        if (operatingForDisplay) return;
+
         string email = DatabaseHandler.loggedInUser.email;
         email = email.Replace(".", ",");
         string category = gameToDisplay.minigameCategory;

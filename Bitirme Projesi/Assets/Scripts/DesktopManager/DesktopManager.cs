@@ -180,11 +180,10 @@ public class DesktopManager : MonoBehaviour
 
 
 
-                StopAllCoroutines();
-
                 Button firstMinigameButtonInCategory = panelToOpen.GetComponentInChildren<Button>();
-                firstMinigameButtonInCategory.onClick.Invoke();
                 firstMinigameButtonInCategory.GetComponent<Image>().color = selectedButtonColor;
+                firstMinigameButtonInCategory.onClick.Invoke();
+                
 
 
 
@@ -215,7 +214,7 @@ public class DesktopManager : MonoBehaviour
         {
             Minigame minigameScript = displayStatisticMiniGameButtons[i].GetComponent<Minigame>();
             displayStatisticMiniGameButtons[i].onClick.AddListener(() => { StaisticsPanelManager.instance.DisplayForMinigame(minigameScript); });
-            Debug.Log("Added listener to: " + displayStatisticMiniGameButtons[i].name);
+            //Debug.Log("Added listener to: " + displayStatisticMiniGameButtons[i].name);
         }
      
         for(int i = 0; i < minigameButtons.Length; i++)
