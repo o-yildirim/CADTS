@@ -144,6 +144,8 @@ public class DesktopManager : MonoBehaviour
 
 
             }
+
+            StopAllCoroutines();
         }
      
     }
@@ -175,6 +177,10 @@ public class DesktopManager : MonoBehaviour
                     ResetPanels(minigameSelectPanels);
                 }
                 ActivatePanel(clickedPanelButton, panelToOpen);
+
+
+
+                StopAllCoroutines();
 
                 Button firstMinigameButtonInCategory = panelToOpen.GetComponentInChildren<Button>();
                 firstMinigameButtonInCategory.onClick.Invoke();

@@ -302,10 +302,12 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public IEnumerator initDatabaseValues(string email, string category, string game)
     {
+
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
-        statisticsToAnalyze.Clear();
-        clearValues();
+
+        //statisticsToAnalyze.Clear();
+        //clearValues();
 
         InitializeUserAverageAndLastPerformance(email, category, game);
         while (!userStatsInitialized)
@@ -339,6 +341,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public void clearValues()
     {
+
         resetPies();
         deactivatePies();
 
@@ -406,8 +409,11 @@ public class StaisticsPanelManager : MonoBehaviour
         email = email.Replace(".", ",");
         string category = gameToDisplay.minigameCategory;
         string game = gameToDisplay.minigameName;
-
         titleText.text = game;
+
+        StopAllCoroutines();
+        statisticsToAnalyze.Clear();
+        clearValues();
 
         StartCoroutine(initDatabaseValues(email, category, game));
 
