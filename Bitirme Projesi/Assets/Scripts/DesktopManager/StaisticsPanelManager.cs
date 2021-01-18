@@ -421,7 +421,7 @@ public class StaisticsPanelManager : MonoBehaviour
         email = email.Replace(".", ",");
         string category = gameToDisplay.minigameCategory;
         string game = gameToDisplay.minigameName;
-        titleText.text = game;
+        titleText.text = gameToDisplay.displayName;
 
         StopAllCoroutines();
         //statisticsToAnalyze.Clear();
