@@ -305,9 +305,8 @@ public class StaisticsPanelManager : MonoBehaviour
 
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
-
-        //statisticsToAnalyze.Clear();
-        //clearValues();
+        statisticsToAnalyze.Clear();
+        clearValues();
 
         InitializeUserAverageAndLastPerformance(email, category, game);
         while (!userStatsInitialized)
@@ -412,8 +411,8 @@ public class StaisticsPanelManager : MonoBehaviour
         titleText.text = game;
 
         StopAllCoroutines();
-        statisticsToAnalyze.Clear();
-        clearValues();
+        //statisticsToAnalyze.Clear();
+        //clearValues();
 
         StartCoroutine(initDatabaseValues(email, category, game));
 
