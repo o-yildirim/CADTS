@@ -7,7 +7,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
 {
     public bool fullyLinked = false;
     public bool inputUnavailable = false;
-
+   
 
     public GameObject sink;
     public GameObject finish;
@@ -168,8 +168,16 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     public void SkipTutorial()
     {
-        StopCoroutine(Tutorial());
-        tutorialMap.SetActive(false);
+        //StopCoroutine(Tutorial());
+        StopAllCoroutines();
+        waterManagerScript.StopAllCoroutines();
+        valveScript.StopAllCoroutines();
+
+        pipesPassedTrough.Clear();
+        waterManagerScript.ResetElements();
+
+        //tutorialMap.SetActive(false);
+        Destroy(tutorialMap);
         tutorialCanvas.SetActive(false);
         inputUnavailable = false;
         inTutorial = false;
