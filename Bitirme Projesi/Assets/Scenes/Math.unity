@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38835135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.39, z: 0}
+  m_LocalPosition: {x: 0, y: -7.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdc889e3329c2549b6c3f9ffbfc1b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balloon: {fileID: 5563909670589320836, guid: 4ae52a4d8b5f1634784c548150b39707, type: 3}
+  balloon: {fileID: 4572215368048748625, guid: 472cf1662ec0f044898bda8cb10d151c, type: 3}
   rangeMin: -7
   rangeMax: -2
   time: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balloons: []
-  health: 5
+  health: 100
   answer: {fileID: 763195674}
   scoreTxt: {fileID: 941510743}
   isFinished: 0
@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdc889e3329c2549b6c3f9ffbfc1b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balloon: {fileID: 5563909670589320836, guid: 4ae52a4d8b5f1634784c548150b39707, type: 3}
+  balloon: {fileID: 4572215368048748625, guid: 472cf1662ec0f044898bda8cb10d151c, type: 3}
   rangeMin: 7
   rangeMax: 2
   time: 0
@@ -1266,7 +1266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330656946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: -6.39, z: 0}
+  m_LocalPosition: {x: 0.04, y: -7.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
