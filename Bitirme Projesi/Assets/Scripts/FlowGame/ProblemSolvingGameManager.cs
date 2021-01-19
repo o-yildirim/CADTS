@@ -152,7 +152,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         
         inTutorial = false;       
-        tutorialMap.SetActive(false);
+        //tutorialMap.SetActive(false);
+        Destroy(tutorialMap);
         tutorialCanvas.SetActive(false);
 
 
