@@ -7,6 +7,8 @@ TagManager:
   - UtilityManager
   - CategoryButton
   - StatisticButton
+  - Baloon
+  - Barrier
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Tile
   - Sink
   - Finish
-  - 
+  - Background
   - 
   - 
   - 
@@ -41,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4119533103
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
