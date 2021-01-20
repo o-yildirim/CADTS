@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MathGameController : MonoBehaviour
 {
     public static MathGameController instance;
+    public GameObject exp;
     public List<Balloon> balloons;
     [SerializeField]
     public int health = 5;
@@ -51,6 +52,7 @@ public class MathGameController : MonoBehaviour
                 score += 10;
                 GameObject balloonToRemove = balloons[i].gameObject;
                 balloons.Remove(balloons[i]);
+                Instantiate(exp, new Vector2(balloonToRemove.transform.position.x, balloonToRemove.transform.position.y+1), Quaternion.identity);
                 Destroy(balloonToRemove);
                 Debug.Log(score);
             }

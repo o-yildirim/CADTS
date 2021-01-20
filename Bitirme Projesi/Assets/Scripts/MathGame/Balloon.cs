@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class Balloon : MonoBehaviour
 {
-    [SerializeField]
+    public GameObject exp;
     public string mathOperator;
-    [SerializeField]
     public int firstNum, secondNum;
     public Text operationTxt;
     public float answer = -1111;
@@ -32,6 +31,7 @@ public class Balloon : MonoBehaviour
             MathGameController.instance.health--;
             MathGameController.instance.checkHealth();
             MathGameController.instance.balloons.Remove(this);
+            Instantiate(exp, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y+1), Quaternion.identity);
             Destroy(gameObject); 
         }
     }

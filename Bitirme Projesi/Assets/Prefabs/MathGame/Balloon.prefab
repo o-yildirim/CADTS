@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9858dcc40a80064a8e485f718e9f348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exp: {fileID: 6558674779456477366, guid: d277934ff1501484e833656baa14b590, type: 3}
   mathOperator: 
   firstNum: 0
   secondNum: 0
