@@ -1781,5 +1781,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particle System
       objectReference: {fileID: 0}
+    - target: {fileID: 6558674779456477366, guid: d277934ff1501484e833656baa14b590, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d277934ff1501484e833656baa14b590, type: 3}
