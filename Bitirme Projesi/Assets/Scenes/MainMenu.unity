@@ -1549,7 +1549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6106438439140236357, guid: 228df847d0571114fb3cef30d561cfc1, type: 3}
       propertyPath: displayName
-      value: "Ak\u0131yor Ma\u015Fallah"
+      value: "Su hayatt\u0131r hayat g\xFCzel"
       objectReference: {fileID: 0}
     - target: {fileID: 6275595817622673260, guid: 228df847d0571114fb3cef30d561cfc1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4281,11 +4281,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: minigameName
-      value: Problem Solving Game
+      value: FlowGame
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: minigameCategory
-      value: Problem Solving
+      value: ProblemSolving
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: sceneIndex
@@ -4293,7 +4293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: displayName
-      value: "Ak\u0131yor Ma\u015Fallah"
+      value: "Su hayatt\u0131r hayat g\xFCzel"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}

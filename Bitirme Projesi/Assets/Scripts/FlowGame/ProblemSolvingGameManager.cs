@@ -7,7 +7,6 @@ public class ProblemSolvingGameManager : MonoBehaviour
 {
     public bool fullyLinked = false;
     public bool inputUnavailable = false;
-   
 
     public GameObject sink;
     public GameObject finish;
@@ -19,9 +18,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     public List<GameObject> pipesPassedTrough;
 
-    public GameObject gameOverCanvas;
-
-    private bool inTutorial = false;
+    public bool inTutorial = false;
     public GameObject tutorialMap;
     public GameObject tutorialCanvas;
     public Text tutorialText;
@@ -45,7 +42,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         mapGenerator = GetComponent<MapGenerator>();
 
         //gameOverCanvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
-        gameOverCanvas.GetComponentInChildren<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
+      
         StartCoroutine(Tutorial());
     }
 
@@ -77,7 +74,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
         if (!fullyLinked)
         {
             pipesPassedTrough.Clear();
-            waterManagerScript.ResetElements(); 
+            waterManagerScript.ResetElements();
+            FlowStatisticManager.instance.IncrementWrongAttempt();
             inputUnavailable = false;
         }
         else
@@ -99,8 +97,12 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public void FinishGame()
     {
         inputUnavailable = true;
-        //BURADA ISTATISTIK MANAGERDEN FALAN METOD CAGIRILIR
-        gameOverCanvas.SetActive(true);
+        FlowStatisticManager.instance.timerOn = false;
+
+        FlowStatisticManager.instance.EvaluateValues();
+        FlowStatisticManager.instance.DisplayStatisticPanel();
+        FlowStatisticManager.instance.InsertToDatabase();
+      
     }
 
     public void StartGame()
@@ -113,6 +115,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
         mapGenerator.MixSolution();
         mapGenerator.GenerateMap();
         mapGenerator.RepositionCamera();
+        inputUnavailable = false;
+        FlowStatisticManager.instance.timerOn = true;
     }
 
     public IEnumerator Tutorial()
@@ -159,8 +163,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
-        
-     
+
+        FlowStatisticManager.instance.tilesRotationCounts.Clear();
 
         StartGame();
         
@@ -176,6 +180,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
+        FlowStatisticManager.instance.tilesRotationCounts.Clear();
 
         //tutorialMap.SetActive(false);
         Destroy(tutorialMap);

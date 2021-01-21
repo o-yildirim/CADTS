@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 155414577}
   - component: {fileID: 155414578}
   - component: {fileID: 155414579}
+  - component: {fileID: 155414580}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -256,7 +257,7 @@ MonoBehaviour:
   mapGenerator: {fileID: 0}
   valveScript: {fileID: 0}
   pipesPassedTrough: []
-  gameOverCanvas: {fileID: 1392492622}
+  inTutorial: 0
   tutorialMap: {fileID: 311460188}
   tutorialCanvas: {fileID: 1986084737}
   tutorialText: {fileID: 363543135}
@@ -302,6 +303,33 @@ MonoBehaviour:
   sinkOffsetY: 2.5
   valveOffsetX: 1.5
   valveOffsetY: 1.8
+--- !u!114 &155414580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155414574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b89d0658d4c1a48be7baede1c4f663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 0
+  cycles: 0
+  wrongAttempts: 0
+  pathCostByPipes: 0
+  score: 0
+  timeMultiplier: 2500
+  cycleMultiplier: 5
+  wrongAttemptMultiplier: 15
+  pathCostByPipesMultiplier: 1
+  statisticCanvas: {fileID: 1392492622}
+  cycleText: {fileID: 1852214552}
+  pathCostText: {fileID: 994246342}
+  scoreText: {fileID: 289008715}
+  wrongAttemptsText: {fileID: 785743395}
+  timerOn: 0
 --- !u!1 &289008713
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +342,7 @@ GameObject:
   - component: {fileID: 289008716}
   - component: {fileID: 289008715}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -334,10 +362,10 @@ RectTransform:
   m_Father: {fileID: 612638920}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.37726516, y: 0.31300002}
-  m_AnchorMax: {x: 0.6215248, y: 0.39800003}
-  m_AnchoredPosition: {x: 0, y: -0.8999939}
-  m_SizeDelta: {x: -61, y: -12}
+  m_AnchorMin: {x: 0.40948302, y: 0.19829102}
+  m_AnchorMax: {x: 0.5872934, y: 0.284291}
+  m_AnchoredPosition: {x: -0.80550003, y: -0.5}
+  m_SizeDelta: {x: -28, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &289008715
 MonoBehaviour:
@@ -449,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.63000005, y: 0.47633937}
   m_AnchorMax: {x: 0.9296055, y: 0.68987244}
-  m_AnchoredPosition: {x: -0.30000305, y: 0.65999985}
+  m_AnchoredPosition: {x: -0.2999878, y: 0.66000366}
   m_SizeDelta: {x: 2.2434235, y: -2.3113556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363543135
@@ -5538,13 +5566,14 @@ RectTransform:
   - {fileID: 1852214551}
   - {fileID: 785743394}
   - {fileID: 289008714}
+  - {fileID: 994246341}
   m_Father: {fileID: 1392492626}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 500.32843, y: 378}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &612638921
 MonoBehaviour:
@@ -5559,10 +5588,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3207547, g: 0.23451406, b: 0.23451406, a: 0.392}
+  m_Color: {r: 0.3207547, g: 0.23451406, b: 0.23451406, a: 0.87058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5737,7 +5766,7 @@ GameObject:
   - component: {fileID: 785743396}
   - component: {fileID: 785743395}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: WrongAttemptsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5757,10 +5786,10 @@ RectTransform:
   m_Father: {fileID: 612638920}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.37726516, y: 0.5062631}
-  m_AnchorMax: {x: 0.6215248, y: 0.591}
-  m_AnchoredPosition: {x: 0.57507324, y: 0.19999695}
-  m_SizeDelta: {x: -61, y: -12}
+  m_AnchorMin: {x: 0.41547906, y: 0.394291}
+  m_AnchorMax: {x: 0.59328943, y: 0.46564552}
+  m_AnchoredPosition: {x: 0.07500076, y: 1.0999985}
+  m_SizeDelta: {x: -28, y: -7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &785743395
 MonoBehaviour:
@@ -5795,7 +5824,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "S\xFCre:"
+  m_Text: "Yanl\u0131\u015F deneme"
 --- !u!222 &785743396
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5866,6 +5895,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4323424995917017307, guid: 7ba7ce44738e306418704e63ba2a022a, type: 3}
   m_PrefabInstance: {fileID: 910033948}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &994246340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 994246341}
+  - component: {fileID: 994246343}
+  - component: {fileID: 994246342}
+  m_Layer: 5
+  m_Name: PathCostText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &994246341
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994246340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 612638920}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.40948302, y: 0.5936455}
+  m_AnchorMax: {x: 0.59328943, y: 0.67213136}
+  m_AnchoredPosition: {x: -0.42498016, y: -0.000011444092}
+  m_SizeDelta: {x: -27, y: -9}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &994246342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994246340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "Yolun uzunlu\u011Fu"
+--- !u!222 &994246343
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994246340}
+  m_CullTransparentMesh: 0
 --- !u!1001 &1224944616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6081,7 +6189,7 @@ GameObject:
   - component: {fileID: 1392492624}
   - component: {fileID: 1392492623}
   m_Layer: 5
-  m_Name: GameOverCanvas
+  m_Name: StatisticCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6316,7 +6424,7 @@ Camera:
   far clip plane: 1000
   field of view: 33.98431
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 3.6240425
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6340,7 +6448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664694904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: -10}
+  m_LocalPosition: {x: -4, y: 0.75, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6388,7 +6496,7 @@ GameObject:
   - component: {fileID: 1852214553}
   - component: {fileID: 1852214552}
   m_Layer: 5
-  m_Name: Text
+  m_Name: CycleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6408,10 +6516,10 @@ RectTransform:
   m_Father: {fileID: 612638920}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.37726516, y: 0.717}
-  m_AnchorMax: {x: 0.6215248, y: 0.80500007}
-  m_AnchoredPosition: {x: 0.5, y: -0.5}
-  m_SizeDelta: {x: -61, y: -13}
+  m_AnchorMin: {x: 0.40948302, y: 0.78370905}
+  m_AnchorMax: {x: 0.5872934, y: 0.86100006}
+  m_AnchoredPosition: {x: 0.07500076, y: 0.19999695}
+  m_SizeDelta: {x: -26, y: -9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1852214552
 MonoBehaviour:
@@ -6446,7 +6554,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Yap\u0131lan d\xF6nd\xFCrme: "
+  m_Text: Devir
 --- !u!222 &1852214553
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6489,9 +6597,9 @@ RectTransform:
   m_Father: {fileID: 612638920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.17317538}
-  m_AnchorMax: {x: 0.5, y: 0.17317538}
-  m_AnchoredPosition: {x: 0, y: -1.3899994}
+  m_AnchorMin: {x: 0.5, y: 0.08800001}
+  m_AnchorMax: {x: 0.5, y: 0.08800001}
+  m_AnchoredPosition: {x: 0.26858, y: 1.2000122}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1857421971

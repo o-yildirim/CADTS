@@ -26,6 +26,7 @@ public class PlayerInputManager : MonoBehaviour
                     if (hitTile != null)
                     {
                         hitTile.RotationCall();
+                        FlowStatisticManager.instance.IncrementRotation(hitTile);
                     }
                 }
                 else if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Sink"))
