@@ -31,6 +31,8 @@ public class DesktopManager : MonoBehaviour
     public Dictionary<Button, GameObject> statisticCategoryButtonPanelMatch;
 
 
+    public GameObject accountSettingsCanvas;
+    public GameObject operationCanvas;
 
     public Color selectedButtonColor;
     public Color unselectedColor;
@@ -68,18 +70,21 @@ public class DesktopManager : MonoBehaviour
 
         openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
 
+        accountSettingsCanvas.transform.Find("Panel/ChangePassword").GetComponent<Button>().onClick.AddListener(SettingsManager.instance.ChangePassword);
+        accountSettingsCanvas.transform.Find("Panel/DeleteAccount").GetComponent<Button>().onClick.AddListener(SettingsManager.instance.DeleteAccount);
+        accountSettingsCanvas.transform.Find("Panel/Close").GetComponent<Button>().onClick.AddListener(() => { CloseCanvas(accountSettingsCanvas); });
+
+
+
+        operationCanvas.SetActive(true);
+        SettingsManager.instance.InitializePanels();
+        operationCanvas.SetActive(false);
+
     }
 
     public void ResetButtonColors(Button[] buttons)
     {
-        /*
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            Image buttonImage = buttons[i].GetComponent<Image>();
-            buttonImage.color = unselectedColor;
-
-        }
-        */
+   
         for (int i = 0; i < buttons.Length; i++)
         {
             Image buttonImage = buttons[i].GetComponent<Image>();
@@ -94,16 +99,7 @@ public class DesktopManager : MonoBehaviour
     }
 
     public void ResetPanels(GameObject[] panels)
-    {
-
-        /*
-       for (int i = 0; i < panels.Length; i++)
-        {
-            panels[i].SetActive(false);
-        } 
-        */
-
-        
+    {   
         for(int i = 0; i < panels.Length; i++)
         {
             if (panels[i].activeSelf)
@@ -286,8 +282,7 @@ public class DesktopManager : MonoBehaviour
 
     public void OpenAccountSettings()
     {
-       // Debug.Log("Account Settings");
-        //Ayrı bir canvas falan açılır
+        accountSettingsCanvas.SetActive(true);
     }
 
     public void OpenAppSettings()
@@ -296,4 +291,8 @@ public class DesktopManager : MonoBehaviour
         //Ayrı bir canvas falan açılır
     }
 
+    public void CloseCanvas(GameObject canvasToClose)
+    {
+        canvasToClose.SetActive(false);
+    }
 }
