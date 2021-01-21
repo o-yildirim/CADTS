@@ -108,7 +108,7 @@ public class SettingsManager : MonoBehaviour
         string hashedPwd = AuthenticationManager.GetMD5HashString(enteredOldPw1);
         string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw); //**
 
-        if (string.IsNullOrEmpty(enteredOldPw1) || string.IsNullOrEmpty(enteredOldPw2) || string.IsNullOrEmpty(enteredNewPw))
+        if (string.IsNullOrWhiteSpace(enteredOldPw1) || string.IsNullOrWhiteSpace(enteredOldPw2) || string.IsNullOrWhiteSpace(enteredNewPw))
         {
             warningText.text = "Şifreler boş olamaz.";
             return;

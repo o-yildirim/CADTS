@@ -89,6 +89,14 @@ public class AuthenticationManager : MonoBehaviour
 
     public void register()
     {
+        if (string.IsNullOrWhiteSpace(registerName.text) || string.IsNullOrWhiteSpace(registerSurname.text)
+            || string.IsNullOrWhiteSpace(dateOfBirth.text) || string.IsNullOrWhiteSpace(registerEmail.text) || string.IsNullOrWhiteSpace(registerPassword.text))
+        {
+            status.text = "Yukarıdaki alanlar boş bırakılamaz.";
+            return;
+        }
+            
+
         string unparsedDob = dateOfBirth.text;
 
         DateTime date = DateTime.Parse(unparsedDob);
@@ -105,7 +113,7 @@ public class AuthenticationManager : MonoBehaviour
 
     public void login()
     {
-        if (string.IsNullOrEmpty(email.text) || string.IsNullOrEmpty(password.text))
+        if (string.IsNullOrWhiteSpace(email.text) || string.IsNullOrWhiteSpace(password.text))
         {
             status.text = "E-mail veya şifre boş olamaz.";
             return;
