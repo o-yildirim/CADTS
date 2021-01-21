@@ -8,7 +8,8 @@ public class StatisticPanelManager : MonoBehaviour
     public static StatisticPanelManager instance;
     public GameObject gameCanvas;
     public GameObject statisticPanel;
-    
+    public Button exitButton;
+
     void Awake()
     {
         if (instance == null)

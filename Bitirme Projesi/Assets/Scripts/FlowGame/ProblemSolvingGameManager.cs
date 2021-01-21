@@ -101,6 +101,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         FlowStatisticManager.instance.EvaluateValues();
         FlowStatisticManager.instance.DisplayStatisticPanel();
+        FlowStatisticManager.instance.InitializeStatisticObject();
         FlowStatisticManager.instance.InsertToDatabase();
       
     }

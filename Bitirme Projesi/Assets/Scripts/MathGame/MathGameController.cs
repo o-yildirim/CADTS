@@ -71,6 +71,7 @@ public class MathGameController : MonoBehaviour
             Debug.Log(score);
             scoreTxt.text += score.ToString();
             StatisticPanelManager.instance.statisticPanel.SetActive(true);
+            StatisticPanelManager.instance.exitButton.onClick.AddListener(SceneManagement.instance.loadMainMenu);
         }
     }
 

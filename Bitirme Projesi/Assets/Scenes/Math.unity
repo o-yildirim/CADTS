@@ -334,7 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exp: {fileID: 6558674779456477366, guid: d277934ff1501484e833656baa14b590, type: 3}
   balloons: []
-  health: 5
+  health: 3
   answer: {fileID: 763195674}
   scoreTxt: {fileID: 941510743}
   isFinished: 0
@@ -953,6 +953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameCanvas: {fileID: 1956621452}
   statisticPanel: {fileID: 737105228}
+  exitButton: {fileID: 490659342}
 --- !u!4 &829048886
 Transform:
   m_ObjectHideFlags: 0
