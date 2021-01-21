@@ -77,7 +77,7 @@ public class SettingsManager : MonoBehaviour
                 titleText = operationCanvas.transform.Find("Panel/Title").GetComponent<Text>();
                 oldPw1 = operationCanvas.transform.Find("Panel/Old Password").GetComponent<InputField>();
                 oldPw2 = operationCanvas.transform.Find("Panel/Old Password 2").GetComponent<InputField>();
-                newPw = oldPw2 = operationCanvas.transform.Find("Panel/New Password").GetComponent<InputField>();
+                newPw = operationCanvas.transform.Find("Panel/New Password").GetComponent<InputField>();
                 submit = operationCanvas.transform.Find("Panel/Submit").GetComponent<Button>();
                 warningText = operationCanvas.transform.Find("Panel/Warning Text").GetComponent<Text>();
                 closeButton = operationCanvas.transform.Find("Panel/Close").GetComponent<Button>();
@@ -105,6 +105,9 @@ public class SettingsManager : MonoBehaviour
         string enteredOldPw2 = oldPw2.text;
         string enteredNewPw = newPw.text;
 
+        string hashedPwd = AuthenticationManager.GetMD5HashString(enteredOldPw1);
+        string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw); //**
+
         if (string.IsNullOrEmpty(enteredOldPw1) || string.IsNullOrEmpty(enteredOldPw2) || string.IsNullOrEmpty(enteredNewPw))
         {
             warningText.text = "Şifreler boş olamaz.";
@@ -112,21 +115,26 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            if (!enteredOldPw1.Equals(enteredOldPw2))
+           if (!enteredOldPw1.Equals(enteredOldPw2))
+            //if (1 == 0)
             {
+                Debug.Log("İlki: " + oldPw1.text);
+                Debug.Log("İkincisi: " + oldPw2.text);
                 warningText.text = "Girilen eski şifreler uyuşmuyor.";
             }
             else
             {
                 //Eski sifreyi hashle databasedeki ile uyusuyor mu bak
                 string emailEncoded = AuthenticationManager.instance.encode(DatabaseHandler.loggedInUser.email);
-                string hashedPwd = AuthenticationManager.GetMD5HashString(enteredOldPw1);
+                
                 DatabaseHandler.GetUser(emailEncoded, user =>
                 {
                     if (user.password.Equals(hashedPwd))
                     {
-
-                        string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw);
+                        User newUser = new User(user.name, user.surname, user.dob, emailEncoded, hashedNewPassword);
+                        Debug.Log(newUser.name + " " + newUser.surname + " " + newUser.dob + " " + " " + newUser.email + " " + newUser.password);
+                        DatabaseHandler.PostUser(newUser, emailEncoded, () => { });
+                        //DatabaseHandler.registerUser(newUser, newUser.email, user2 => { });
                         /*******************************************************************************************************************
                         *******************************************************************************************************************
                                      BURAYA YENI hashedNewPassword U KAYITLI EMAILIN SIFRESI OLACAK KOD GELECEK

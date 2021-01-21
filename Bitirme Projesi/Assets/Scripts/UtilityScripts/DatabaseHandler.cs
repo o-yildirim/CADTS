@@ -34,8 +34,8 @@ public class DatabaseHandler
 
     public static void PostUser(User user, string userEmail, PostUserCallback callback)
     {
-        //RestClient.Put<User>($"{databaseURL}users/{userId}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
-        RestClient.Put<User>(databaseURL +"users/"+userEmail+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
+        RestClient.Put<User>($"{databaseURL}users/{userEmail}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
+        //RestClient.Put<User>(databaseURL +"users/"+userEmail+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
     }
 
     public static void GetUser(string userEmail, GetUserCallback callback)
