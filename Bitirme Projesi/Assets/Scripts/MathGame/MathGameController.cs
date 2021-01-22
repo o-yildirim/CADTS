@@ -20,10 +20,11 @@ public class MathGameController : MonoBehaviour
     public Spawner spawnerLeft;
     public Spawner spawnerRight;
     public Spawner tutorialSpawner;
+    private Coroutine tutorialC = null;
 
     void Start()
     {
-        StartCoroutine(tutorial());
+        tutorialC = StartCoroutine(tutorial());
         answer.Select();
     }
 
@@ -104,6 +105,7 @@ public class MathGameController : MonoBehaviour
         tutorialSpawner.gameObject.SetActive(false);
 
         tutorialText.text = "Harika!";
+        Debug.Log(tutorialText.text);
         yield return new WaitForSeconds(5f);
 
         tutorialText.text = "Balonları yukarıdaki çubuğa temas edip patlatmadan önce doğru cevabı yazarak siz patlatmalısınız.";
@@ -137,7 +139,11 @@ public class MathGameController : MonoBehaviour
 
     public void skipTutorial()
     {
-        StopCoroutine(tutorial());
+        StopCoroutine(tutorialC);
+        tutorialSpawner.gameObject.SetActive(false);
+        if (balloons.Count>0)
+            destroyBalloons();
+        balloons = new List<Balloon>();
         startGame();
     }
 }
