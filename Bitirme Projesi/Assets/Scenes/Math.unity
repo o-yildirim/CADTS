@@ -334,7 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exp: {fileID: 6558674779456477366, guid: d277934ff1501484e833656baa14b590, type: 3}
   balloons: []
-  health: 3
+  health: 500
   answer: {fileID: 763195674}
   scoreTxt: {fileID: 941510743}
   isFinished: 0
@@ -1239,7 +1239,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

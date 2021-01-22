@@ -19,20 +19,15 @@ public class Balloon : MonoBehaviour
         Destroy(gameObject, 30f);
     }
 
-    void Update()
-    {
-        transform.position = new Vector2(transform.position.x, transform.position.y + velocity);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Barrier")
         {
             MathGameController.instance.health--;
             MathGameController.instance.checkHealth();
             MathGameController.instance.balloons.Remove(this);
-            Instantiate(exp, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y+1), Quaternion.identity);
-            Destroy(gameObject); 
+            Instantiate(exp, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 1), Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 
