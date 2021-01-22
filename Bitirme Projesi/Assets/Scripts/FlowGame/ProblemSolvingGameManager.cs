@@ -142,13 +142,13 @@ public class ProblemSolvingGameManager : MonoBehaviour
         tutorialCanvas.GetComponentInChildren<Button>().onClick.AddListener(SkipTutorial);
 
         tutorialText.text = "Oyunun amacı, yukarıdaki kalın borudan aşağıdakine suyu ulaştıracak doğru yolu hazırlayabilmektir.";
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(8.5f);
 
         tutorialText.text = "Borulara tıklayarak saat yönünde dönmelerini, suyun gireceği ve akacağı yönlerini değiştirmelerini\nsağlayabilirsiniz.";
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(8.5f);
 
         tutorialText.text = "Yönlendirmeyi doğru yaptığınızı düşünüyorsanız, vanaya tıklayarak suyun akmasını sağlayabilirsiniz.";
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7.5f);
 
         tutorialText.text = "Okun gösterdiği boruyu döndürmek için tıklayın!";
        
