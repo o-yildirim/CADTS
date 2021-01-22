@@ -46,7 +46,8 @@ public class Spawner : MonoBehaviour
         //rb.velocity = new Vector2(0f, velocity * Time.deltaTime);
         rb.velocity = new Vector2(0f, velocity);
         //Debug.Log(rb.velocity.magnitude);
-        velocity *= 1.01f;
+        //velocity *= 1.01f;
+        velocity += 0.25f;
         MathGameController.instance.balloons.Add(obj.GetComponent<Balloon>());
     }
 
