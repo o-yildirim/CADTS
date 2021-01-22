@@ -101,8 +101,10 @@ public class MathGameController : MonoBehaviour
             yield return null;
         }
 
-        destroyBalloons();
         tutorialSpawner.gameObject.SetActive(false);
+        destroyBalloons();
+        balloons = new List<Balloon>();
+       
 
         tutorialText.text = "Harika!";
         Debug.Log(tutorialText.text);
@@ -142,8 +144,10 @@ public class MathGameController : MonoBehaviour
         StopCoroutine(tutorialC);
         tutorialSpawner.gameObject.SetActive(false);
         if (balloons.Count>0)
+        {
             destroyBalloons();
-        balloons = new List<Balloon>();
+            balloons = new List<Balloon>();
+        }         
         startGame();
     }
 }
