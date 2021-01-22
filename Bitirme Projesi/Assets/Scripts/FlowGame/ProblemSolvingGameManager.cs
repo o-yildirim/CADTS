@@ -25,6 +25,10 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     private Coroutine isWaterDrawn;
 
+    public GameObject tutorialArrow;
+    public Vector3[] arrowPositions;
+
+
     public static ProblemSolvingGameManager instance;
     private void Awake()
     {
@@ -124,12 +128,20 @@ public class ProblemSolvingGameManager : MonoBehaviour
     {
         inputUnavailable = true;
         inTutorial = true;
+        for(int j =1; j < tutorialMap.transform.childCount; j++) //0 dan başlatmamamın sebebi ilk çocuğun collideri aktif olmasını istiyorum onu döndürecek
+        {
+            BoxCollider collider = tutorialMap.transform.GetChild(j).GetComponent<BoxCollider>();
+            if(collider != null)
+            {
+                collider.enabled = false;
+            }
+        }
 
         tutorialMap.SetActive(true);
         tutorialCanvas.SetActive(true);
         tutorialCanvas.GetComponentInChildren<Button>().onClick.AddListener(SkipTutorial);
 
-        tutorialText.text = "Oyunun amacı, yukarıdaki yeşil borudan aşağıdakine suyu ulaştıracak doğru yolu hazırlayabilmektir.";
+        tutorialText.text = "Oyunun amacı, yukarıdaki kalın borudan aşağıdakine suyu ulaştıracak doğru yolu hazırlayabilmektir.";
         yield return new WaitForSeconds(5f);
 
         tutorialText.text = "Borulara tıklayarak saat yönünde dönmelerini, suyun gireceği ve akacağı yönlerini değiştirmelerini\nsağlayabilirsiniz.";
@@ -138,8 +150,41 @@ public class ProblemSolvingGameManager : MonoBehaviour
         tutorialText.text = "Yönlendirmeyi doğru yaptığınızı düşünüyorsanız, vanaya tıklayarak suyun akmasını sağlayabilirsiniz.";
         yield return new WaitForSeconds(5f);
 
-        tutorialText.text = "Şimdi deneyin!";
+        tutorialText.text = "Okun gösterdiği boruyu döndürmek için tıklayın!";
+       
+
+        int i = 0;
+        tutorialArrow.transform.position = arrowPositions[i];
+        tutorialArrow.SetActive(true);
+
+
+        Tile tileToRotate = tutorialMap.transform.GetChild(0).GetComponent<Tile>();
+        int currentStateOfTile = tileToRotate.currentState;
+
         inputUnavailable = false;
+
+        while (tileToRotate.currentState != (currentStateOfTile + 1) % tileToRotate.totalStates)
+        {
+            yield return null;
+        }
+
+        for (int j = 1; j < tutorialMap.transform.childCount; j++) //0 dan başlatmamamın sebebi ilk çocuğun collideri aktif olmasını istiyorum onu döndürecek
+        {
+            BoxCollider collider = tutorialMap.transform.GetChild(j).GetComponent<BoxCollider>();
+            if (collider != null)
+            {
+                collider.enabled = true;
+            }
+        }
+
+        tutorialArrow.SetActive(false);
+        tutorialText.text = "Harika!";
+        yield return new WaitForSeconds(1.8f);
+
+        tutorialText.text = "Artık iki kalın boru arasındaki yol sağlandı. Suyu açmak için vanaya tıklayın!";
+        i++;
+        tutorialArrow.transform.position = arrowPositions[i];
+        tutorialArrow.SetActive(true);
 
         while (!fullyLinked)
         {
@@ -148,6 +193,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         yield return isWaterDrawn;
         fullyLinked = false;
+        tutorialArrow.SetActive(false);
 
         tutorialText.text = "\t\t\tHarika!\nOyuna başlamak için herhangi bir tuşa basın.";
         while (!Input.anyKeyDown)
