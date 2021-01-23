@@ -36,11 +36,16 @@ public class MapGenerator : MonoBehaviour
         tileLengthX = pipes[0].GetComponent<BoxCollider>().size.x;
         tileLengthY = pipes[0].GetComponent<BoxCollider>().size.y;
         possiblePipeStateCount = pipes[0].GetComponent<Tile>().totalStates;
-        map = new GameObject[rows,columns];
+        InitializeMapValues();
+
+    }
+
+    public void InitializeMapValues()
+    {
+        map = new GameObject[rows, columns];
 
         maxI = (rows * columns) / 6;
         maxL = (rows * columns) - maxI;
-
     }
 
     public void GenerateMap()
@@ -435,9 +440,11 @@ public class MapGenerator : MonoBehaviour
         Camera.main.orthographicSize = newCamSize;
         */
 
-        Camera.main.orthographicSize = 5.1f;
+        float xPos = (map[0, 0].transform.position.x + map[0, columns - 1].transform.position.x)/2f;
+        float yPos = (ProblemSolvingGameManager.instance.sink.transform.position.y + ProblemSolvingGameManager.instance.finish.transform.position.y)/ 2f;
 
-        Vector3 newCamPos = map[rows / 2, columns / 2].transform.position;
+        Camera.main.orthographicSize = 5f;
+        Vector3 newCamPos = new Vector3(xPos, yPos, 0f);
         newCamPos.z = Camera.main.transform.position.z;
         Camera.main.transform.position = newCamPos;
         

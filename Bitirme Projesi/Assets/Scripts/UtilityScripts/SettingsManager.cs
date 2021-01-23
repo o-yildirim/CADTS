@@ -7,15 +7,28 @@ public class SettingsManager : MonoBehaviour
 {
 
     public GameObject quitCanvas;
-
+    public GameObject accountSettingsCanvas;
     public GameObject operationCanvas;
-    public Text titleText;
+
+    public GameObject changePasswordPanel;
     public InputField oldPw1;
     public InputField oldPw2;
     public InputField newPw;
+    public InputField newPw2;
     public Button submit;
     public Text warningText;
     public Button closeButton;
+
+    public GameObject deleteAccountPanel;
+    public InputField pw1;
+    public InputField pw2;
+    public Button checkBox;
+    public Image checkImage;
+    public Button submitButton;
+    public Button closeButtonForDel;
+    public Text warningTextForDel;
+    public bool approvedToDeleteStatistics = false;
+
 
 
 
@@ -23,6 +36,7 @@ public class SettingsManager : MonoBehaviour
 
 
     public static SettingsManager instance;
+
     void Awake()
     {
         if (instance == null)
@@ -39,6 +53,7 @@ public class SettingsManager : MonoBehaviour
     public void Start()
     {
         quitCanvas = gameObject.transform.GetChild(0).gameObject;
+
     }
     public void QuitRequest()
     {
@@ -67,96 +82,155 @@ public class SettingsManager : MonoBehaviour
 
     public void InitializePanels()
     {
-        if (operationCanvas == null)
+
+        accountSettingsCanvas = GameObject.Find("AccountSettingsMenu");
+        accountSettingsCanvas.transform.Find("Panel/ChangePassword").GetComponent<Button>().onClick.AddListener(ChangePassword);
+        accountSettingsCanvas.transform.Find("Panel/DeleteAccount").GetComponent<Button>().onClick.AddListener(DeleteAccount);
+        accountSettingsCanvas.transform.Find("Panel/Close").GetComponent<Button>().onClick.AddListener(() => { CloseCanvas(accountSettingsCanvas); });
+
+
+
+        operationCanvas = GameObject.Find("OperationCanvas");
+        Debug.Log(operationCanvas.transform.name);
+        if (operationCanvas != null)
         {
-            operationCanvas = GameObject.Find("OperationCanvas");
-            Debug.Log(operationCanvas.transform.name);
-            if (operationCanvas != null)
-            {
-
-                titleText = operationCanvas.transform.Find("Panel/Title").GetComponent<Text>();
-                oldPw1 = operationCanvas.transform.Find("Panel/Old Password").GetComponent<InputField>();
-                oldPw2 = operationCanvas.transform.Find("Panel/Old Password 2").GetComponent<InputField>();
-                newPw = operationCanvas.transform.Find("Panel/New Password").GetComponent<InputField>();
-                submit = operationCanvas.transform.Find("Panel/Submit").GetComponent<Button>();
-                warningText = operationCanvas.transform.Find("Panel/Warning Text").GetComponent<Text>();
-                closeButton = operationCanvas.transform.Find("Panel/Close").GetComponent<Button>();
-
-
-
-                DesktopManager temp = new DesktopManager();
-
-                closeButton.onClick.AddListener(() => { temp.CloseCanvas(operationCanvas); });
-            }
-
+            InitializeChangePasswordCanvas();
+            InitializeDeleteAccountCanvas();
         }
+
+
+
+        //applicationSettingsCanvas.SetActive(false);
+        CloseCanvas(accountSettingsCanvas);
+        CloseCanvas(operationCanvas);
+        CloseCanvas(changePasswordPanel);
+        CloseCanvas(deleteAccountPanel);
+
+
+    }
+
+    public void InitializeChangePasswordCanvas()
+    {
+        changePasswordPanel = operationCanvas.transform.Find("ChangePasswordPanel").gameObject;
+
+        oldPw1 = operationCanvas.transform.Find("ChangePasswordPanel/Old Password").GetComponent<InputField>();
+        oldPw2 = operationCanvas.transform.Find("ChangePasswordPanel/Old Password 2").GetComponent<InputField>();
+        newPw = operationCanvas.transform.Find("ChangePasswordPanel/New Password").GetComponent<InputField>();
+        newPw2 = operationCanvas.transform.Find("ChangePasswordPanel/New Password 2").GetComponent<InputField>();
+        submit = operationCanvas.transform.Find("ChangePasswordPanel/Submit").GetComponent<Button>();
+        warningText = operationCanvas.transform.Find("ChangePasswordPanel/Warning Text").GetComponent<Text>();
+        closeButton = operationCanvas.transform.Find("ChangePasswordPanel/Close").GetComponent<Button>();
+        closeButton.onClick.AddListener(() => { CloseCanvas(changePasswordPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
     }
 
     public void ChangePassword()
     {
-        titleText.text = "Şifre değiştir";
+
         submit.onClick.AddListener(InsertNewPassword);
-        operationCanvas.SetActive(true);
+        CloseCanvas(accountSettingsCanvas);
+        OpenCanvas(operationCanvas);
+        OpenCanvas(changePasswordPanel);
+
     }
 
     public void InsertNewPassword()
     {
         string enteredOldPw1 = oldPw1.text;
         string enteredOldPw2 = oldPw2.text;
-        string enteredNewPw = newPw.text;
+        string enteredNewPw1 = newPw.text;
+        string enteredNewPw2 = newPw2.text;
 
         string hashedPwd = AuthenticationManager.GetMD5HashString(enteredOldPw1);
-        string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw); //**
+        string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw1); //**
 
-        if (string.IsNullOrWhiteSpace(enteredOldPw1) || string.IsNullOrWhiteSpace(enteredOldPw2) || string.IsNullOrWhiteSpace(enteredNewPw))
+        if (string.IsNullOrWhiteSpace(enteredOldPw1) || string.IsNullOrWhiteSpace(enteredOldPw2) || string.IsNullOrWhiteSpace(enteredNewPw1) || string.IsNullOrWhiteSpace(enteredNewPw2))
         {
             warningText.text = "Şifreler boş olamaz.";
             return;
         }
+        else if (!enteredOldPw1.Equals(enteredOldPw2))
+        {
+            warningText.text = "Girilen eski şifreler uyuşmuyor.";
+        }
+        else if (!enteredNewPw1.Equals(enteredNewPw2))
+        {
+            warningText.text = "Girilen yeni şifreler uyuşmuyor.";
+        }
         else
         {
-           if (!enteredOldPw1.Equals(enteredOldPw2))
-            //if (1 == 0)
+            string emailEncoded = AuthenticationManager.instance.encode(DatabaseHandler.loggedInUser.email);
+
+            DatabaseHandler.GetUser(emailEncoded, user =>
             {
-                Debug.Log("İlki: " + oldPw1.text);
-                Debug.Log("İkincisi: " + oldPw2.text);
-                warningText.text = "Girilen eski şifreler uyuşmuyor.";
-            }
-            else
-            {
-                //Eski sifreyi hashle databasedeki ile uyusuyor mu bak
-                string emailEncoded = AuthenticationManager.instance.encode(DatabaseHandler.loggedInUser.email);
-                
-                DatabaseHandler.GetUser(emailEncoded, user =>
+                if (user.password.Equals(hashedPwd))
                 {
-                    if (user.password.Equals(hashedPwd))
-                    {
-                        User newUser = new User(user.name, user.surname, user.dob, emailEncoded, hashedNewPassword);
-                        Debug.Log(newUser.name + " " + newUser.surname + " " + newUser.dob + " " + " " + newUser.email + " " + newUser.password);
-                        DatabaseHandler.PostUser(newUser, emailEncoded, () => { });
-                        //DatabaseHandler.registerUser(newUser, newUser.email, user2 => { });
-                        /*******************************************************************************************************************
-                        *******************************************************************************************************************
-                                     BURAYA YENI hashedNewPassword U KAYITLI EMAILIN SIFRESI OLACAK KOD GELECEK
-                        *******************************************************************************************************************
-                        *******************************************************************************************************************
-                        *********************************************************************************************************************/
-                    }
-                    else if (!user.password.Equals(hashedPwd))
-                    {
-                        warningText.text = "Girilen şifre yanlış.";
-                    }
+                    User newUser = new User(user.name, user.surname, user.dob, emailEncoded, hashedNewPassword);
+                    Debug.Log(newUser.name + " " + newUser.surname + " " + newUser.dob + " " + " " + newUser.email + " " + newUser.password);
+                    warningText.text = "Şifre başarıyla değiştirildi.";
 
-                });
-            }
+                }
+                else if (!user.password.Equals(hashedPwd))
+                {
+                    warningText.text = "Girilen şifre yanlış.";
+                }
 
-
-
+            });
         }
 
 
 
+    
+
     }
 
-    public void DeleteAccount() { }
+    public void DeleteAccount()
+    {
+        submit.onClick.AddListener(DeleteAccountFromDatabase);
+        CloseCanvas(accountSettingsCanvas);
+        OpenCanvas(operationCanvas);
+        OpenCanvas(deleteAccountPanel);
+    }
+
+
+    public void InitializeDeleteAccountCanvas()
+    {
+        deleteAccountPanel = operationCanvas.transform.Find("DeleteAccountPanel").gameObject;
+
+        pw1 = operationCanvas.transform.Find("DeleteAccountPanel/Password").GetComponent<InputField>();
+        pw2 = operationCanvas.transform.Find("DeleteAccountPanel/Password 2").GetComponent<InputField>();
+        submitButton = operationCanvas.transform.Find("DeleteAccountPanel/Submit").GetComponent<Button>();
+        warningTextForDel = operationCanvas.transform.Find("DeleteAccountPanel/Warning Text").GetComponent<Text>();
+
+        checkBox = operationCanvas.transform.Find("DeleteAccountPanel/CheckBox").GetComponent<Button>();
+        checkImage = checkBox.transform.Find("CheckImage").GetComponent<Image>();
+
+        closeButtonForDel = operationCanvas.transform.Find("DeleteAccountPanel/Close").GetComponent<Button>();
+
+
+        checkBox.onClick.AddListener(() => { ManageCheckBox(); } );
+        closeButtonForDel.onClick.AddListener(() => { CloseCanvas(deleteAccountPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
+    }
+
+    public void DeleteAccountFromDatabase()
+    {
+       //REST ISLEMLERI
+
+    }
+
+    public void ManageCheckBox()
+    {
+        approvedToDeleteStatistics = !approvedToDeleteStatistics;
+        checkImage.enabled = !checkImage.enabled;
+   
+    }
+
+
+    public void OpenCanvas(GameObject canvasToOpen)
+    {
+        canvasToOpen.SetActive(true);
+    }
+    public void CloseCanvas(GameObject canvasToClose)
+    {
+        canvasToClose.SetActive(false);
+    }
 }

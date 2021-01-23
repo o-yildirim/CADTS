@@ -16,7 +16,8 @@ public class DesktopManager : MonoBehaviour
 
     public Button[] minigameButtons;
 
-    
+    public GameObject accountSettingsCanvas;
+    public GameObject applicationSettingsCanvas;
 
     public Button openSettingsButton;
     public GameObject settingsButtonsPanel;
@@ -30,9 +31,6 @@ public class DesktopManager : MonoBehaviour
     public Button[] displayStatisticMiniGameButtons;
     public Dictionary<Button, GameObject> statisticCategoryButtonPanelMatch;
 
-
-    public GameObject accountSettingsCanvas;
-    public GameObject operationCanvas;
 
     public Color selectedButtonColor;
     public Color unselectedColor;
@@ -70,15 +68,9 @@ public class DesktopManager : MonoBehaviour
 
         openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
 
-        accountSettingsCanvas.transform.Find("Panel/ChangePassword").GetComponent<Button>().onClick.AddListener(SettingsManager.instance.ChangePassword);
-        accountSettingsCanvas.transform.Find("Panel/DeleteAccount").GetComponent<Button>().onClick.AddListener(SettingsManager.instance.DeleteAccount);
-        accountSettingsCanvas.transform.Find("Panel/Close").GetComponent<Button>().onClick.AddListener(() => { CloseCanvas(accountSettingsCanvas); });
-
-
-
-        operationCanvas.SetActive(true);
         SettingsManager.instance.InitializePanels();
-        operationCanvas.SetActive(false);
+
+       
 
     }
 
@@ -287,12 +279,8 @@ public class DesktopManager : MonoBehaviour
 
     public void OpenAppSettings()
     {
-       // Debug.Log("Application Settings");
-        //Ayrı bir canvas falan açılır
+        applicationSettingsCanvas.SetActive(true);
     }
 
-    public void CloseCanvas(GameObject canvasToClose)
-    {
-        canvasToClose.SetActive(false);
-    }
+   
 }

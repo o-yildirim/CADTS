@@ -13,7 +13,8 @@ public class FlowStatisticManager : MonoBehaviour
     public float time;
     public int cycles;
     public int wrongAttempts;
-    public int pathCostByPipes;
+    public int[] pathCostByPipes;
+    public int allLevelsTotalCostByPipes;
     public float score;
 
 
@@ -47,6 +48,7 @@ public class FlowStatisticManager : MonoBehaviour
     {
         tilesRotationCounts = new Dictionary<Tile, int>();
         statisticCanvas.GetComponentInChildren<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
+        pathCostByPipes = new int[ProblemSolvingGameManager.instance.levelCount + 1];
     }
 
     private void Update()
@@ -80,15 +82,21 @@ public class FlowStatisticManager : MonoBehaviour
 
     public void EvaluateValues()
     {
-       
+
+     
+        
         foreach (int rotationCount in tilesRotationCounts.Values)
         {
             cycles += rotationCount / 4;
         }
-        pathCostByPipes = ProblemSolvingGameManager.instance.pipesPassedTrough.Count - 2; //Sink and finish removed
 
+        for (int i = 0; i < pathCostByPipes.Length; i++)
+        {
+            Debug.Log("Level " + i + " yol uzunlugu: " + pathCostByPipes[i]);
+            allLevelsTotalCostByPipes += pathCostByPipes[i]; 
+        }
         //ÇOK DANDIK BIR HESAPLAMA SKOR HESAPLAMASI
-        score = ((1f / time)* timeMultiplier) - (wrongAttempts * wrongAttemptMultiplier) - (cycles * cycleMultiplier) - (pathCostByPipes * pathCostByPipesMultiplier); 
+        score = ((1f / time)* timeMultiplier) - (wrongAttempts * wrongAttemptMultiplier) - (cycles * cycleMultiplier) - (allLevelsTotalCostByPipes * pathCostByPipesMultiplier); 
 
         if(score < 0f)
         {
@@ -103,7 +111,7 @@ public class FlowStatisticManager : MonoBehaviour
                                       "FlowGame",
                                        score,
                                        cycles,
-                                       pathCostByPipes,
+                                       allLevelsTotalCostByPipes,
                                        wrongAttempts
                                       );
    
@@ -117,11 +125,23 @@ public class FlowStatisticManager : MonoBehaviour
     {
         cycleText.text = "Devir sayısı: " + cycles;
         wrongAttemptsText.text = "Yanlış deneme: " + wrongAttempts;
-        pathCostText.text = "Bulunan yolun uzunluğu: " + pathCostByPipes;
+        pathCostText.text = "Bulunan yolların toplam uzunluğu: " + allLevelsTotalCostByPipes;
         scoreText.text = "Skor: " + score;
 
         statisticCanvas.SetActive(true);
 
+    }
+
+    public void ResetAttributes()
+    {
+        tilesRotationCounts.Clear();
+        cycles = 0;
+        instance.wrongAttempts = 0;
+        for(int i = 0; i< pathCostByPipes.Length; i++)
+        {
+            pathCostByPipes[i] = 0;
+        }
+        allLevelsTotalCostByPipes = 0;
     }
 
 }

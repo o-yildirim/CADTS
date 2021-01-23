@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class ProblemSolvingGameManager : MonoBehaviour
 {
+    public int levelCount = 2;
+    public int currentLevel = 0;
+    public int[,] levelRowColumns = { {4,7}, {5,8}, { 5, 12 } };
+
+
     public bool fullyLinked = false;
     public bool inputUnavailable = false;
 
@@ -28,6 +33,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public GameObject tutorialArrow;
     public Vector3[] arrowPositions;
 
+    public float tutorialTextTime = 8.5f;
 
     public static ProblemSolvingGameManager instance;
     private void Awake()
@@ -86,7 +92,19 @@ public class ProblemSolvingGameManager : MonoBehaviour
         {
             if (!inTutorial)
             {
-                FinishGame();
+                FlowStatisticManager.instance.pathCostByPipes[currentLevel] = pipesPassedTrough.Count - 2;
+                if (currentLevel == levelCount)
+                {
+                    FinishGame();
+                }
+                else
+                {
+                    FlowStatisticManager.instance.timerOn = false;                   
+                    currentLevel++;
+                    ResetLevel();
+                    StartGame();
+
+                } //load next level
             }
             else
             {
@@ -112,6 +130,12 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     public void StartGame()
     {
+        mapGenerator.rows = levelRowColumns[currentLevel, 0];
+        mapGenerator.columns = levelRowColumns[currentLevel, 1];
+        mapGenerator.mapGameObject = new GameObject("Map");
+        
+
+        mapGenerator.InitializeMapValues();
         mapGenerator.PositionSink();
         mapGenerator.PositionFinish();
         mapGenerator.PositionValve();
@@ -128,7 +152,12 @@ public class ProblemSolvingGameManager : MonoBehaviour
     {
         inputUnavailable = true;
         inTutorial = true;
-        for(int j =1; j < tutorialMap.transform.childCount; j++) //0 dan başlatmamamın sebebi ilk çocuğun collideri aktif olmasını istiyorum onu döndürecek
+
+        SphereCollider valveCollider = valve.GetComponent<SphereCollider>();
+        BoxCollider sinkCollider = sink.GetComponent<BoxCollider>();
+        valveCollider.enabled = sinkCollider.enabled = false;
+
+        for (int j =1; j < tutorialMap.transform.childCount; j++) //0 dan başlatmamamın sebebi ilk çocuğun collideri aktif olmasını istiyorum onu döndürecek
         {
             BoxCollider collider = tutorialMap.transform.GetChild(j).GetComponent<BoxCollider>();
             if(collider != null)
@@ -142,13 +171,13 @@ public class ProblemSolvingGameManager : MonoBehaviour
         tutorialCanvas.GetComponentInChildren<Button>().onClick.AddListener(SkipTutorial);
 
         tutorialText.text = "Oyunun amacı, yukarıdaki kalın borudan aşağıdakine suyu ulaştıracak doğru yolu hazırlayabilmektir.";
-        yield return new WaitForSeconds(8.5f);
+        yield return new WaitForSeconds(tutorialTextTime);
 
         tutorialText.text = "Borulara tıklayarak saat yönünde dönmelerini, suyun gireceği ve akacağı yönlerini değiştirmelerini\nsağlayabilirsiniz.";
-        yield return new WaitForSeconds(8.5f);
+        yield return new WaitForSeconds(tutorialTextTime);
 
         tutorialText.text = "Yönlendirmeyi doğru yaptığınızı düşünüyorsanız, vanaya tıklayarak suyun akmasını sağlayabilirsiniz.";
-        yield return new WaitForSeconds(7.5f);
+        yield return new WaitForSeconds(tutorialTextTime);
 
         tutorialText.text = "Okun gösterdiği boruyu döndürmek için tıklayın!";
        
@@ -176,6 +205,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
                 collider.enabled = true;
             }
         }
+        valveCollider.enabled = sinkCollider.enabled = true;
 
         tutorialArrow.SetActive(false);
         tutorialText.text = "Harika!";
@@ -203,15 +233,12 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         
         inTutorial = false;       
-        //tutorialMap.SetActive(false);
         Destroy(tutorialMap);
         tutorialCanvas.SetActive(false);
-
-
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
 
-        FlowStatisticManager.instance.tilesRotationCounts.Clear();
+        FlowStatisticManager.instance.ResetAttributes();
 
         StartGame();
         
@@ -220,23 +247,40 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
     public void SkipTutorial()
     {
-        //StopCoroutine(Tutorial());
+        fullyLinked = false;
+
+        valve.GetComponent<SphereCollider>().enabled = true;
+        sink.GetComponent<BoxCollider>().enabled = true;
+
         StopAllCoroutines();
         waterManagerScript.StopAllCoroutines();
         valveScript.StopAllCoroutines();
 
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
-        FlowStatisticManager.instance.tilesRotationCounts.Clear();
+        FlowStatisticManager.instance.ResetAttributes();
 
         //tutorialMap.SetActive(false);
         Destroy(tutorialMap);
         tutorialCanvas.SetActive(false);
         inputUnavailable = false;
         inTutorial = false;
-        fullyLinked = false;
+       
         
         StartGame();
+    }
+
+    public void ResetLevel()
+    {
+        StopAllCoroutines();
+        waterManagerScript.StopAllCoroutines();
+        valveScript.StopAllCoroutines();
+
+        pipesPassedTrough.Clear();
+        waterManagerScript.ResetElements();       
+        Destroy(mapGenerator.mapGameObject);
+        fullyLinked = false;
+
     }
 
    
