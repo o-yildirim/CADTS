@@ -167,7 +167,7 @@ public class SettingsManager : MonoBehaviour
                     User newUser = new User(user.name, user.surname, user.dob, emailEncoded, hashedNewPassword);
                     Debug.Log(newUser.name + " " + newUser.surname + " " + newUser.dob + " " + " " + newUser.email + " " + newUser.password);
                     warningText.text = "Şifre başarıyla değiştirildi.";
-
+                    DatabaseHandler.PostUser(newUser, emailEncoded, () => { });
                 }
                 else if (!user.password.Equals(hashedPwd))
                 {
