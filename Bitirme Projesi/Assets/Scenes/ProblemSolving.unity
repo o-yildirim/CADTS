@@ -267,7 +267,7 @@ MonoBehaviour:
   arrowPositions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 3.3, z: 0}
-  tutorialTextTime: 1
+  tutorialTextTime: 8
 --- !u!114 &155414578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +325,8 @@ MonoBehaviour:
   time: 0
   cycles: 0
   wrongAttempts: 0
-  pathCostByPipes: 0
+  pathCostByPipes: 
+  allLevelsTotalCostByPipes: 0
   score: 0
   timeMultiplier: 10000
   cycleMultiplier: 5
