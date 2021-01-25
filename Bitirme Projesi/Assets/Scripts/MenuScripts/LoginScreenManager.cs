@@ -36,6 +36,7 @@ public class LoginScreenManager : MonoBehaviour
         registerButtonImage = registerPanelButton.GetComponent<Image>();
 
         defaultButtonColor = registerButtonImage.color;
+
     }
 
     public void switchToLogin()

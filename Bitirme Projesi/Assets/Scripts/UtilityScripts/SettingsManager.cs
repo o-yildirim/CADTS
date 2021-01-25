@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
@@ -8,6 +6,7 @@ public class SettingsManager : MonoBehaviour
 
     public GameObject quitCanvas;
     public GameObject accountSettingsCanvas;
+    public GameObject applicationSettingsCanvas;
     public GameObject operationCanvas;
 
     public GameObject changePasswordPanel;
@@ -29,6 +28,13 @@ public class SettingsManager : MonoBehaviour
     public Text warningTextForDel;
     public bool approvedToDeleteStatistics = false;
 
+    public GameObject screenPanel;
+    public Dropdown screenModeDropdown;
+    public Dropdown screenResolutionDropdown;
+    public Button submitScreenSettings;
+    public Button closeScreenButton;
+
+    public GameObject audioPanel;
 
 
 
@@ -88,39 +94,73 @@ public class SettingsManager : MonoBehaviour
         accountSettingsCanvas.transform.Find("Panel/DeleteAccount").GetComponent<Button>().onClick.AddListener(DeleteAccount);
         accountSettingsCanvas.transform.Find("Panel/Close").GetComponent<Button>().onClick.AddListener(() => { CloseCanvas(accountSettingsCanvas); });
 
+        applicationSettingsCanvas = GameObject.Find("ApplicationSettingsMenu");
+        applicationSettingsCanvas.transform.Find("Panel/Screen").GetComponent<Button>().onClick.AddListener(ScreenSettings);
+        //applicationSettingsCanvas.transform.Find("Panel/Audio").GetComponent<Button>().onClick.AddListener(AudioSettings);
+        applicationSettingsCanvas.transform.Find("Panel/Close").GetComponent<Button>().onClick.AddListener(() => { CloseCanvas(applicationSettingsCanvas); });
+
 
 
         operationCanvas = GameObject.Find("OperationCanvas");
         Debug.Log(operationCanvas.transform.name);
         if (operationCanvas != null)
         {
+            InitializeScreenSettingsCanvas();
+            //InitializeAudioSettingsCanvas();
             InitializeChangePasswordCanvas();
             InitializeDeleteAccountCanvas();
         }
 
+        CloseAllCanvasses();
 
+    }
 
-        //applicationSettingsCanvas.SetActive(false);
+    private void CloseAllCanvasses()
+    {
+        CloseCanvas(applicationSettingsCanvas);
+        //CloseCanvas(audioPanel);
+        CloseCanvas(screenPanel);
         CloseCanvas(accountSettingsCanvas);
         CloseCanvas(operationCanvas);
         CloseCanvas(changePasswordPanel);
         CloseCanvas(deleteAccountPanel);
-
-
     }
 
     public void InitializeChangePasswordCanvas()
     {
         changePasswordPanel = operationCanvas.transform.Find("ChangePasswordPanel").gameObject;
 
-        oldPw1 = operationCanvas.transform.Find("ChangePasswordPanel/Old Password").GetComponent<InputField>();
-        oldPw2 = operationCanvas.transform.Find("ChangePasswordPanel/Old Password 2").GetComponent<InputField>();
-        newPw = operationCanvas.transform.Find("ChangePasswordPanel/New Password").GetComponent<InputField>();
-        newPw2 = operationCanvas.transform.Find("ChangePasswordPanel/New Password 2").GetComponent<InputField>();
-        submit = operationCanvas.transform.Find("ChangePasswordPanel/Submit").GetComponent<Button>();
-        warningText = operationCanvas.transform.Find("ChangePasswordPanel/Warning Text").GetComponent<Text>();
-        closeButton = operationCanvas.transform.Find("ChangePasswordPanel/Close").GetComponent<Button>();
-        closeButton.onClick.AddListener(() => { CloseCanvas(changePasswordPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
+        if (changePasswordPanel != null)
+        {
+            oldPw1 = changePasswordPanel.transform.Find("Old Password").GetComponent<InputField>();
+            oldPw2 = changePasswordPanel.transform.Find("Old Password 2").GetComponent<InputField>();
+            newPw = changePasswordPanel.transform.Find("New Password").GetComponent<InputField>();
+            newPw2 = changePasswordPanel.transform.Find("New Password 2").GetComponent<InputField>();
+            submit = changePasswordPanel.transform.Find("Submit").GetComponent<Button>();
+            warningText = changePasswordPanel.transform.Find("Warning Text").GetComponent<Text>();
+            closeButton = changePasswordPanel.transform.Find("Close").GetComponent<Button>();
+            closeButton.onClick.AddListener(() => { CloseCanvas(changePasswordPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
+        }
+    }
+
+    public void InitializeScreenSettingsCanvas()
+    {
+        screenPanel = operationCanvas.transform.Find("ScreenPanel").gameObject;
+
+        if (screenPanel != null)
+        {
+            screenModeDropdown = screenPanel.transform.Find("Screen Mode Dropdown").GetComponent<Dropdown>();
+            screenResolutionDropdown = screenPanel.transform.Find("Screen Resolution Dropdown").GetComponent<Dropdown>();
+
+            submitScreenSettings = screenPanel.transform.Find("Submit").GetComponent<Button>();
+            closeScreenButton = screenPanel.transform.Find("Close").GetComponent<Button>();
+            closeScreenButton.onClick.AddListener(() => { CloseCanvas(screenPanel); CloseCanvas(operationCanvas); OpenCanvas(applicationSettingsCanvas); });
+            submitScreenSettings.onClick.AddListener(() => { ResolutionManager.ApplySettings(); });
+
+            ResolutionManager.InitializeResolutions();
+            ResolutionManager.InitializeModesToDropdown(screenModeDropdown);
+            ResolutionManager.InitializeResolutionsToDropdown(screenResolutionDropdown);
+        }
     }
 
     public void ChangePassword()
@@ -175,11 +215,6 @@ public class SettingsManager : MonoBehaviour
 
             });
         }
-
-
-
-    
-
     }
 
     public void DeleteAccount()
@@ -194,21 +229,21 @@ public class SettingsManager : MonoBehaviour
     public void InitializeDeleteAccountCanvas()
     {
         deleteAccountPanel = operationCanvas.transform.Find("DeleteAccountPanel").gameObject;
+        if (deleteAccountPanel != null)
+        {
+            pw1 = deleteAccountPanel.transform.Find("Password").GetComponent<InputField>();
+            pw2 = deleteAccountPanel.transform.Find("Password 2").GetComponent<InputField>();
+            submitButton = deleteAccountPanel.transform.Find("Submit").GetComponent<Button>();
+            warningTextForDel = deleteAccountPanel.transform.Find("Warning Text").GetComponent<Text>();
+            checkBox = deleteAccountPanel.transform.Find("CheckBox").GetComponent<Button>();
+            checkImage = checkBox.transform.Find("CheckImage").GetComponent<Image>();
+            closeButtonForDel = deleteAccountPanel.transform.Find("Close").GetComponent<Button>();
 
-        pw1 = operationCanvas.transform.Find("DeleteAccountPanel/Password").GetComponent<InputField>();
-        pw2 = operationCanvas.transform.Find("DeleteAccountPanel/Password 2").GetComponent<InputField>();
-        submitButton = operationCanvas.transform.Find("DeleteAccountPanel/Submit").GetComponent<Button>();
-        warningTextForDel = operationCanvas.transform.Find("DeleteAccountPanel/Warning Text").GetComponent<Text>();
 
-        checkBox = operationCanvas.transform.Find("DeleteAccountPanel/CheckBox").GetComponent<Button>();
-        checkImage = checkBox.transform.Find("CheckImage").GetComponent<Image>();
-
-        closeButtonForDel = operationCanvas.transform.Find("DeleteAccountPanel/Close").GetComponent<Button>();
-
-
-        checkBox.onClick.AddListener(() => { ManageCheckBox(); } );
-        submitButton.onClick.AddListener(() => { DeleteAccountFromDatabase(); });
-        closeButtonForDel.onClick.AddListener(() => { CloseCanvas(deleteAccountPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
+            checkBox.onClick.AddListener(() => { ManageCheckBox(); });
+            submitButton.onClick.AddListener(() => { DeleteAccountFromDatabase(); });
+            closeButtonForDel.onClick.AddListener(() => { CloseCanvas(deleteAccountPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
+        }
     }
 
     public void DeleteAccountFromDatabase()
@@ -249,13 +284,24 @@ public class SettingsManager : MonoBehaviour
 
     }
 
+    public void ScreenSettings()
+    {
+        //submit.onClick.AddListener(ResolutionManager.ApplySettings);
+        screenResolutionDropdown.value = ResolutionManager.selectedResolutionIndex;
+        screenModeDropdown.value = ResolutionManager.selectedModeIndex;
+        CloseCanvas(applicationSettingsCanvas);
+        OpenCanvas(operationCanvas);
+        OpenCanvas(screenPanel);
+    } 
+
+
+
     public void ManageCheckBox()
     {
         approvedToDeleteStatistics = !approvedToDeleteStatistics;
         checkImage.enabled = !checkImage.enabled;
    
     }
-
 
     public void OpenCanvas(GameObject canvasToOpen)
     {
