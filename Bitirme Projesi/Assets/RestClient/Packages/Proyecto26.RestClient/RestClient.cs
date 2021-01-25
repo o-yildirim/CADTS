@@ -76,6 +76,11 @@ namespace Proyecto26
             DefaultRequestHeaders.Clear();
         }
 
+        internal static object Delete<T>(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Callbacks

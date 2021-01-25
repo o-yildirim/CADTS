@@ -43,6 +43,23 @@ public class DatabaseHandler
         RestClient.Get<User>($"{databaseURL}users/{userEmail}.json").Then(user => { callback(user); }).Catch(error => AuthenticationManager.instance.setStatus("Email veya şifre yanlış"));
     }
 
+    public static void DeleteUser(User userToDelete, bool deleteStatistics)
+    {
+        string encodedEmail = AuthenticationManager.instance.encode(userToDelete.email);
+        Debug.Log(encodedEmail);
+
+        RestClient.Delete($"{databaseURL}users/{encodedEmail}.json").Then(response => {
+
+            if (deleteStatistics)
+            {
+                RestClient.Delete($"{databaseURL}statistics/{encodedEmail}.json").Then(response2 => { SettingsManager.instance.LogOut(); });
+            }
+
+        });
+       
+
+    }
+
     public static void registerUser(User userToRegister, string userId, GetUserCallback callback)
     {
         RestClient.Get<User>($"{databaseURL}users/{userId}.json").Then(user => { callback(user); AuthenticationManager.instance.setStatus("Bu e-maile ait bir hesap bulunmakta."); })

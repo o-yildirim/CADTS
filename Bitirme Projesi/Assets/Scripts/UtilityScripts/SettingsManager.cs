@@ -146,7 +146,6 @@ public class SettingsManager : MonoBehaviour
         if (string.IsNullOrWhiteSpace(enteredOldPw1) || string.IsNullOrWhiteSpace(enteredOldPw2) || string.IsNullOrWhiteSpace(enteredNewPw1) || string.IsNullOrWhiteSpace(enteredNewPw2))
         {
             warningText.text = "Şifreler boş olamaz.";
-            return;
         }
         else if (!enteredOldPw1.Equals(enteredOldPw2))
         {
@@ -208,12 +207,45 @@ public class SettingsManager : MonoBehaviour
 
 
         checkBox.onClick.AddListener(() => { ManageCheckBox(); } );
+        submitButton.onClick.AddListener(() => { DeleteAccountFromDatabase(); });
         closeButtonForDel.onClick.AddListener(() => { CloseCanvas(deleteAccountPanel); CloseCanvas(operationCanvas); OpenCanvas(accountSettingsCanvas); });
     }
 
     public void DeleteAccountFromDatabase()
     {
-       //REST ISLEMLERI
+        string enteredPw1 =  pw1.text;
+        string enteredPw2 =  pw2.text;
+
+        
+
+        if (string.IsNullOrWhiteSpace(enteredPw1) || string.IsNullOrWhiteSpace(enteredPw2))
+        {
+            warningTextForDel.text = "Şifreler boş olamaz.";
+        }
+        else if (!enteredPw1.Equals(enteredPw2))
+        {
+            warningTextForDel.text = "Girilen şifreler uyuşmuyor.";
+        }
+        else
+        {
+            string emailEncoded = AuthenticationManager.instance.encode(DatabaseHandler.loggedInUser.email);
+            string hashedPwd = AuthenticationManager.GetMD5HashString(enteredPw1);
+
+            DatabaseHandler.GetUser(emailEncoded, user =>
+            {
+                if (user.password.Equals(hashedPwd))
+                {
+                    DatabaseHandler.DeleteUser(DatabaseHandler.loggedInUser, approvedToDeleteStatistics);
+                }
+                else if (!user.password.Equals(hashedPwd))
+                {
+                    warningTextForDel.text = "Girilen şifre yanlış.";
+                }
+
+            });
+        }
+
+       
 
     }
 
