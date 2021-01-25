@@ -50,7 +50,7 @@ public class ResolutionManager
         List<string> resolutions = new List<string>();
         for (int i = 0; i < supportedResolutions.Length; i++)
         {
-            string newResolutionOption = supportedResolutions[i].width + "x" + supportedResolutions[i].height;
+            string newResolutionOption = supportedResolutions[i].ToString();
             resolutions.Add(newResolutionOption);
         }
         dropdownButton.AddOptions(resolutions);
