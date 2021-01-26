@@ -286,11 +286,10 @@ public class SettingsManager : MonoBehaviour
 
     public void ScreenSettings()
     {
-        //submit.onClick.AddListener(ResolutionManager.ApplySettings);
-        screenResolutionDropdown.value = ResolutionManager.GetSelectedResIndex();
-        Debug.Log(screenResolutionDropdown.value.ToString());
-        screenModeDropdown.value = ResolutionManager.GetSelectedModeIndex();
-        Debug.Log(screenModeDropdown.value.ToString());
+
+        screenResolutionDropdown.value = PlayerPrefs.GetInt("ResolutionIndex");
+        screenModeDropdown.value = PlayerPrefs.GetInt("ModeIndex");
+
  
 
         CloseCanvas(applicationSettingsCanvas);

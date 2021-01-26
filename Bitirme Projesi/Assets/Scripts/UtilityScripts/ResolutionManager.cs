@@ -20,6 +20,14 @@ public class ResolutionManager
     public static void ApplySettings()
     {
         selectedResolutionIndex = SettingsManager.instance.screenResolutionDropdown.value;
+        selectedModeIndex = SettingsManager.instance.screenModeDropdown.value;
+
+        PlayerPrefs.SetInt("ResolutionIndex",selectedResolutionIndex);
+        PlayerPrefs.SetInt("ModeIndex", selectedModeIndex);
+
+        if (selectedModeIndex == 0) fullScreen = true;
+        else if (selectedModeIndex == 1) fullScreen = false;
+
 
         Screen.SetResolution(supportedResolutions[selectedResolutionIndex].width, supportedResolutions[selectedResolutionIndex].height,fullScreen);
   
@@ -77,7 +85,7 @@ public class ResolutionManager
 
         for (int i = 0; i < supportedResolutions.Length; i++)
         {         
-            if (string.Equals(supportedResolutions[i].ToString(),currentResolution.ToString()))
+            if (currentResolution.Equals(supportedResolutions[i]))
             {
                 currentIndex = i;
                 break;
