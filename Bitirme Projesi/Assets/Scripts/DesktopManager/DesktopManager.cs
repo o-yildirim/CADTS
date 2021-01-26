@@ -59,7 +59,7 @@ public class DesktopManager : MonoBehaviour
         ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow]);
         ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null);
 
-        Debug.Log("Calling invoke");
+
 
        
         displayStatisticMiniGameButtons[startingWindow].onClick.Invoke();

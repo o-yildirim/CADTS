@@ -413,7 +413,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public void DisplayForMinigame(Minigame gameToDisplay)
     {
-        Debug.Log(operatingForDisplay);
+
 
         if (operatingForDisplay) return;
 

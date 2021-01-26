@@ -54,6 +54,10 @@ public class DatabaseHandler
             {
                 RestClient.Delete($"{databaseURL}statistics/{encodedEmail}.json").Then(response2 => { SettingsManager.instance.LogOut(); });
             }
+            else
+            {
+                SettingsManager.instance.LogOut();
+            }
 
         });
        

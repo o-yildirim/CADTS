@@ -102,7 +102,7 @@ public class SettingsManager : MonoBehaviour
 
 
         operationCanvas = GameObject.Find("OperationCanvas");
-        Debug.Log(operationCanvas.transform.name);
+
         if (operationCanvas != null)
         {
             InitializeScreenSettingsCanvas();
@@ -154,7 +154,7 @@ public class SettingsManager : MonoBehaviour
 
             submitScreenSettings = screenPanel.transform.Find("Submit").GetComponent<Button>();
             closeScreenButton = screenPanel.transform.Find("Close").GetComponent<Button>();
-            closeScreenButton.onClick.AddListener(() => { CloseCanvas(screenPanel); CloseCanvas(operationCanvas); OpenCanvas(applicationSettingsCanvas); });
+            closeScreenButton.onClick.AddListener(() => { ResolutionManager.ResetSelected();  CloseCanvas(screenPanel); CloseCanvas(operationCanvas); OpenCanvas(applicationSettingsCanvas); });
             submitScreenSettings.onClick.AddListener(() => { ResolutionManager.ApplySettings(); });
 
             ResolutionManager.InitializeResolutions();
@@ -287,8 +287,12 @@ public class SettingsManager : MonoBehaviour
     public void ScreenSettings()
     {
         //submit.onClick.AddListener(ResolutionManager.ApplySettings);
-        screenResolutionDropdown.value = ResolutionManager.selectedResolutionIndex;
-        screenModeDropdown.value = ResolutionManager.selectedModeIndex;
+        screenResolutionDropdown.value = ResolutionManager.GetSelectedResIndex();
+        Debug.Log(screenResolutionDropdown.value.ToString());
+        screenModeDropdown.value = ResolutionManager.GetSelectedModeIndex();
+        Debug.Log(screenModeDropdown.value.ToString());
+ 
+
         CloseCanvas(applicationSettingsCanvas);
         OpenCanvas(operationCanvas);
         OpenCanvas(screenPanel);

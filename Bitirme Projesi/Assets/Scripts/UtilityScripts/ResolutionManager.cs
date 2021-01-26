@@ -14,24 +14,15 @@ public class ResolutionManager
 
     public static void InitializeResolutions()
     {
-        supportedResolutions = Screen.resolutions;
-        Resolution currentResolution = Screen.currentResolution;
-        for(int i =0; i< supportedResolutions.Length; i++)
-        {
-            if (currentResolution.Equals(supportedResolutions[i]))
-            {
-                selectedResolutionIndex = i;
-                break;
-            }
-        }
-
-       // Debug.Log(currentResolution.width + "x" + currentResolution.height);
-
+        supportedResolutions = Screen.resolutions;       
     }
 
     public static void ApplySettings()
     {
+        selectedResolutionIndex = SettingsManager.instance.screenResolutionDropdown.value;
+
         Screen.SetResolution(supportedResolutions[selectedResolutionIndex].width, supportedResolutions[selectedResolutionIndex].height,fullScreen);
+  
     }
 
     public static void InitializeModesToDropdown(Dropdown dropdownButton)
@@ -73,6 +64,41 @@ public class ResolutionManager
        
 
         
+    }
+
+    public static int GetSelectedResIndex()
+    {
+        Resolution currentResolution = new Resolution();
+        currentResolution.width = Screen.width;
+        currentResolution.height = Screen.height;
+        currentResolution.refreshRate = Screen.currentResolution.refreshRate;
+
+        int currentIndex = 0;
+
+        for (int i = 0; i < supportedResolutions.Length; i++)
+        {         
+            if (string.Equals(supportedResolutions[i].ToString(),currentResolution.ToString()))
+            {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        //Debug.Log("Current: " + currentResolution.ToString());
+        //Debug.Log("Selected: "+ supportedResolutions[currentIndex].ToString());
+        return currentIndex;
+    }
+
+    public static int GetSelectedModeIndex()
+    {
+        if (Screen.fullScreen) return 0;
+        else return 1;
+    }
+
+    public static void ResetSelected()
+    {
+        selectedResolutionIndex = GetSelectedResIndex();
+        selectedModeIndex = GetSelectedModeIndex();
     }
 
 
