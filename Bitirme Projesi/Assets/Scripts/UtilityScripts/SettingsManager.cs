@@ -115,7 +115,7 @@ public class SettingsManager : MonoBehaviour
 
     }
 
-    private void CloseAllCanvasses()
+    public void CloseAllCanvasses()
     {
         CloseCanvas(applicationSettingsCanvas);
         //CloseCanvas(audioPanel);

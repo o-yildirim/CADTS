@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
-
 public class DesktopManager : MonoBehaviour
 {
     public Button[] desktopButtons;
@@ -274,11 +272,13 @@ public class DesktopManager : MonoBehaviour
 
     public void OpenAccountSettings()
     {
+        SettingsManager.instance.CloseAllCanvasses();
         accountSettingsCanvas.SetActive(true);
     }
 
     public void OpenAppSettings()
     {
+        SettingsManager.instance.CloseAllCanvasses();
         applicationSettingsCanvas.SetActive(true);
     }
 
