@@ -973,7 +973,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6106438439140236357, guid: 228df847d0571114fb3cef30d561cfc1, type: 3}
       propertyPath: minigameName
-      value: Minigame D
+      value: BalloonGame
       objectReference: {fileID: 0}
     - target: {fileID: 6106438439140236357, guid: 228df847d0571114fb3cef30d561cfc1, type: 3}
       propertyPath: minigameCategory
@@ -6998,7 +6998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: minigameName
-      value: MathGame
+      value: BalloonGame
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: minigameCategory
