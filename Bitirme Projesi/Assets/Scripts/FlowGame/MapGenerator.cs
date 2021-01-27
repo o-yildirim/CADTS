@@ -412,16 +412,26 @@ public class MapGenerator : MonoBehaviour
             {
                 if (map[i,j] != null)
                 {
-                    int randomState = Random.Range(0, possiblePipeStateCount);
+                   
                     Tile tile = map[i, j].GetComponent<Tile>();
                     if (tile != null)
                     {
-                        for (int x = 0; x < randomState; x++)
+                        int randomState;
+                        do
+                        {
+                          randomState = Random.Range(0, possiblePipeStateCount);
+                        } while (randomState != tile.currentState);
+
+                        /*for (int x = 0; x < randomState; x++)
                         {
                             tile.manageEdges();
                             tile.currentState = (tile.currentState+1) % possiblePipeStateCount;
                            
-                        }
+                        }*/
+                        tile.currentState = randomState;
+                        //tile.init();
+                        tile.manageEdges();
+                        tile.currentState = (tile.currentState+1)%possiblePipeStateCount;
                     }
                 }
             }

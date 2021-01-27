@@ -255,6 +255,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         StopAllCoroutines();
         waterManagerScript.StopAllCoroutines();
         valveScript.StopAllCoroutines();
+        valveScript.gameObject.GetComponent<AudioSource>().Stop();
 
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
@@ -275,6 +276,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         StopAllCoroutines();
         waterManagerScript.StopAllCoroutines();
         valveScript.StopAllCoroutines();
+  
 
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();       
