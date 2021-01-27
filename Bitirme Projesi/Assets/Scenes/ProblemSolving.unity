@@ -6308,6 +6308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8b6ea568cb0ae489e1e8f216f58e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 1380175956}
   rotationSpeed: 150
   offset: 0.7
 --- !u!135 &1380175955

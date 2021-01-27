@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class Valve : MonoBehaviour
 {
-    private AudioSource audioSource;
     public float rotationSpeed = 3f;
     public float offset = 0.3f;
     private float rotationDuration;
+    private AudioSource audioSource;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         rotationDuration = audioSource.clip.length;
+
     }
     public IEnumerator Rotate()
     {
-
         float time = 0f;
+       
+        audioSource.enabled = true;       
         audioSource.Play();
+
         while (time <= rotationDuration - offset)
         {
             transform.Rotate(Vector3.back, rotationSpeed * Time.deltaTime);

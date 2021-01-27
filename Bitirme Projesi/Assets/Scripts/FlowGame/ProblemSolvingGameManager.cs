@@ -76,7 +76,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public IEnumerator initiateWater()
     {
         Coroutine valveRotating = StartCoroutine(valveScript.Rotate());
-        Coroutine waterFlowing =StartCoroutine(waterManagerScript.DrawWaterSlow(pipesPassedTrough, valveRotating));        
+        Coroutine waterFlowing = StartCoroutine(waterManagerScript.DrawWaterSlow(pipesPassedTrough, valveRotating));        
         yield return waterFlowing;
 
       
