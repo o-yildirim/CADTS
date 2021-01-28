@@ -85,6 +85,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         {
             pipesPassedTrough.Clear();
             waterManagerScript.ResetElements();
+            waterManagerScript.waterSoundSource.Stop();
             FlowStatisticManager.instance.IncrementWrongAttempt();
             inputUnavailable = false;
         }
@@ -118,6 +119,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
     }
     public void FinishGame()
     {
+        waterManagerScript.waterSoundSource.volume /= 2f;
         inputUnavailable = true;
         FlowStatisticManager.instance.timerOn = false;
 
@@ -254,9 +256,10 @@ public class ProblemSolvingGameManager : MonoBehaviour
 
         StopAllCoroutines();
         waterManagerScript.StopAllCoroutines();
+        waterManagerScript.waterSoundSource.Stop();
         valveScript.StopAllCoroutines();
-        valveScript.gameObject.GetComponent<AudioSource>().Stop();
-
+        //valveScript.gameObject.GetComponent<AudioSource>().Stop();
+        valveScript.audioSource.Stop();
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
         FlowStatisticManager.instance.ResetAttributes();
@@ -275,8 +278,9 @@ public class ProblemSolvingGameManager : MonoBehaviour
     {
         StopAllCoroutines();
         waterManagerScript.StopAllCoroutines();
+        waterManagerScript.waterSoundSource.Stop();
         valveScript.StopAllCoroutines();
-  
+        
 
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();       

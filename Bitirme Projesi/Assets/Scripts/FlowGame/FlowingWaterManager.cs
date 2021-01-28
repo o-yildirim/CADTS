@@ -9,13 +9,22 @@ public class FlowingWaterManager : MonoBehaviour
     public float offset = 0.1f;
     public float flowSpeed = 3f;
     public GameObject finalPointIfFails;
-
+    public AudioSource waterSoundSource;
 
     public GameObject cross;
     public float crossDuration = 0.5f;
+
+    private void Start()
+    {
+
+        waterSoundSource = ProblemSolvingGameManager.instance.sink.GetComponent<AudioSource>();
+    }
+
     public IEnumerator DrawWaterSlow(List<GameObject> positionList,Coroutine valveRotating)
     {
         yield return valveRotating;
+        waterSoundSource.enabled = true;     
+        waterSoundSource.Play();
 
         if (!ProblemSolvingGameManager.instance.fullyLinked)
         {

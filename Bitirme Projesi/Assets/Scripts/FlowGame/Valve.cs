@@ -7,7 +7,7 @@ public class Valve : MonoBehaviour
     public float rotationSpeed = 3f;
     public float offset = 0.3f;
     private float rotationDuration;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     private void Start()
     {
