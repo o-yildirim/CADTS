@@ -453,7 +453,7 @@ public class MapGenerator : MonoBehaviour
         float xPos = (map[0, 0].transform.position.x + map[0, columns - 1].transform.position.x)/2f;
         float yPos = (ProblemSolvingGameManager.instance.sink.transform.position.y + ProblemSolvingGameManager.instance.finish.transform.position.y)/ 2f;
 
-        Camera.main.orthographicSize = 5f;
+        Camera.main.orthographicSize = 5.15f;
         Vector3 newCamPos = new Vector3(xPos, yPos, 0f);
         newCamPos.z = Camera.main.transform.position.z;
         Camera.main.transform.position = newCamPos;

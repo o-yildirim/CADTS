@@ -1,44 +1,45 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
 
     public GameObject quitCanvas;
-    public GameObject accountSettingsCanvas;
-    public GameObject applicationSettingsCanvas;
-    public GameObject operationCanvas;
+    private GameObject accountSettingsCanvas;
+    private GameObject applicationSettingsCanvas;
+    private GameObject operationCanvas;
 
-    public GameObject changePasswordPanel;
-    public InputField oldPw1;
-    public InputField oldPw2;
-    public InputField newPw;
-    public InputField newPw2;
-    public Button submit;
-    public Text warningText;
-    public Button closeButton;
+    private GameObject changePasswordPanel;
+    private InputField oldPw1;
+    private InputField oldPw2;
+    private InputField newPw;
+    private InputField newPw2;
+    private Button submit;
+    private Text warningText;
+    private Button closeButton;
 
-    public GameObject deleteAccountPanel;
-    public InputField pw1;
-    public InputField pw2;
-    public Button checkBox;
-    public Image checkImage;
-    public Button submitButton;
-    public Button closeButtonForDel;
-    public Text warningTextForDel;
-    public bool approvedToDeleteStatistics = false;
+    private GameObject deleteAccountPanel;
+    private InputField pw1;
+    private InputField pw2;
+    private Button checkBox;
+    private Image checkImage;
+    private Button submitButton;
+    private Button closeButtonForDel;
+    private Text warningTextForDel;
+    private bool approvedToDeleteStatistics = false;
 
-    public GameObject screenPanel;
+    private GameObject screenPanel;
     public Dropdown screenModeDropdown;
     public Dropdown screenResolutionDropdown;
-    public Button submitScreenSettings;
-    public Button closeScreenButton;
+    private Button submitScreenSettings;
+    private Button closeScreenButton;
 
-    public GameObject audioPanel;
-
-
-
-    //public GameObject applicationSettingsPanel
+    private GameObject audioPanel;
+    private Slider volumeSlider;
+    public AudioMixer audioMixer;
+    private AudioSource sampleSource;
+    
 
 
     public static SettingsManager instance;
@@ -59,6 +60,7 @@ public class SettingsManager : MonoBehaviour
     public void Start()
     {
         quitCanvas = gameObject.transform.GetChild(0).gameObject;
+        sampleSource = GetComponent<AudioSource>();
 
     }
     public void QuitRequest()
@@ -96,7 +98,7 @@ public class SettingsManager : MonoBehaviour
 
         applicationSettingsCanvas = GameObject.Find("ApplicationSettingsMenu");
         applicationSettingsCanvas.transform.Find("Panel/Screen").GetComponent<Button>().onClick.AddListener(ScreenSettings);
-        //applicationSettingsCanvas.transform.Find("Panel/Audio").GetComponent<Button>().onClick.AddListener(AudioSettings);
+        applicationSettingsCanvas.transform.Find("Panel/Audio").GetComponent<Button>().onClick.AddListener(OpenAudioSettings);
         applicationSettingsCanvas.transform.Find("Panel/Close").GetComponent<Button>().onClick.AddListener(() => { CloseCanvas(applicationSettingsCanvas); });
 
 
@@ -106,7 +108,7 @@ public class SettingsManager : MonoBehaviour
         if (operationCanvas != null)
         {
             InitializeScreenSettingsCanvas();
-            //InitializeAudioSettingsCanvas();
+            InitializeAudioSettingsCanvas();
             InitializeChangePasswordCanvas();
             InitializeDeleteAccountCanvas();
         }
@@ -118,7 +120,7 @@ public class SettingsManager : MonoBehaviour
     public void CloseAllCanvasses()
     {
         CloseCanvas(applicationSettingsCanvas);
-        //CloseCanvas(audioPanel);
+        CloseCanvas(audioPanel);
         CloseCanvas(screenPanel);
         CloseCanvas(accountSettingsCanvas);
         CloseCanvas(operationCanvas);
@@ -162,6 +164,38 @@ public class SettingsManager : MonoBehaviour
             ResolutionManager.InitializeResolutionsToDropdown(screenResolutionDropdown);
         }
     }
+
+    public void InitializeAudioSettingsCanvas()
+    {
+        audioPanel = operationCanvas.transform.Find("AudioPanel").gameObject;
+
+        if (audioPanel != null)
+        {
+            sampleSource = audioPanel.GetComponent<AudioSource>();
+
+            volumeSlider = audioPanel.transform.Find("Volume Slider").GetComponent<Slider>();
+            float currentVolume = PlayerPrefs.GetFloat("volume");
+            volumeSlider.value = currentVolume;
+            audioMixer.SetFloat("volume", currentVolume);
+            volumeSlider.onValueChanged.AddListener(SetVolume);
+
+           
+            
+            closeScreenButton = audioPanel.transform.Find("Close").GetComponent<Button>();
+            closeScreenButton.onClick.AddListener(() => { CloseCanvas(audioPanel); CloseCanvas(operationCanvas); OpenCanvas(applicationSettingsCanvas); });
+    
+
+
+        }
+    }
+
+    public void OpenAudioSettings()
+    {
+        CloseCanvas(applicationSettingsCanvas);
+        OpenCanvas(operationCanvas);
+        OpenCanvas(audioPanel);
+    }
+
 
     public void ChangePassword()
     {
@@ -287,16 +321,29 @@ public class SettingsManager : MonoBehaviour
     public void ScreenSettings()
     {
 
-        screenResolutionDropdown.value = PlayerPrefs.GetInt("ResolutionIndex");
-        screenModeDropdown.value = PlayerPrefs.GetInt("ModeIndex");
+        //screenResolutionDropdown.value = PlayerPrefs.GetInt("ResolutionIndex");
+        //screenModeDropdown.value = PlayerPrefs.GetInt("ModeIndex");
 
- 
+        //screenModeDropdown.RefreshShownValue();
+        //screenResolutionDropdown.RefreshShownValue();
+
+        //Text tempText = screenPanel.transform.Find("Title").GetComponent<Text>();
+        //tempText.text = screenResolutionDropdown.value.ToString();
 
         CloseCanvas(applicationSettingsCanvas);
         OpenCanvas(operationCanvas);
         OpenCanvas(screenPanel);
     } 
 
+    public void SetVolume(float volume)
+    {
+        audioMixer.SetFloat("volume", volume);
+        PlayerPrefs.SetFloat("volume", volume);
+        if (!sampleSource.isPlaying) sampleSource.Play();
+        //sampleSource.Play();
+
+        // Debug.Log(volume);
+    }
 
 
     public void ManageCheckBox()
