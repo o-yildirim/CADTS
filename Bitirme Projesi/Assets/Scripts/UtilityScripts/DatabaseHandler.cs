@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Proyecto26;
 using FullSerializer;
+using UnityEditor;
+
 public class DatabaseHandler
 {
 
@@ -139,6 +141,11 @@ public class DatabaseHandler
             callback(users);
         });
 
+    }
+
+    public static void sendMail(string userId, MailInfo info)
+    {
+        RestClient.Put<MailInfo>(databaseURL + "mail/" + userId + ".json", info);    
     }
 
     public static void InsertStatistic(Statistic statistic)

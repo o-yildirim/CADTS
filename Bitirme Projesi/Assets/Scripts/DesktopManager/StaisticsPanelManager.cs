@@ -12,6 +12,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public GameObject panelToDisplay;
     public GameObject legend;
+    public Button mailBtn;
 
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
@@ -339,9 +340,18 @@ public class StaisticsPanelManager : MonoBehaviour
         panelToDisplay.SetActive(true);
         operatingForDisplay = false;
 
-       // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
-      //  StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
-       
+
+        mailBtn.onClick.AddListener(() => {
+            Debug.Log(email + " " + category + " " + game);
+            string info = category + "," + game;
+            Debug.Log(info);
+            MailInfo mailInfo = new MailInfo(info);
+            DatabaseHandler.sendMail(email, mailInfo);
+        });
+
+        // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
+        //  StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
+
         //InformUserComparedToHisOwn();
         //InformUserAboutGlobal();
 
@@ -352,7 +362,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
         resetPies();
         deactivatePies();
-
+        
         ownPerformanceText.text = "";
         percentageAmongUsers.text = "";
         lastPerformancePercentageAmongUsers.text = "";
@@ -369,7 +379,7 @@ public class StaisticsPanelManager : MonoBehaviour
         lastPerformance = 0f;
         userPerformanceCount = 0;
         globalAverage = 0f;
-
+        mailBtn.onClick.RemoveAllListeners();
     }
 
     public IEnumerator drawPie(float percentage,Image pieImage, Color color)
@@ -422,6 +432,7 @@ public class StaisticsPanelManager : MonoBehaviour
         string category = gameToDisplay.minigameCategory;
         string game = gameToDisplay.minigameName;
         titleText.text = gameToDisplay.displayName;
+        //Debug.Log(email + " " + category + " " + game);
 
         StopAllCoroutines();
         //statisticsToAnalyze.Clear();
