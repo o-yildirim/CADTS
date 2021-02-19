@@ -13,6 +13,7 @@ public class StaisticsPanelManager : MonoBehaviour
     public GameObject panelToDisplay;
     public GameObject legend;
     public Button mailBtn;
+    public Text mailAckText;
 
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
@@ -196,12 +197,17 @@ public class StaisticsPanelManager : MonoBehaviour
 
     private void InitializeUserAverageAndLastPerformance(string email, string category, string game)
     {
+       
 
         DatabaseHandler.GetUserStatistics(email, category, game, statistics =>
         {
+            mailBtn.gameObject.SetActive(true);
+
             if (statistics == null || statistics.Count == 0)
             {
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
+                mailBtn.gameObject.SetActive(false);
+
                 userStatsInitialized = true;
                 doNotTouchOwnText = true;
                 operatingForDisplay = false;
@@ -209,6 +215,7 @@ public class StaisticsPanelManager : MonoBehaviour
             }
             else if (statistics.Count == 1)
             {
+                mailBtn.gameObject.SetActive(false);
                 ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
                 lastPerformance = statistics.Values.Last().minigameScore;
                 //doNotTouchOwnText = true;
@@ -250,7 +257,7 @@ public class StaisticsPanelManager : MonoBehaviour
     {
         if (!doNotTouchOwnText)
         {
-           
+          
 
             float difference = userAverageLastPerformanceExcluded - lastPerformance;
             float changePercentage = Math.Abs(difference) * 100f / userAverageLastPerformanceExcluded;
@@ -347,6 +354,9 @@ public class StaisticsPanelManager : MonoBehaviour
             Debug.Log(info);
             MailInfo mailInfo = new MailInfo(info);
             DatabaseHandler.sendMail(email, mailInfo);
+          //DatabaseHandler daki metoda .Then koymaya çalıştım beceremedim.
+            
+            
         });
 
         // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));

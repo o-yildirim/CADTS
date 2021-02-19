@@ -139,6 +139,7 @@ public class DesktopManager : MonoBehaviour
 
     public void StatitsicPanelSelect()
     {
+        StaisticsPanelManager.instance.mailAckText.text = "";
 
         GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
         Button clickedPanelButton = selectedGameObject.GetComponent<Button>();

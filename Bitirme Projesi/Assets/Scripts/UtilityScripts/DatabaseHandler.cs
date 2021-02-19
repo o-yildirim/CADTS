@@ -145,7 +145,7 @@ public class DatabaseHandler
 
     public static void sendMail(string userId, MailInfo info)
     {
-        RestClient.Put<MailInfo>(databaseURL + "mail/" + userId + ".json", info);    
+        RestClient.Put<MailInfo>(databaseURL + "mail/" + userId + ".json", info).Then(response => { StaisticsPanelManager.instance.mailAckText.text = "Başarıyla gönderildi."; });    
     }
 
     public static void InsertStatistic(Statistic statistic)

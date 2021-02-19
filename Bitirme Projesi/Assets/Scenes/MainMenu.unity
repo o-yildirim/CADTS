@@ -2820,6 +2820,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367212520}
   m_CullTransparentMesh: 0
+--- !u!1 &418420056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 418420057}
+  - component: {fileID: 418420059}
+  - component: {fileID: 418420058}
+  m_Layer: 5
+  m_Name: Mail Acknowledgement Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &418420057
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418420056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 715143578}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 758.3, y: 192.4}
+  m_SizeDelta: {x: 160, y: 112.04993}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &418420058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418420056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.24546158, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 25
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &418420059
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418420056}
+  m_CullTransparentMesh: 0
 --- !u!1001 &454900067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4925,6 +5004,7 @@ RectTransform:
   - {fileID: 1103299360}
   - {fileID: 1495314526}
   - {fileID: 1957931035}
+  - {fileID: 418420057}
   - {fileID: 1994527778}
   m_Father: {fileID: 901030693}
   m_RootOrder: 5
@@ -9176,8 +9256,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.0037384033, y: 0.023777008}
+  m_SizeDelta: {x: -0.0077209473, y: 0.047706604}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268710249
 MonoBehaviour:
@@ -9201,10 +9281,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -9212,7 +9292,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "Detayl\u0131 bilgiyi e-posta olarak g\xF6nder"
 --- !u!222 &1268710250
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11295,6 +11375,7 @@ MonoBehaviour:
   panelToDisplay: {fileID: 715143577}
   legend: {fileID: 1957931034}
   mailBtn: {fileID: 1994527781}
+  mailAckText: {fileID: 418420058}
   titleText: {fileID: 1015115745}
   percentageAmongUsers: {fileID: 1495314527}
   lastPerformancePercentageAmongUsers: {fileID: 1103299361}
@@ -14368,12 +14449,12 @@ RectTransform:
   m_Children:
   - {fileID: 1268710248}
   m_Father: {fileID: 715143578}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 480, y: 221}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 489, y: 195.41}
+  m_SizeDelta: {x: 327.21725, y: 118.00915}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1994527779
 MonoBehaviour:
@@ -14434,7 +14515,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.59607846}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
