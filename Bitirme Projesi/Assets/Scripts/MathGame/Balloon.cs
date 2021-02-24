@@ -28,6 +28,7 @@ public class Balloon : MonoBehaviour
             MathGameController.instance.balloons.Remove(this);
             Instantiate(exp, new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 1), Quaternion.identity);
             Destroy(gameObject);
+            MathGameController.instance.source.Play();
         }
     }
 

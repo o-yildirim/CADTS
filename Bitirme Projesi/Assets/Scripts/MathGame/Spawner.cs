@@ -34,19 +34,14 @@ public class Spawner : MonoBehaviour
                 time = 0f;
                 timeLimit -= 0.01f;
             }
-        }
-
-        
+        }   
     }
 
     void SpawnBalloon()
     {
         GameObject obj = Instantiate(balloon, new Vector2(Random.Range(gameObject.transform.position.x + rangeMax, gameObject.transform.position.x + rangeMin), gameObject.transform.position.y), Quaternion.identity);
         rb = obj.GetComponent<Rigidbody2D>();
-        //rb.velocity = new Vector2(0f, velocity * Time.deltaTime);
         rb.velocity = new Vector2(0f, velocity);
-        //Debug.Log(rb.velocity.magnitude);
-        //velocity *= 1.01f;
         velocity += 0.25f;
         MathGameController.instance.balloons.Add(obj.GetComponent<Balloon>());
     }

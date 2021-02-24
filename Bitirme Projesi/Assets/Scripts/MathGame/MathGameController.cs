@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MathGameController : MonoBehaviour
 {
+    public AudioSource source;
     public static MathGameController instance;
     public GameObject exp;
     public List<Balloon> balloons;
@@ -25,6 +26,8 @@ public class MathGameController : MonoBehaviour
     void Start()
     {
         tutorialC = StartCoroutine(tutorial());
+        source = GetComponent<AudioSource>();
+        source.playOnAwake = false;
         answer.Select();
     }
 
@@ -63,6 +66,7 @@ public class MathGameController : MonoBehaviour
                 Instantiate(exp, new Vector2(balloonToRemove.transform.position.x, balloonToRemove.transform.position.y + 1), Quaternion.identity);
                 Destroy(balloonToRemove);
                 Debug.Log(score);
+                source.Play();
             }
         }
 
