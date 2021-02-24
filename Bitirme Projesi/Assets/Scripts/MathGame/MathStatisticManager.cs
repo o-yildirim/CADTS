@@ -8,6 +8,7 @@ public class MathStatisticManager : MonoBehaviour
     public static MathStatisticManager instance;
     private MathStatistic statistic;
     public float minigameScore;
+    public int wrongAttempts;
 
     public void Awake()
     {
@@ -21,10 +22,11 @@ public class MathStatisticManager : MonoBehaviour
         }
     }
 
-    public void EvaluateValues(float score)
+    public void EvaluateValues(float score, int wrongAttempts)
     {
         //detaylandırılabilir
-        minigameScore = score;
+        this.wrongAttempts = wrongAttempts;
+        minigameScore = (float)(score - (0.2 * wrongAttempts));
     }
 
     public void InitializeStatisticObject()
@@ -33,7 +35,8 @@ public class MathStatisticManager : MonoBehaviour
                                       DatabaseHandler.loggedInUser,
                                       "Math",
                                       "BalloonGame",
-                                       minigameScore 
+                                       minigameScore,
+                                       wrongAttempts
                                       );
 
     }

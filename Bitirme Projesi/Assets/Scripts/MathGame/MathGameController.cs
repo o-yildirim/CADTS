@@ -14,7 +14,9 @@ public class MathGameController : MonoBehaviour
     [SerializeField]
     public InputField answer;
     public Text scoreTxt;
+    public Text wrongAttemptsTxt;
     public bool isFinished = false;
+    private int wrongAttempts = 0;
     private int score = 0;
     public Text tutorialText;
     public Button skipTutorialBtn;
@@ -56,11 +58,13 @@ public class MathGameController : MonoBehaviour
 
     public void submitButton()
     {
+        bool scoreChanged = false;
         for (int i = 0; i < balloons.Count; i++)
         {
             if (balloons[i].answer.ToString() == answer.text)
             {
                 score += 10;
+                scoreChanged = true;
                 GameObject balloonToRemove = balloons[i].gameObject;
                 balloons.Remove(balloons[i]);
                 Instantiate(exp, new Vector2(balloonToRemove.transform.position.x, balloonToRemove.transform.position.y + 1), Quaternion.identity);
@@ -69,6 +73,13 @@ public class MathGameController : MonoBehaviour
                 source.Play();
             }
         }
+
+        if (!scoreChanged && answer.text != "")
+        {
+            wrongAttempts += 1;
+            Debug.Log("WRONG NUM: " + wrongAttempts);
+        }
+
 
         answer.text = "";
     }
@@ -81,9 +92,12 @@ public class MathGameController : MonoBehaviour
             destroyBalloons();
             StatisticPanelManager.instance.gameCanvas.SetActive(false);
             Debug.Log(score);
-            scoreTxt.text += score.ToString();
+          //  scoreTxt.text += score.ToString();
+            Debug.Log(wrongAttempts);
+            wrongAttemptsTxt.text += wrongAttempts.ToString();
             StatisticPanelManager.instance.statisticPanel.SetActive(true);
-            MathStatisticManager.instance.EvaluateValues(score); //**
+            MathStatisticManager.instance.EvaluateValues(score, wrongAttempts); //**
+            scoreTxt.text += MathStatisticManager.instance.minigameScore.ToString();
             MathStatisticManager.instance.InitializeStatisticObject(); //**
             MathStatisticManager.instance.InsertToDatabase(); //**
             StatisticPanelManager.instance.exitButton.onClick.AddListener(SceneManagement.instance.loadMainMenu);
@@ -142,6 +156,7 @@ public class MathGameController : MonoBehaviour
         spawnerLeft.gameObject.SetActive(true);
         spawnerRight.gameObject.SetActive(true);
         instance.score = 0;
+        instance.wrongAttempts = 0;
         instance.health = 5;
         answer.text = "";
     }
