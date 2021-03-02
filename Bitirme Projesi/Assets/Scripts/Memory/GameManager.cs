@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public GameObject FinalTime;
     public Text FT;
 
+    public Button skip;
+    public GameObject SkipButton;
+
+
     public float timeStart;
     public float globalTimer = 0f;
 
@@ -56,6 +60,8 @@ public class GameManager : MonoBehaviour
         LevelTimer = GameObject.Find("LevelTimer");
         Timer = LevelTimer.GetComponent<Text>();
         Timer.text = timeStart.ToString("F2");
+        SkipButton = GameObject.Find("SkipButton");
+        skip = SkipButton.GetComponent<Button>();
 
         CreateGameButton(0, new Vector3(-64, 64));
         CreateGameButton(1, new Vector3(64, 64));
@@ -82,6 +88,7 @@ public class GameManager : MonoBehaviour
         {
             globalTimer += Time.deltaTime;
         }
+
 
     }
 
@@ -172,6 +179,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Tutorial()                      //tutorial skip buttonu eklenecek, yazılar delayleriyle birlikte düzenlenecek
     {
+        SkipButton.SetActive(true);
+        skip.onClick.AddListener(SkipTutorial);
         inputEnabled = false;
         tutorialEnabled = true;
         rg = new System.Random("honeybee".GetHashCode());           //tutorialda her seferinde aynı ikili geliyor.
@@ -208,10 +217,18 @@ public class GameManager : MonoBehaviour
         }
         tutorialEnabled = false;
         StartCoroutine(SimonSays());
-    }        
+    }
+
+    public void SkipTutorial()
+    {
+        StopAllCoroutines();
+        tutorialEnabled = false;
+        StartCoroutine(SimonSays());
+    }
 
     IEnumerator SimonSays()             //yazılar delayleriyle birlikte düzenlenecek
     {
+        SkipButton.SetActive(false);
         inputEnabled = false;
         timerActive = false;
         globalTimerActive = false;
@@ -237,7 +254,8 @@ public class GameManager : MonoBehaviour
         globalTimerActive = true;
         yield return null;
         Scoring();
-    }         
+    }
+
 
     void Bleep(int index)
     {
