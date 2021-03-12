@@ -2,11 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 
 public class GameManager : MonoBehaviour
 {
-
+    public GameManager instance;
     public GameObject gameButtonPrefab;
     public Text Info;
     public GameObject DisplayText;
@@ -47,6 +46,19 @@ public class GameManager : MonoBehaviour
     bool timerActive = false;
     bool globalTimerActive = false;
     bool tutorialEnabled = false;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     void Start()
     {
@@ -174,6 +186,9 @@ public class GameManager : MonoBehaviour
         FinalTime = GameObject.Find("FinalTime");
         FT = FinalTime.GetComponentInChildren<Text>();
         FT.text = "Toplam Süre: " + globalTimer.ToString("F2");
+        MemoryStatisticManager.instance.EvaluateValues(score, correctlyAnswered, globalTimer);
+        MemoryStatisticManager.instance.InitializeStatisticObject(); //**
+        MemoryStatisticManager.instance.InsertToDatabase(); //**
 
     }
 

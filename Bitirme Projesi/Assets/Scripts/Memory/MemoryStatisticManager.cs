@@ -18,7 +18,7 @@ public class MemoryStatisticManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
@@ -26,5 +26,22 @@ public class MemoryStatisticManager : MonoBehaviour
     {
         this.correctlyAnswered = correctlyAnswered;
         this.globalTime = globalTime;
+    }
+
+    public void InitializeStatisticObject()
+    {
+        statistic = new MemoryStatistic(
+                                      DatabaseHandler.loggedInUser,
+                                      "Memory",
+                                      "SimonSays",
+                                       minigameScore,
+                                       correctlyAnswered,
+                                       globalTime
+                                      );
+    }
+
+    public void InsertToDatabase()
+    {
+        DatabaseHandler.InsertStatistic(statistic);
     }
 }
