@@ -26,6 +26,7 @@ public class MemoryStatisticManager : MonoBehaviour
     {
         this.correctlyAnswered = correctlyAnswered;
         this.globalTime = globalTime;
+        this.minigameScore = minigameScore;
     }
 
     public void InitializeStatisticObject()

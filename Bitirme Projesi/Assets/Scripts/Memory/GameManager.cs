@@ -177,9 +177,9 @@ public class GameManager : MonoBehaviour
         timerActive = false;
         globalTimerActive = false;
         GameOverScreen.SetActive(true);
-        /* = GameObject.Find("FinalCorrectlyAnswered");                                         //Bu noktada bir bug var, henüz çözemedim!!! FinalScore ve FinalTİme gibi çalışması lazım?
+        FinalCorrectlyAnswered = GameObject.Find("FinalCorrectlyAnswered");                                         //Bu noktada bir bug var, henüz çözemedim!!! FinalScore ve FinalTİme gibi çalışması lazım?
         FCA = FinalCorrectlyAnswered.GetComponentInChildren<Text>();                                             
-        FCA.text = "Toplam Doğru Sayısı: " + correctlyAnswered;*/                                                   
+        FCA.text = "Toplam Doğru Sayısı: " + correctlyAnswered;                                                   
         FinalScore = GameObject.Find("FinalScore");
         FS = FinalScore.GetComponentInChildren<Text>();
         FS.text = "Toplam Skor: " + score;

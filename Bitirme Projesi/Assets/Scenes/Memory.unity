@@ -909,6 +909,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1246777120}
   - component: {fileID: 1246777119}
+  - component: {fileID: 1246777121}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -928,6 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f64c76eb340d746aa783b9e13e8d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instance: {fileID: 0}
   gameButtonPrefab: {fileID: 7814007579852647023, guid: 5aed7e1ab923e2248ad736555b950fcb, type: 3}
   Info: {fileID: 0}
   DisplayText: {fileID: 0}
@@ -969,6 +971,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1246777121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246777118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c79f44141351945bb2a259103b8849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minigameScore: 0
+  globalTime: 0
+  correctlyAnswered: 0
 --- !u!1 &1367098591
 GameObject:
   m_ObjectHideFlags: 0
