@@ -15268,7 +15268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: minigameName
-      value: MemoryGame
+      value: SimonSays
       objectReference: {fileID: 0}
     - target: {fileID: 5832577943959166299, guid: 01fb9769737d51840b27535297e1b5fb, type: 3}
       propertyPath: minigameCategory
