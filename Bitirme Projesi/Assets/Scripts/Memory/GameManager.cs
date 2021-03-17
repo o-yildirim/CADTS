@@ -134,7 +134,10 @@ public class GameManager : MonoBehaviour
 
         AudioClip audioClip = LeanAudio.createAudio(volumeCurve, frequencyCurve, audioOptions);
 
-        LeanAudio.play(audioClip, 0.5f);
+        float volume = PlayerPrefs.GetFloat("volume");
+        volume = Mathf.Pow(10.0f, volume / 20.0f);
+        Debug.Log(volume);
+        LeanAudio.play(audioClip, volume);
     }
 
     void OnGameButtonClick(int index)
