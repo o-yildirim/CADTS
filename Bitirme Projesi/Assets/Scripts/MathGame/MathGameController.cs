@@ -131,7 +131,7 @@ public class MathGameController : MonoBehaviour
         Debug.Log(tutorialText.text);
         yield return new WaitForSeconds(5f);
 
-        tutorialText.text = "Balonları yukarıdaki çubuğa temas edip patlatmadan önce doğru cevabı yazarak siz patlatmalısınız.";
+        tutorialText.text = "Balonları yukarıdaki engele temas edip patlatmadan önce doğru cevabı yazarak siz patlatmalısınız.";
         yield return new WaitForSeconds(7f);
 
         tutorialText.text = "Toplamda 5 temas hakkınız vardır. Haklarınız tükenince oyun sonlanacaktır.";
