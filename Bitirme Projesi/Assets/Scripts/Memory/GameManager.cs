@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public Button skip;
     public GameObject SkipButton;
+    public Button exit;
+    public GameObject ExitButton;
 
 
     public float timeStart;
@@ -180,7 +183,7 @@ public class GameManager : MonoBehaviour
         timerActive = false;
         globalTimerActive = false;
         GameOverScreen.SetActive(true);
-        FinalCorrectlyAnswered = GameObject.Find("FinalCorrectlyAnswered");                                         //Bu noktada bir bug var, henüz çözemedim!!! FinalScore ve FinalTİme gibi çalışması lazım?
+        FinalCorrectlyAnswered = GameObject.Find("FinalCorrectlyAnswered");                                        
         FCA = FinalCorrectlyAnswered.GetComponentInChildren<Text>();                                             
         FCA.text = "Toplam Doğru Sayısı: " + correctlyAnswered;                                                   
         FinalScore = GameObject.Find("FinalScore");
@@ -189,13 +192,16 @@ public class GameManager : MonoBehaviour
         FinalTime = GameObject.Find("FinalTime");
         FT = FinalTime.GetComponentInChildren<Text>();
         FT.text = "Toplam Süre: " + globalTimer.ToString("F2");
+        ExitButton = GameObject.Find("ExitButton");
+        exit = ExitButton.GetComponent<Button>();
+        exit.onClick.AddListener(ToMain);
         MemoryStatisticManager.instance.EvaluateValues(score, correctlyAnswered, globalTimer);
-        MemoryStatisticManager.instance.InitializeStatisticObject(); //**
-        MemoryStatisticManager.instance.InsertToDatabase(); //**
+        MemoryStatisticManager.instance.InitializeStatisticObject(); 
+        MemoryStatisticManager.instance.InsertToDatabase(); 
 
     }
 
-    IEnumerator Tutorial()                      //tutorial skip buttonu eklenecek, yazılar delayleriyle birlikte düzenlenecek
+    IEnumerator Tutorial()                      
     {
         SkipButton.SetActive(true);
         skip.onClick.AddListener(SkipTutorial);
@@ -307,7 +313,12 @@ public class GameManager : MonoBehaviour
 
     void Scoring()
     {
-        score += (buttonPoints / timeStart) * (currentLevel * 0.01f);
+        score += (buttonPoints / (timeStart*1000)) / (currentLevel * 0.1f);
+    }
+
+    void ToMain()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
