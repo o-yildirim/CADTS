@@ -26,7 +26,7 @@ public class MathStatisticManager : MonoBehaviour
     {
         //detaylandırılabilir
         this.wrongAttempts = wrongAttempts;
-        minigameScore = (float)(score - (0.2 * wrongAttempts));
+        minigameScore = (float)(score - (3 * wrongAttempts));
     }
 
     public void InitializeStatisticObject()
