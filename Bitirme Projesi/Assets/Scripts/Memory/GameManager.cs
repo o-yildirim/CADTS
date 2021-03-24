@@ -313,7 +313,7 @@ public class GameManager : MonoBehaviour
 
     void Scoring()
     {
-        score += (buttonPoints / (timeStart*1000)) / (currentLevel * 0.1f);
+        score += (buttonPoints / (timeStart*100)) * (currentLevel);
     }
 
     void ToMain()
