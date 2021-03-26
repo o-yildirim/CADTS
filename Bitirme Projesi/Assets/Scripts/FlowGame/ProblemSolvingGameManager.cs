@@ -233,13 +233,13 @@ public class ProblemSolvingGameManager : MonoBehaviour
             yield return null;
         }
 
-        
+        valveScript.audioSource.Stop();
         inTutorial = false;       
-        Destroy(tutorialMap);
         tutorialCanvas.SetActive(false);
         pipesPassedTrough.Clear();
+        waterManagerScript.waterSoundSource.Stop();
         waterManagerScript.ResetElements();
-
+        Destroy(tutorialMap);
         FlowStatisticManager.instance.ResetAttributes();
 
         StartGame();
