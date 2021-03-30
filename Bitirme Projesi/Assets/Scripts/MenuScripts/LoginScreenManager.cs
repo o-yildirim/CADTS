@@ -47,7 +47,7 @@ public class LoginScreenManager : MonoBehaviour
             {
                 checkImage.SetActive(false);
             }
-            else
+            else if(rememberMe == 1)
             {
                 AuthenticationManager.instance.email.text = PlayerPrefs.GetString("username");
                 AuthenticationManager.instance.password.text = PlayerPrefs.GetString("password");

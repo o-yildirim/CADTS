@@ -20,7 +20,7 @@ public class AuthenticationManager : MonoBehaviour
     public InputField email;
     public InputField password;
 
-    public bool rememberMe = false;
+    public bool rememberMe;
 
 
     public Text status;
@@ -28,6 +28,19 @@ public class AuthenticationManager : MonoBehaviour
     void Start()
     {
         createTokenAsync();
+
+        if (PlayerPrefs.HasKey("remember_me"))
+        {
+            int rememberIndex = PlayerPrefs.GetInt("remember_me");
+            if(rememberIndex == 0)
+            {
+                rememberMe = false;
+            }
+            else if( rememberIndex == 1)
+            {
+                rememberMe = true;
+            }
+        }
     }
 
     private void Awake()
@@ -123,15 +136,17 @@ public class AuthenticationManager : MonoBehaviour
 
         if (rememberMe)
         {
+ 
             PlayerPrefs.SetString("username", email.text);
             PlayerPrefs.SetString("password", password.text);
             PlayerPrefs.SetInt("remember_me", 1);
         }
         else
         {
+
             PlayerPrefs.DeleteKey("username");
             PlayerPrefs.DeleteKey("password");
-            PlayerPrefs.DeleteKey("remember_me");
+            PlayerPrefs.SetInt("remember_me", 0);
         }
 
         string emailEncoded = encode(email.text);

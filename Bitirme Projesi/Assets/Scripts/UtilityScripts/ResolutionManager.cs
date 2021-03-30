@@ -61,10 +61,10 @@ public class ResolutionManager
             {
                 currentResolution = i;
             }
-            Debug.Log(newResolutionOption + "   " + Screen.currentResolution.ToString());
+            //Debug.Log(newResolutionOption + "   " + Screen.currentResolution.ToString());
         }
 
-        Debug.Log(currentResolution);
+        //Debug.Log(currentResolution);
 
         dropdownButton.AddOptions(resolutions);
         dropdownButton.value = currentResolution;
