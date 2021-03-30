@@ -7,7 +7,7 @@ public class StringManager : MonoBehaviour
     public static StringManager instance;
     string x;
 
-    string[] characters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+    string[] characters = { "a", "b", "c", "d", "e", "f", "g", "h", "j", "k", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
     void Awake()
     {
         if(instance == null)
