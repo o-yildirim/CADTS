@@ -38,15 +38,22 @@ public class LoginScreenManager : MonoBehaviour
 
         defaultButtonColor = registerButtonImage.color;
 
-        if (PlayerPrefs.HasKey("username"))
+        if (PlayerPrefs.HasKey("remember_me"))
         {
-            AuthenticationManager.instance.email.text = PlayerPrefs.GetString("username");
-        }
-        if (PlayerPrefs.HasKey("password"))
-        {
-            AuthenticationManager.instance.password.text = PlayerPrefs.GetString("password");
-        }
+            GameObject checkImage = rememberMeButton.transform.GetChild(0).gameObject;
 
+            int rememberMe = PlayerPrefs.GetInt("remember_me");
+            if (rememberMe == 0)
+            {
+                checkImage.SetActive(false);
+            }
+            else
+            {
+                AuthenticationManager.instance.email.text = PlayerPrefs.GetString("username");
+                AuthenticationManager.instance.password.text = PlayerPrefs.GetString("password");
+                checkImage.SetActive(true);
+            }
+        }
     }
 
     public void switchToLogin()

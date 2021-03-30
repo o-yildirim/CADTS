@@ -125,6 +125,13 @@ public class AuthenticationManager : MonoBehaviour
         {
             PlayerPrefs.SetString("username", email.text);
             PlayerPrefs.SetString("password", password.text);
+            PlayerPrefs.SetInt("remember_me", 1);
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey("username");
+            PlayerPrefs.DeleteKey("password");
+            PlayerPrefs.DeleteKey("remember_me");
         }
 
         string emailEncoded = encode(email.text);

@@ -305,6 +305,9 @@ public class SettingsManager : MonoBehaviour
                 if (user.password.Equals(hashedPwd))
                 {
                     DatabaseHandler.DeleteUser(DatabaseHandler.loggedInUser, approvedToDeleteStatistics);
+                    PlayerPrefs.DeleteKey("username");
+                    PlayerPrefs.DeleteKey("password");
+                    PlayerPrefs.DeleteKey("remember_me");
                 }
                 else if (!user.password.Equals(hashedPwd))
                 {
