@@ -11,6 +11,7 @@ public class LoginScreenManager : MonoBehaviour
 
     public Button loginPanelButton;
     public Button registerPanelButton;
+    public Button rememberMeButton;
 
     private Image loginButtonImage;
     private Image registerButtonImage;
@@ -36,6 +37,15 @@ public class LoginScreenManager : MonoBehaviour
         registerButtonImage = registerPanelButton.GetComponent<Image>();
 
         defaultButtonColor = registerButtonImage.color;
+
+        if (PlayerPrefs.HasKey("username"))
+        {
+            AuthenticationManager.instance.email.text = PlayerPrefs.GetString("username");
+        }
+        if (PlayerPrefs.HasKey("password"))
+        {
+            AuthenticationManager.instance.password.text = PlayerPrefs.GetString("password");
+        }
 
     }
 
@@ -71,5 +81,16 @@ public class LoginScreenManager : MonoBehaviour
     {
         SettingsManager.instance.QuitRequest();
     }
+
+
+    public void manageRememberMe()
+    {
+        AuthenticationManager.instance.rememberMe = !AuthenticationManager.instance.rememberMe;
+
+        GameObject checkImage = rememberMeButton.transform.GetChild(0).gameObject;
+        checkImage.SetActive(!checkImage.activeSelf);
+
+    }
+
 
 }

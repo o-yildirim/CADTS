@@ -20,6 +20,8 @@ public class AuthenticationManager : MonoBehaviour
     public InputField email;
     public InputField password;
 
+    public bool rememberMe = false;
+
 
     public Text status;
 
@@ -118,7 +120,13 @@ public class AuthenticationManager : MonoBehaviour
             status.text = "E-mail veya şifre boş olamaz.";
             return;
         }
-      
+
+        if (rememberMe)
+        {
+            PlayerPrefs.SetString("username", email.text);
+            PlayerPrefs.SetString("password", password.text);
+        }
+
         string emailEncoded = encode(email.text);
         string hashedPwd = GetMD5HashString(password.text);
         DatabaseHandler.GetUser(emailEncoded, user =>
@@ -164,6 +172,12 @@ public class AuthenticationManager : MonoBehaviour
             sb.Append(hash[i].ToString("x2"));
         }
         return sb.ToString();
+    }
+
+    public void manageRememberMe()
+    {
+        rememberMe = !rememberMe;
+        
     }
 
 
