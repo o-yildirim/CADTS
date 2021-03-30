@@ -174,11 +174,7 @@ public class AuthenticationManager : MonoBehaviour
         return sb.ToString();
     }
 
-    public void manageRememberMe()
-    {
-        rememberMe = !rememberMe;
-        
-    }
+  
 
 
 
