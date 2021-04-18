@@ -19,6 +19,7 @@ public class DesktopManager : MonoBehaviour
 
     public Button openSettingsButton;
     public GameObject settingsButtonsPanel;
+    public Image settingsBorder;
 
 
     public Dictionary<Button, GameObject> panelButtonMatch;
@@ -28,6 +29,17 @@ public class DesktopManager : MonoBehaviour
     public GameObject[] minigameSelectPanels;
     public Button[] displayStatisticMiniGameButtons;
     public Dictionary<Button, GameObject> statisticCategoryButtonPanelMatch;
+
+
+    public Image leftMenuBar;
+    public Image upperMenuBar;
+    public Image background;
+    //public Image settingsImage;
+
+    public Sprite[] leftMenuBarImages;
+    public Sprite[] upperMenuBarImages;
+    public Sprite[] backgroundImages;
+    //public Image[] leftMenuBarImages;
 
 
     public Color selectedButtonColor;
@@ -49,13 +61,13 @@ public class DesktopManager : MonoBehaviour
 
 
 
-        ActivatePanel(desktopButtons[0], desktopPanels[0]);
+        ActivatePanel(desktopButtons[0], desktopPanels[0],false);
 
         int startingWindow = 0;
-        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow]);
+        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow],true);
 
-        ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow]);
-        ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null);
+        ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow],true);
+        ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null,false);
 
 
 
@@ -114,19 +126,20 @@ public class DesktopManager : MonoBehaviour
          
             if (panelToOpen != null && !panelToOpen.activeSelf) //BURALARDA SUB PANEL MI DIYE BIR IF KOYULACAK
             {
-                
 
+                bool isCategoryButton = false;
                 if (!clickedPanelButton.CompareTag("CategoryButton"))
                 {                
                     ResetButtonColors(desktopButtons);
-                    ResetPanels(desktopPanels);
+                    ResetPanels(desktopPanels);                    
                 }
                 else
                 {
                     ResetButtonColors(gameCategoryButtons);
                     ResetPanels(gameCategoryPanels);
+                    isCategoryButton = true;
                 }
-                ActivatePanel(clickedPanelButton, panelToOpen);
+                ActivatePanel(clickedPanelButton, panelToOpen,isCategoryButton);
 
 
             }
@@ -152,7 +165,7 @@ public class DesktopManager : MonoBehaviour
             if (panelToOpen != null && !panelToOpen.activeSelf) //BURALARDA SUB PANEL MI DIYE BIR IF KOYULACAK
             {
 
-
+                bool isCategoryButton = false;
                 if (!clickedPanelButton.CompareTag("StatisticButton"))
                 {
                     ResetButtonColors(statisticCategoriesButtons);
@@ -162,8 +175,9 @@ public class DesktopManager : MonoBehaviour
                 {
                     ResetButtonColors(statisticCategoriesButtons);
                     ResetPanels(minigameSelectPanels);
+                    isCategoryButton = true;
                 }
-                ActivatePanel(clickedPanelButton, panelToOpen);
+                ActivatePanel(clickedPanelButton, panelToOpen,isCategoryButton);
 
 
 
@@ -235,7 +249,7 @@ public class DesktopManager : MonoBehaviour
 
     }
 
-    public void ActivatePanel(Button button, GameObject panel)
+    public void ActivatePanel(Button button, GameObject panel,bool isGamePanel)
     {
 
         if (button != null)
@@ -244,6 +258,22 @@ public class DesktopManager : MonoBehaviour
         }
         if (panel != null)
         {
+            if (isGamePanel)
+            {
+                int index;
+                for (index = 0; index < gameCategoryButtons.Length; index++)
+                {
+                    if(gameCategoryPanels[index] == panel || minigameSelectPanels[index] == panel)
+                    {                       
+                        break;
+                    }                 
+                }
+
+                background.sprite = backgroundImages[index];
+                upperMenuBar.sprite = upperMenuBarImages[index];
+                leftMenuBar.sprite = leftMenuBarImages[index];
+
+            }
             panel.SetActive(true);
         }
     }
@@ -254,10 +284,12 @@ public class DesktopManager : MonoBehaviour
         if (settingsButtonsPanel.activeSelf)
         {
             settingsButtonsPanel.SetActive(false);
+            settingsBorder.gameObject.SetActive(false);
         }
         else
         {
             settingsButtonsPanel.SetActive(true);
+            settingsBorder.gameObject.SetActive(true);
         } 
     }
 
