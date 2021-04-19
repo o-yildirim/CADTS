@@ -61,48 +61,48 @@ public class DesktopManager : MonoBehaviour
 
 
 
-        ActivatePanel(desktopButtons[0], desktopPanels[0],false);
+        ActivatePanel(desktopButtons[0], desktopPanels[0], false);
 
         int startingWindow = 0;
-        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow],true);
+        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow], true);
 
-        ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow],true);
-        ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null,false);
+        ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow], true);
+        ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null, false);
 
 
 
-       
+
         displayStatisticMiniGameButtons[startingWindow].onClick.Invoke();
-        
+
         //StaisticsPanelManager.instance.DisplayForMinigame(displayStatisticMiniGameButtons[startingWindow].GetComponent<Minigame>());
 
         openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
 
         SettingsManager.instance.InitializePanels();
 
-       
+
 
     }
 
     public void ResetButtonColors(Button[] buttons)
     {
-   
+
         for (int i = 0; i < buttons.Length; i++)
         {
             Image buttonImage = buttons[i].GetComponent<Image>();
-            if(buttonImage.color == selectedButtonColor)
+            if (buttonImage.color == selectedButtonColor)
             {
                 buttonImage.color = unselectedColor;
                 break;
             }
-           
+
         }
-        
+
     }
 
     public void ResetPanels(GameObject[] panels)
-    {   
-        for(int i = 0; i < panels.Length; i++)
+    {
+        for (int i = 0; i < panels.Length; i++)
         {
             if (panels[i].activeSelf)
             {
@@ -110,28 +110,28 @@ public class DesktopManager : MonoBehaviour
                 break;
             }
         }
-        
+
     }
 
     public void PanelSelect()
     {
-       
+
         GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
         Button clickedPanelButton = selectedGameObject.GetComponent<Button>();
-      
+
         if (clickedPanelButton != null)
         {
             GameObject panelToOpen;
             panelButtonMatch.TryGetValue(clickedPanelButton, out panelToOpen);
-         
+
             if (panelToOpen != null && !panelToOpen.activeSelf) //BURALARDA SUB PANEL MI DIYE BIR IF KOYULACAK
             {
 
                 bool isCategoryButton = false;
                 if (!clickedPanelButton.CompareTag("CategoryButton"))
-                {                
+                {
                     ResetButtonColors(desktopButtons);
-                    ResetPanels(desktopPanels);                    
+                    ResetPanels(desktopPanels);
                 }
                 else
                 {
@@ -139,14 +139,14 @@ public class DesktopManager : MonoBehaviour
                     ResetPanels(gameCategoryPanels);
                     isCategoryButton = true;
                 }
-                ActivatePanel(clickedPanelButton, panelToOpen,isCategoryButton);
+                ActivatePanel(clickedPanelButton, panelToOpen, isCategoryButton);
 
 
             }
 
             StopAllCoroutines();
         }
-     
+
     }
 
 
@@ -177,15 +177,27 @@ public class DesktopManager : MonoBehaviour
                     ResetPanels(minigameSelectPanels);
                     isCategoryButton = true;
                 }
-                ActivatePanel(clickedPanelButton, panelToOpen,isCategoryButton);
+                ActivatePanel(clickedPanelButton, panelToOpen, isCategoryButton);
 
 
 
                 Button firstMinigameButtonInCategory = panelToOpen.GetComponentInChildren<Button>();
                 firstMinigameButtonInCategory.GetComponent<Image>().color = selectedButtonColor;
                 firstMinigameButtonInCategory.onClick.Invoke();
-                
 
+                /*
+                  for (int i = 0; i < panelToOpen.transform.childCount; i++)
+                  {
+                      Button button = panelToOpen.transform.GetChild(i).GetComponent<Button>();
+                      if(button && button.gameObject.activeSelf)
+                      {
+                          button.GetComponent<Image>().color = selectedButtonColor;
+                          button.onClick.Invoke();
+                          Debug.Log(button.name);
+                          break;                    
+                      }
+                  }
+                */
 
 
             }
@@ -201,24 +213,24 @@ public class DesktopManager : MonoBehaviour
             desktopButtons[i].onClick.AddListener(PanelSelect);
         }
 
-        for(int i = 0; i< gameCategoryButtons.Length; i++)
+        for (int i = 0; i < gameCategoryButtons.Length; i++)
         {
             gameCategoryButtons[i].onClick.AddListener(PanelSelect);
         }
 
-        for(int i = 0; i < statisticCategoriesButtons.Length; i++)
+        for (int i = 0; i < statisticCategoriesButtons.Length; i++)
         {
             statisticCategoriesButtons[i].onClick.AddListener(StatitsicPanelSelect);
         }
 
-        for(int i = 0; i < displayStatisticMiniGameButtons.Length; i++)
+        for (int i = 0; i < displayStatisticMiniGameButtons.Length; i++)
         {
             Minigame minigameScript = displayStatisticMiniGameButtons[i].GetComponent<Minigame>();
             displayStatisticMiniGameButtons[i].onClick.AddListener(() => { StaisticsPanelManager.instance.DisplayForMinigame(minigameScript); });
             //Debug.Log("Added listener to: " + displayStatisticMiniGameButtons[i].name);
         }
-     
-        for(int i = 0; i < minigameButtons.Length; i++)
+
+        for (int i = 0; i < minigameButtons.Length; i++)
         {
             Minigame minigameScript = minigameButtons[i].GetComponent<Minigame>();
             int indexOfThisMinigame = minigameScript.sceneIndex;
@@ -229,54 +241,100 @@ public class DesktopManager : MonoBehaviour
     }
     public void AssignDictionary()
     {
-       
+
 
         for (int i = 0; i < desktopPanels.Length; i++)
         {
             panelButtonMatch.Add(desktopButtons[i], desktopPanels[i]);
             //Debug.Log(desktopButtons[i] + "  " + desktopPanels[i]);
         }
-        
-        for(int i = 0; i<gameCategoryPanels.Length ; i++)
+
+        for (int i = 0; i < gameCategoryPanels.Length; i++)
         {
             panelButtonMatch.Add(gameCategoryButtons[i], gameCategoryPanels[i]);
-           // Debug.Log(gameCategoryButtons[i] + "  " + gameCategoryPanels[i]);
+            // Debug.Log(gameCategoryButtons[i] + "  " + gameCategoryPanels[i]);
         }
-        for(int i = 0; i< statisticCategoriesButtons.Length; i++)
+        for (int i = 0; i < statisticCategoriesButtons.Length; i++)
         {
             statisticCategoryButtonPanelMatch.Add(statisticCategoriesButtons[i], minigameSelectPanels[i]);
         }
 
     }
 
-    public void ActivatePanel(Button button, GameObject panel,bool isGamePanel)
+    public void ActivatePanel(Button button, GameObject panel, bool isGamePanel)
     {
 
         if (button != null)
         {
             button.GetComponent<Image>().color = selectedButtonColor;
         }
+        /* if (panel != null)
+         {
+             panel.SetActive(true);
+             int index;
+
+             if (isGamePanel)
+             {
+                 for (index = 0; index < gameCategoryButtons.Length; index++)
+                 {
+                     if (gameCategoryPanels[index] == panel || minigameSelectPanels[index] == panel)
+                     {
+                         break;
+                     }
+                 }
+             }
+             else
+             {
+                 for (index = 0; index < gameCategoryPanels.Length; index++)
+                 {
+                     if (gameCategoryPanels[index].activeSelf|| minigameSelectPanels[index].activeSelf)
+                     {
+                         break;
+                     }
+
+                 }
+             }
+
+         */
+
         if (panel != null)
         {
+            panel.SetActive(true);
+            int index;
+
             if (isGamePanel)
             {
-                int index;
                 for (index = 0; index < gameCategoryButtons.Length; index++)
                 {
-                    if(gameCategoryPanels[index] == panel || minigameSelectPanels[index] == panel)
-                    {                       
+                    if (gameCategoryPanels[index] == panel || minigameSelectPanels[index] == panel)
+                    {
                         break;
-                    }                 
+                    }
                 }
-
-                background.sprite = backgroundImages[index];
-                upperMenuBar.sprite = upperMenuBarImages[index];
-                leftMenuBar.sprite = leftMenuBarImages[index];
-
             }
-            panel.SetActive(true);
+            else
+            {
+                for (index = 0; index < gameCategoryPanels.Length; index++)
+                {
+                    if (gameCategoryPanels[index].activeSelf || minigameSelectPanels[index].activeSelf)
+                    {
+                        break;
+                    }
+
+                }
+            }
+
+            background.sprite = backgroundImages[index];
+            upperMenuBar.sprite = upperMenuBarImages[index];
+            leftMenuBar.sprite = leftMenuBarImages[index];
+
+
         }
+
     }
+
+
+
 
     public void ManageSettingsButtonsPanel()
     {
@@ -290,7 +348,7 @@ public class DesktopManager : MonoBehaviour
         {
             settingsButtonsPanel.SetActive(true);
             settingsBorder.gameObject.SetActive(true);
-        } 
+        }
     }
 
 
@@ -315,5 +373,5 @@ public class DesktopManager : MonoBehaviour
         applicationSettingsCanvas.SetActive(true);
     }
 
-   
 }
+
