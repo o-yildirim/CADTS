@@ -61,7 +61,9 @@ public class DesktopManager : MonoBehaviour
 
 
 
-        ActivatePanel(desktopButtons[0], desktopPanels[0], false);
+        //ActivatePanel(desktopButtons[0], desktopPanels[0], false);
+
+        desktopPanels[0].SetActive(true);
 
         int startingWindow = 0;
         ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow], true);
@@ -73,8 +75,6 @@ public class DesktopManager : MonoBehaviour
 
 
         displayStatisticMiniGameButtons[startingWindow].onClick.Invoke();
-
-        //StaisticsPanelManager.instance.DisplayForMinigame(displayStatisticMiniGameButtons[startingWindow].GetComponent<Minigame>());
 
         openSettingsButton.GetComponentInChildren<Text>().text = DatabaseHandler.loggedInUser.name;
 
@@ -300,7 +300,7 @@ public class DesktopManager : MonoBehaviour
         if (panel != null)
         {
             panel.SetActive(true);
-            int index;
+            int index = 0;
 
             if (isGamePanel)
             {
@@ -314,15 +314,23 @@ public class DesktopManager : MonoBehaviour
             }
             else
             {
-                for (index = 0; index < gameCategoryPanels.Length; index++)
+                for (int i = 0; i < panel.transform.childCount; i++)
                 {
-                    if (gameCategoryPanels[index].activeSelf || minigameSelectPanels[index].activeSelf)
+                    Debug.Log(panel.transform.GetChild(i).name);
+                    if (panel.transform.GetChild(i).CompareTag("GamePanel"))
                     {
-                        break;
+                        if (panel.transform.GetChild(i).gameObject.activeSelf)
+                        {
+                            break;
+                        }
+                        index++;
+                      
                     }
 
                 }
             }
+
+            Debug.Log(index);
 
             background.sprite = backgroundImages[index];
             upperMenuBar.sprite = upperMenuBarImages[index];

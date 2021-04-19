@@ -9,6 +9,7 @@ TagManager:
   - StatisticButton
   - Baloon
   - Barrier
+  - GamePanel
   layers:
   - Default
   - TransparentFX
