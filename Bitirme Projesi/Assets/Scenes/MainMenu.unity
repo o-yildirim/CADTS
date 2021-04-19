@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 13113358}
   m_Layer: 5
   m_Name: AttentionGameSelectPanel
-  m_TagString: GamePanel
+  m_TagString: StatisticGamePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1931,7 +1931,7 @@ GameObject:
   - component: {fileID: 269233012}
   m_Layer: 5
   m_Name: ProblemSolvingGameSelectPanel
-  m_TagString: GamePanel
+  m_TagString: StatisticGamePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10043,7 +10043,7 @@ GameObject:
   - component: {fileID: 1316133675}
   m_Layer: 5
   m_Name: MemoryGameSelectPanel
-  m_TagString: GamePanel
+  m_TagString: StatisticGamePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10917,7 +10917,7 @@ GameObject:
   - component: {fileID: 1384518572}
   m_Layer: 5
   m_Name: MathGameSelectPanel
-  m_TagString: GamePanel
+  m_TagString: StatisticGamePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11617,6 +11617,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cb47aee139c4fa74cb6cc10158957c24, type: 3}
   - {fileID: 21300000, guid: 3572310f4919e064e98acc8313ae8818, type: 3}
   - {fileID: 21300000, guid: 9fedd795be5aa8947861865524e6653e, type: 3}
+  - {fileID: 21300000, guid: 81498f454039a8f4295a3f8e1b80439c, type: 3}
   selectedButtonColor: {r: 0.8490566, g: 0.82084924, b: 0.7809719, a: 1}
   unselectedColor: {r: 0.99215686, g: 0.9882353, b: 0.99215686, a: 1}
 --- !u!4 &1461036866

@@ -66,10 +66,14 @@ public class DesktopManager : MonoBehaviour
         desktopPanels[0].SetActive(true);
 
         int startingWindow = 0;
-        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow], true);
 
         ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow], true);
         ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null, false);
+        ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow], true);
+
+        //gameCategoryPanels[startingWindow].SetActive(true);
+
+    
 
 
 
@@ -301,7 +305,7 @@ public class DesktopManager : MonoBehaviour
         {
             panel.SetActive(true);
             int index = 0;
-
+            GameObject temporaryPanel = null;
             if (isGamePanel)
             {
                 for (index = 0; index < gameCategoryButtons.Length; index++)
@@ -316,10 +320,10 @@ public class DesktopManager : MonoBehaviour
             {
                 for (int i = 0; i < panel.transform.childCount; i++)
                 {
-                    Debug.Log(panel.transform.GetChild(i).name);
-                    if (panel.transform.GetChild(i).CompareTag("GamePanel"))
+                    temporaryPanel = panel.transform.GetChild(i).gameObject;
+                    if (temporaryPanel.CompareTag("GamePanel") || temporaryPanel.CompareTag("StatisticGamePanel"))
                     {
-                        if (panel.transform.GetChild(i).gameObject.activeSelf)
+                        if (temporaryPanel.activeSelf)
                         {
                             break;
                         }
@@ -331,10 +335,16 @@ public class DesktopManager : MonoBehaviour
             }
 
             Debug.Log(index);
-
-            background.sprite = backgroundImages[index];
+            
+           
             upperMenuBar.sprite = upperMenuBarImages[index];
             leftMenuBar.sprite = leftMenuBarImages[index];
+
+            if (panel.CompareTag("StatisticGamePanel") || (temporaryPanel && temporaryPanel.CompareTag("StatisticGamePanel")))
+            {
+                index = backgroundImages.Length - 1;
+            }
+            background.sprite = backgroundImages[index];
 
 
         }

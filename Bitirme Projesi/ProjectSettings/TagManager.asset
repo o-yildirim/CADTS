@@ -10,6 +10,7 @@ TagManager:
   - Baloon
   - Barrier
   - GamePanel
+  - StatisticGamePanel
   layers:
   - Default
   - TransparentFX
