@@ -24,6 +24,7 @@ public class MathGameController : MonoBehaviour
     public Spawner spawnerRight;
     public Spawner tutorialSpawner;
     private Coroutine tutorialC = null;
+    public Button endGameButton;
 
     void Start()
     {
@@ -31,7 +32,10 @@ public class MathGameController : MonoBehaviour
         source = GetComponent<AudioSource>();
         source.playOnAwake = false;
         answer.Select();
+        endGameButton.onClick.AddListener(QuitToMainMenu);
     }
+
+    
 
     void Awake()
     {
@@ -54,6 +58,11 @@ public class MathGameController : MonoBehaviour
         }
         answer.Select();
         answer.ActivateInputField();
+    }
+
+    private void QuitToMainMenu()
+    {
+        SceneManagement.instance.loadMainMenu();
     }
 
     public void submitButton()
