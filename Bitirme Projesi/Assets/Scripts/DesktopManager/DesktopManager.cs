@@ -63,7 +63,8 @@ public class DesktopManager : MonoBehaviour
 
         //ActivatePanel(desktopButtons[0], desktopPanels[0], false);
 
-        desktopPanels[0].SetActive(true);
+        desktopPanels[0].SetActive(true);      
+        desktopButtons[0].GetComponent<Image>().color = selectedButtonColor;
 
         int startingWindow = 0;
 
