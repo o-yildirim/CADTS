@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public static GameController instance;
 
     public Button skipTutorialButton;
+    public GameObject quitButtonCanvas;
 
     public string withUppercase;
     public string withoutUppercase;
@@ -76,6 +77,7 @@ public class GameController : MonoBehaviour
     {
         resetAttributes();
         marker.enabled = false;
+        quitButtonCanvas.GetComponentInChildren<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
         StartCoroutine(tutorial());
     }
 
@@ -285,6 +287,7 @@ public class GameController : MonoBehaviour
         timeText.enabled = true;
         newQuestion();
         gamePaused = false;
+        quitButtonCanvas.SetActive(true);
     }
     public void finishGame()
     {
@@ -294,6 +297,7 @@ public class GameController : MonoBehaviour
         {
             reactionTimeAverage = reactionTimeAverage / questionAnswered;
         }
+        quitButtonCanvas.SetActive(false);
         UppercaseLetterStatisticManager.instance.InitializeStatistics();
         UppercaseLetterStatisticManager.instance.ShowStatistics();
         UppercaseLetterStatisticManager.instance.InsertStatistics();
