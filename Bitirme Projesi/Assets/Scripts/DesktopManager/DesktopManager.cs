@@ -67,8 +67,8 @@ public class DesktopManager : MonoBehaviour
 
         Image firstButtonImage = desktopButtons[0].GetComponent<Image>();
         firstButtonImage.color = selectedButtonColor;
-        firstButtonImage.enabled = false;
-        firstButtonImage.enabled = true;
+        //firstButtonImage.enabled = false;
+        //firstButtonImage.enabled = true;
 
         int startingWindow = 0;
 
@@ -278,8 +278,8 @@ public class DesktopManager : MonoBehaviour
         {
             Image image = button.GetComponent<Image>();
             image.color = selectedButtonColor;
-            image.enabled = false;
-            image.enabled = true;
+            //image.enabled = false;
+            //image.enabled = true;
         }
       
 
@@ -321,8 +321,8 @@ public class DesktopManager : MonoBehaviour
                             }
 
                             buttonImage.color = selectedButtonColor;
-                            buttonImage.enabled = false;
-                            buttonImage.enabled = true;
+                            //buttonImage.enabled = false;
+                            //buttonImage.enabled = true;
 
                             break;
                         }
