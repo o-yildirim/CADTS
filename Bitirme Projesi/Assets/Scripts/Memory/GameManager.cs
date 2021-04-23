@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public Button exit;
     public GameObject ExitButton;
 
+    public GameObject quitToMenuCanvas;
 
     public float timeStart;
     public float globalTimer = 0f;
@@ -78,10 +79,14 @@ public class GameManager : MonoBehaviour
         SkipButton = GameObject.Find("SkipButton");
         skip = SkipButton.GetComponent<Button>();
 
+
+
         CreateGameButton(0, new Vector3(-64, 64));
         CreateGameButton(1, new Vector3(64, 64));
         CreateGameButton(2, new Vector3(-64, -64));
         CreateGameButton(3, new Vector3(64, -64));
+
+        quitToMenuCanvas.GetComponentInChildren<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
 
         StartCoroutine(Tutorial());
     }
@@ -182,6 +187,7 @@ public class GameManager : MonoBehaviour
         inputEnabled = false;
         timerActive = false;
         globalTimerActive = false;
+        quitToMenuCanvas.SetActive(false);
         GameOverScreen.SetActive(true);
         FinalCorrectlyAnswered = GameObject.Find("FinalCorrectlyAnswered");                                        
         FCA = FinalCorrectlyAnswered.GetComponentInChildren<Text>();                                             
@@ -253,6 +259,7 @@ public class GameManager : MonoBehaviour
     IEnumerator SimonSays()             //yazılar delayleriyle birlikte düzenlenecek
     {
         SkipButton.SetActive(false);
+        quitToMenuCanvas.SetActive(true);
         inputEnabled = false;
         timerActive = false;
         globalTimerActive = false;
