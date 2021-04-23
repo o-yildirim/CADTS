@@ -63,8 +63,12 @@ public class DesktopManager : MonoBehaviour
 
         //ActivatePanel(desktopButtons[0], desktopPanels[0], false);
 
-        desktopPanels[0].SetActive(true);      
-        desktopButtons[0].GetComponent<Image>().color = selectedButtonColor;
+        desktopPanels[0].SetActive(true);
+
+        Image firstButtonImage = desktopButtons[0].GetComponent<Image>();
+        firstButtonImage.color = selectedButtonColor;
+        firstButtonImage.enabled = false;
+        firstButtonImage.enabled = true;
 
         int startingWindow = 0;
 
@@ -91,6 +95,7 @@ public class DesktopManager : MonoBehaviour
 
     public void ResetButtonColors(Button[] buttons)
     {
+        
 
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -271,36 +276,12 @@ public class DesktopManager : MonoBehaviour
 
         if (button != null)
         {
-            button.GetComponent<Image>().color = selectedButtonColor;
+            Image image = button.GetComponent<Image>();
+            image.color = selectedButtonColor;
+            image.enabled = false;
+            image.enabled = true;
         }
-        /* if (panel != null)
-         {
-             panel.SetActive(true);
-             int index;
-
-             if (isGamePanel)
-             {
-                 for (index = 0; index < gameCategoryButtons.Length; index++)
-                 {
-                     if (gameCategoryPanels[index] == panel || minigameSelectPanels[index] == panel)
-                     {
-                         break;
-                     }
-                 }
-             }
-             else
-             {
-                 for (index = 0; index < gameCategoryPanels.Length; index++)
-                 {
-                     if (gameCategoryPanels[index].activeSelf|| minigameSelectPanels[index].activeSelf)
-                     {
-                         break;
-                     }
-
-                 }
-             }
-
-         */
+      
 
         if (panel != null)
         {
@@ -326,6 +307,23 @@ public class DesktopManager : MonoBehaviour
                     {
                         if (temporaryPanel.activeSelf)
                         {
+                            Image buttonImage;
+                            if (temporaryPanel.CompareTag("GamePanel"))
+                            {
+                               
+                               buttonImage = gameCategoryButtons[index].GetComponent<Image>();
+                                    
+
+                            }
+                            else
+                            {
+                               buttonImage =  statisticCategoriesButtons[index].GetComponent<Image>();
+                            }
+
+                            buttonImage.color = selectedButtonColor;
+                            buttonImage.enabled = false;
+                            buttonImage.enabled = true;
+
                             break;
                         }
                         index++;
@@ -341,10 +339,16 @@ public class DesktopManager : MonoBehaviour
             upperMenuBar.sprite = upperMenuBarImages[index];
             leftMenuBar.sprite = leftMenuBarImages[index];
 
+
             if (panel.CompareTag("StatisticGamePanel") || (temporaryPanel && temporaryPanel.CompareTag("StatisticGamePanel")))
             {
+      
                 index = backgroundImages.Length - 1;
+                
             }
+         
+       
+        
             background.sprite = backgroundImages[index];
 
 
