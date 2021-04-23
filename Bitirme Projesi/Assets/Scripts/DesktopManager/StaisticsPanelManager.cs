@@ -140,7 +140,7 @@ public class StaisticsPanelManager : MonoBehaviour
             else if (globalLastPerformanceDifference < 0)// iyi durum
             {
                 lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                          "diğer oyuncuların performanslarına göre <color=green>%" +
+                                          "diğer oyuncuların performanslarına göre <color=#B0FC38>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.\n\n";
                 succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
@@ -176,7 +176,7 @@ public class StaisticsPanelManager : MonoBehaviour
             else if (globalOverallPerformanceDifference < 0)// iyi durum
             {
                 percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                          "diğer oyuncuların performanslarına göre <color=green>%" +
+                                          "diğer oyuncuların performanslarına göre <color=#B0FC38>%" +
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.";
 
@@ -269,7 +269,7 @@ public class StaisticsPanelManager : MonoBehaviour
             }
             else if (difference < 0)// iyi durum
             {
-                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=green>%" +
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=#B0FC38>%" +
                                            changePercentage.ToString("F1") +
                                            "</color> daha iyi durumda.";
 
