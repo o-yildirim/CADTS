@@ -28,6 +28,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public GameObject tutorialCanvas;
     public Text tutorialText;
 
+    public GameObject endGameButtonCanvas;
+
     private Coroutine isWaterDrawn;
 
     public GameObject tutorialArrow;
@@ -51,8 +53,8 @@ public class ProblemSolvingGameManager : MonoBehaviour
         valveScript = valve.GetComponentInChildren<Valve>();
         mapGenerator = GetComponent<MapGenerator>();
 
-        //gameOverCanvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
-      
+        endGameButtonCanvas.GetComponentInChildren<Button>().onClick.AddListener(SceneManagement.instance.loadMainMenu);
+
         StartCoroutine(Tutorial());
     }
 
@@ -122,6 +124,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         waterManagerScript.waterSoundSource.volume /= 2f;
         inputUnavailable = true;
         FlowStatisticManager.instance.timerOn = false;
+        endGameButtonCanvas.SetActive(false);
 
         FlowStatisticManager.instance.EvaluateValues();
         FlowStatisticManager.instance.DisplayStatisticPanel();
@@ -146,6 +149,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         mapGenerator.MixSolution();
         mapGenerator.GenerateMap();
         mapGenerator.RepositionCamera();
+        endGameButtonCanvas.SetActive(true);
         inputUnavailable = false;
         FlowStatisticManager.instance.timerOn = true;
     }
