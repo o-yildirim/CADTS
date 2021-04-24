@@ -114,6 +114,7 @@ public class AuthenticationManager : MonoBehaviour
 
         string unparsedDob = dateOfBirth.text;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         DateTime date = DateTime.Parse(unparsedDob);
 
@@ -127,11 +128,20 @@ public class AuthenticationManager : MonoBehaviour
 
         string parsedDob = date.ToString("yyyy-M-dd");
 
+=======
+        DateTime date = DateTime.Parse(unparsedDob);
+
+        string parsedDob = date.ToString("yyyy-M-dd");
+
+>>>>>>> parent of 9f8d82e (Register DateTime Genel Formata Oturtuldu)
         string hashedPwd = GetMD5HashString(registerPassword.text);
         
 
         var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, hashedPwd, contactEmail);
 
+<<<<<<< HEAD
+>>>>>>> parent of 9f8d82e (Register DateTime Genel Formata Oturtuldu)
+=======
 >>>>>>> parent of 9f8d82e (Register DateTime Genel Formata Oturtuldu)
         string email = encode(registerEmail.text); 
         DatabaseHandler.registerUser(registeredUser, email, user => { });
