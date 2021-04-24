@@ -113,6 +113,7 @@ public class StaisticsPanelManager : MonoBehaviour
                 globalInitialized = true;
                 doNotTouchGlobalText = true;
                 operatingForDisplay = false;
+                raycaster.enabled = true;
                 return;
             }
 
@@ -223,7 +224,9 @@ public class StaisticsPanelManager : MonoBehaviour
                 mailOptions.gameObject.SetActive(false);
                 userStatsInitialized = true;
                 doNotTouchOwnText = true;
+                
                 operatingForDisplay = false;
+                raycaster.enabled = true;
                 return;
             }
             else if (statistics.Count == 1)
