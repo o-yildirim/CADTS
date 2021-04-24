@@ -14,7 +14,7 @@ public class StaisticsPanelManager : MonoBehaviour
     public GameObject legend;
     public Button mailBtn;
     public Text mailAckText;
-
+    public Dropdown mailOptions;
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
 
@@ -71,6 +71,16 @@ public class StaisticsPanelManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    private void Start()
+    {
+        mailOptions.ClearOptions();
+        List<string> modes = new List<string> { "Kendime", "Yakınıma" };
+        if (string.IsNullOrWhiteSpace(DatabaseHandler.loggedInUser.contactMail))
+            modes.Remove("Yakınıma");
+
+        mailOptions.AddOptions(modes);
     }
 
     /*private void OnEnable()
@@ -202,12 +212,13 @@ public class StaisticsPanelManager : MonoBehaviour
         DatabaseHandler.GetUserStatistics(email, category, game, statistics =>
         {
             mailBtn.gameObject.SetActive(true);
-
+            mailOptions.gameObject.SetActive(true);
+            
             if (statistics == null || statistics.Count == 0)
             {
                 ownPerformanceText.text = "Bu oyuna ait bir istatistiğiniz bulunmamaktadır.";
                 mailBtn.gameObject.SetActive(false);
-
+                mailOptions.gameObject.SetActive(false);
                 userStatsInitialized = true;
                 doNotTouchOwnText = true;
                 operatingForDisplay = false;
@@ -216,6 +227,7 @@ public class StaisticsPanelManager : MonoBehaviour
             else if (statistics.Count == 1)
             {
                 mailBtn.gameObject.SetActive(false);
+                mailOptions.gameObject.SetActive(false);
                 ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
                 lastPerformance = statistics.Values.Last().minigameScore;
                 //doNotTouchOwnText = true;
@@ -349,15 +361,29 @@ public class StaisticsPanelManager : MonoBehaviour
 
 
         mailBtn.onClick.AddListener(() => {
-            Debug.Log(email + " " + category + " " + game);
-            string info = category + "," + game;
-            Debug.Log(info);
-            MailInfo mailInfo = new MailInfo(info);
-            DatabaseHandler.sendMail(email, mailInfo);
-          //DatabaseHandler daki metoda .Then koymaya çalıştım beceremedim.
-            
-            
+            if (mailOptions.value == 0)
+            {
+                Debug.Log(email + " " + category + " " + game);
+                string info = category + "," + game;
+                Debug.Log(info);
+                MailInfo mailInfo = new MailInfo(info);
+                DatabaseHandler.sendMail(email, mailInfo);
+            }
+
+            else
+            {
+                Debug.Log(email + " " + category + " " + game);
+                string contactMail = DatabaseHandler.loggedInUser.contactMail;
+                string info = category + "," + game + "," + contactMail;
+                Debug.Log(info);
+                
+                contactMail = contactMail.Replace(".", ",");
+                MailInfo mailInfo = new MailInfo(info);
+                DatabaseHandler.sendMailToContact(email, mailInfo);
+            }     
         });
+
+
 
         // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
         //  StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));

@@ -15,7 +15,7 @@ public class AuthenticationManager : MonoBehaviour
     public InputField dateOfBirth;
     public InputField registerEmail;
     public InputField registerPassword;
-
+    public InputField registerContactEmail;
 
     public InputField email;
     public InputField password;
@@ -110,17 +110,20 @@ public class AuthenticationManager : MonoBehaviour
             status.text = "Yukarıdaki alanlar boş bırakılamaz.";
             return;
         }
-            
+        string contactEmail = "";
+        if (!string.IsNullOrWhiteSpace(registerContactEmail.text))
+            contactEmail = registerContactEmail.text;
 
         string unparsedDob = dateOfBirth.text;
-
         DateTime date = DateTime.Parse(unparsedDob);
 
         string parsedDob = date.ToString("yyyy-M-dd");
 
         string hashedPwd = GetMD5HashString(registerPassword.text);
+        
 
-        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, hashedPwd);
+        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, hashedPwd, contactEmail);
+
         string email = encode(registerEmail.text); 
         DatabaseHandler.registerUser(registeredUser, email, user => { });
 
@@ -155,7 +158,7 @@ public class AuthenticationManager : MonoBehaviour
         {
             if (user.password.Equals(hashedPwd))
             {
-                User loggedInUser = new User(user.name, user.surname, user.dob, user.email, user.password);
+                User loggedInUser = new User(user.name, user.surname, user.dob, user.email, user.password, user.contactMail);
                 DatabaseHandler.loggedInUser = loggedInUser;
                 SceneManagement.instance.loadMainMenu();
             }
