@@ -5,7 +5,6 @@ using Google.Apis.Auth.OAuth2;
 using Newtonsoft.Json;
 using System;
 using Proyecto26;
-using System.Globalization;
 
 public class AuthenticationManager : MonoBehaviour
 {
@@ -116,24 +115,18 @@ public class AuthenticationManager : MonoBehaviour
             contactEmail = registerContactEmail.text;
 
         string unparsedDob = dateOfBirth.text;
-        CultureInfo provider = CultureInfo.InvariantCulture;
-        DateTime temp;
-        var cultureInfo = new CultureInfo("de-DE");
-        if (DateTime.TryParse(dateOfBirth.text, cultureInfo, DateTimeStyles.NoCurrentDateDefault, out temp))
-        {
-            string parsedDob = temp.ToString("yyyy-M-dd");
-            string hashedPwd = GetMD5HashString(registerPassword.text);
+        DateTime date = DateTime.Parse(unparsedDob);
 
+        string parsedDob = date.ToString("yyyy-M-dd");
 
-            var registeredUser = new User(registerName.text, registerSurname.text, parsedDob, registerEmail.text, hashedPwd, contactEmail);
+        string hashedPwd = GetMD5HashString(registerPassword.text);
+        
 
-            string email = encode(registerEmail.text);
-            DatabaseHandler.registerUser(registeredUser, email, user => { });
-        }
-        else
-        {
-            status.text = "Lütfen doğum tarihinizi doğru formatta giriniz.";
-        }
+        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, hashedPwd, contactEmail);
+
+        string email = encode(registerEmail.text); 
+        DatabaseHandler.registerUser(registeredUser, email, user => { });
+
     }
 
     public void login()
