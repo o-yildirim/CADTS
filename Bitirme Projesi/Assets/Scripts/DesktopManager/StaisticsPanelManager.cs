@@ -114,6 +114,7 @@ public class StaisticsPanelManager : MonoBehaviour
                 doNotTouchGlobalText = true;
                 operatingForDisplay = false;
                 raycaster.enabled = true;
+
                 return;
             }
 
@@ -333,9 +334,9 @@ public class StaisticsPanelManager : MonoBehaviour
     public IEnumerator initDatabaseValues(string email, string category, string game)
     {
         //if(operatingForDisplay) yield break;
-
-        operatingForDisplay = true;
         raycaster.enabled = false;
+        operatingForDisplay = true;
+        
 
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
@@ -398,8 +399,9 @@ public class StaisticsPanelManager : MonoBehaviour
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
     
-        operatingForDisplay = false;
+        
         raycaster.enabled = true;
+        operatingForDisplay = false;
 
 
     }
