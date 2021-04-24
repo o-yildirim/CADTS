@@ -15,6 +15,8 @@ public class StaisticsPanelManager : MonoBehaviour
     public Button mailBtn;
     public Text mailAckText;
 
+    public GraphicRaycaster raycaster;
+
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
 
@@ -316,8 +318,9 @@ public class StaisticsPanelManager : MonoBehaviour
     public IEnumerator initDatabaseValues(string email, string category, string game)
     {
         //if(operatingForDisplay) yield break;
-
+       
         operatingForDisplay = true;
+        raycaster.enabled = false;
 
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
@@ -345,6 +348,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
+        raycaster.enabled = true;
         operatingForDisplay = false;
 
 
