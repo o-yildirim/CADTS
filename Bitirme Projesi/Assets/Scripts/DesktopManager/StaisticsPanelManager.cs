@@ -18,6 +18,8 @@ public class StaisticsPanelManager : MonoBehaviour
     private Dictionary<string, Statistic> statisticsToAnalyze = new Dictionary<string, Statistic>();
     private GlobalStatistic globalStatistic;
 
+    public GraphicRaycaster raycaster;
+
     public Text titleText;
     public Text percentageAmongUsers;
     public Text lastPerformancePercentageAmongUsers;
@@ -330,6 +332,7 @@ public class StaisticsPanelManager : MonoBehaviour
         //if(operatingForDisplay) yield break;
 
         operatingForDisplay = true;
+        raycaster.enabled = false;
 
         panelToDisplay.SetActive(false);
         loadingText.enabled = true;
@@ -355,9 +358,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
         
 
-        loadingText.enabled = false;
-        panelToDisplay.SetActive(true);
-        operatingForDisplay = false;
+        
 
 
         mailBtn.onClick.AddListener(() => {
@@ -390,6 +391,13 @@ public class StaisticsPanelManager : MonoBehaviour
 
         //InformUserComparedToHisOwn();
         //InformUserAboutGlobal();
+
+        loadingText.enabled = false;
+        panelToDisplay.SetActive(true);
+    
+        operatingForDisplay = false;
+        raycaster.enabled = true;
+
 
     }
 
