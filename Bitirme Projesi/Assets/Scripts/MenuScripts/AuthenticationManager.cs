@@ -5,6 +5,7 @@ using Google.Apis.Auth.OAuth2;
 using Newtonsoft.Json;
 using System;
 using Proyecto26;
+using System.Globalization;
 
 public class AuthenticationManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class AuthenticationManager : MonoBehaviour
     public InputField dateOfBirth;
     public InputField registerEmail;
     public InputField registerPassword;
-
+    public InputField registerContactEmail;
 
     public InputField email;
     public InputField password;
@@ -32,11 +33,11 @@ public class AuthenticationManager : MonoBehaviour
         if (PlayerPrefs.HasKey("remember_me"))
         {
             int rememberIndex = PlayerPrefs.GetInt("remember_me");
-            if (rememberIndex == 0)
+            if(rememberIndex == 0)
             {
                 rememberMe = false;
             }
-            else if (rememberIndex == 1)
+            else if( rememberIndex == 1)
             {
                 rememberMe = true;
             }
@@ -45,11 +46,11 @@ public class AuthenticationManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if(instance == null)
         {
             instance = this;
         }
-        else if (instance != this)
+        else if(instance != this)
         {
             Destroy(gameObject);
         }
@@ -81,8 +82,8 @@ public class AuthenticationManager : MonoBehaviour
                                 ""auth_provider_x509_cert_url"": ""https://www.googleapis.com/oauth2/v1/certs"",
                                 ""client_x509_cert_url"": ""https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-itguz%40bitirme-projesi-df6c6.iam.gserviceaccount.com""
                             }
-    ";
-            var cr = JsonConvert.DeserializeObject<ServiceAccount>(json); // service account credential
+    "; 
+                var cr = JsonConvert.DeserializeObject<ServiceAccount>(json); // service account credential
             //Debug.Log("Email: " + cr.client_email + "PK: " + cr.private_key);
             // Create an explicit ServiceAccountCredential credential
             var xCred = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(cr.client_email)
@@ -98,7 +99,7 @@ public class AuthenticationManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            // Debug.Log(e.Message);
+           // Debug.Log(e.Message);
         }
     }
 
@@ -110,20 +111,29 @@ public class AuthenticationManager : MonoBehaviour
             status.text = "Yukarıdaki alanlar boş bırakılamaz.";
             return;
         }
-            
+        string contactEmail = "";
+        if (!string.IsNullOrWhiteSpace(registerContactEmail.text))
+            contactEmail = registerContactEmail.text;
 
         string unparsedDob = dateOfBirth.text;
+        CultureInfo provider = CultureInfo.InvariantCulture;
+        DateTime temp;
+        var cultureInfo = new CultureInfo("de-DE");
+        if (DateTime.TryParse(dateOfBirth.text, cultureInfo, DateTimeStyles.NoCurrentDateDefault, out temp))
+        {
+            string parsedDob = temp.ToString("yyyy-M-dd");
+            string hashedPwd = GetMD5HashString(registerPassword.text);
 
-        DateTime date = DateTime.Parse(unparsedDob);
 
-        string parsedDob = date.ToString("yyyy-M-dd");
+            var registeredUser = new User(registerName.text, registerSurname.text, parsedDob, registerEmail.text, hashedPwd, contactEmail);
 
-        string hashedPwd = GetMD5HashString(registerPassword.text);
-
-        var registeredUser = new User(registerName.text,registerSurname.text,parsedDob,registerEmail.text, hashedPwd);
-        string email = encode(registerEmail.text); 
-        DatabaseHandler.registerUser(registeredUser, email, user => { });
-
+            string email = encode(registerEmail.text);
+            DatabaseHandler.registerUser(registeredUser, email, user => { });
+        }
+        else
+        {
+            status.text = "Lütfen doğum tarihinizi doğru formatta giriniz.";
+        }
     }
 
     public void login()
@@ -136,7 +146,7 @@ public class AuthenticationManager : MonoBehaviour
 
         if (rememberMe)
         {
-
+ 
             PlayerPrefs.SetString("username", email.text);
             PlayerPrefs.SetString("password", password.text);
             PlayerPrefs.SetInt("remember_me", 1);
@@ -155,7 +165,7 @@ public class AuthenticationManager : MonoBehaviour
         {
             if (user.password.Equals(hashedPwd))
             {
-                User loggedInUser = new User(user.name, user.surname, user.dob, user.email, user.password);
+                User loggedInUser = new User(user.name, user.surname, user.dob, user.email, user.password, user.contactMail);
                 DatabaseHandler.loggedInUser = loggedInUser;
                 SceneManagement.instance.loadMainMenu();
             }
@@ -163,7 +173,7 @@ public class AuthenticationManager : MonoBehaviour
             {
                 status.text = "Şifre yanlış.";
             }
-        });
+        });     
     }
 
     public string encode(string email)
@@ -196,7 +206,7 @@ public class AuthenticationManager : MonoBehaviour
         return sb.ToString();
     }
 
-
+  
 
 
 
