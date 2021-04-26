@@ -29,6 +29,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
     public Text tutorialText;
 
     public GameObject endGameButtonCanvas;
+    public Text levelText;
 
     private Coroutine isWaterDrawn;
 
@@ -139,6 +140,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         mapGenerator.columns = levelRowColumns[currentLevel, 1];
         mapGenerator.mapGameObject = new GameObject("Map");
         
+        levelText.text = (currentLevel+1) + ". seviye";
 
         mapGenerator.InitializeMapValues();
         mapGenerator.PositionSink();
@@ -177,6 +179,9 @@ public class ProblemSolvingGameManager : MonoBehaviour
         tutorialCanvas.GetComponentInChildren<Button>().onClick.AddListener(SkipTutorial);
 
         tutorialText.text = "Oyunun amacı, yukarıdaki kalın borudan aşağıdakine suyu ulaştıracak doğru yolu hazırlayabilmektir.";
+        yield return new WaitForSeconds(tutorialTextTime);
+
+        tutorialText.text = "Oyunda üç seviye bulunmaktadır, her seviyede boru sayısı artmaktadır.";
         yield return new WaitForSeconds(tutorialTextTime);
 
         tutorialText.text = "Borulara tıklayarak saat yönünde dönmelerini, suyun gireceği ve akacağı yönlerini değiştirmelerini\nsağlayabilirsiniz.";
