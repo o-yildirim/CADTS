@@ -83,6 +83,10 @@ public class StaisticsPanelManager : MonoBehaviour
             modes.Remove("Yakınıma");
 
         mailOptions.AddOptions(modes);
+       // mailOptions.image.color = new Color(48, 45, 45);
+        
+
+
     }
 
     /*private void OnEnable()
