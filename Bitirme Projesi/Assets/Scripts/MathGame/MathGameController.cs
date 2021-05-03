@@ -104,6 +104,7 @@ public class MathGameController : MonoBehaviour
           //  scoreTxt.text += score.ToString();
             Debug.Log(wrongAttempts);
             wrongAttemptsTxt.text += wrongAttempts.ToString();
+            endGameButton.gameObject.SetActive(false);
             StatisticPanelManager.instance.statisticPanel.SetActive(true);
             MathStatisticManager.instance.EvaluateValues(score, wrongAttempts); //**
             scoreTxt.text += MathStatisticManager.instance.minigameScore.ToString();
