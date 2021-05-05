@@ -148,7 +148,7 @@ public class StaisticsPanelManager : MonoBehaviour
             if (globalLastPerformanceDifference > 0)//Kötü durum
             {
                 lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                          "diğer oyuncuların performanslarına göre <color=red>%" +
+                                          "diğer oyuncuların performanslarına göre <color=#FF7B7B>%" +
                                            globalLastPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.\n\n";
                 succesPercentageLastToOverall = globalLastPerformanceChangePercentage;
@@ -184,7 +184,7 @@ public class StaisticsPanelManager : MonoBehaviour
             if (globalOverallPerformanceDifference > 0)//Kötü durum
             {
                 percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
-                                          "diğer oyuncuların performanslarına göre <color=red>%" +
+                                          "diğer oyuncuların performanslarına göre <color=#FF7B7B>%" +
                                            globalOverallPerformanceChangePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
 
@@ -285,7 +285,7 @@ public class StaisticsPanelManager : MonoBehaviour
             float changePercentage = Math.Abs(difference) * 100f / userAverageLastPerformanceExcluded;
             if (difference > 0)//Kötü durum
             {
-                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=red>%" +
+                ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=#FF7B7B>%" +
                                            changePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
             }
