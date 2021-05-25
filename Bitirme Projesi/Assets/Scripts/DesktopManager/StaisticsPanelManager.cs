@@ -83,28 +83,11 @@ public class StaisticsPanelManager : MonoBehaviour
             modes.Remove("Yakınıma");
 
         mailOptions.AddOptions(modes);
-       // mailOptions.image.color = new Color(48, 45, 45);
+       
         
 
 
     }
-
-    /*private void OnEnable()
-    {
-
-        string email = DatabaseHandler.loggedInUser.email;
-        email = email.Replace(".", ",");
-        string category = "attention"; //BURALAR
-        string game = "UppercaseLetterGame"; // MINIGAME SCRIPTINDEN ATTRIBUTE OLARAK ÇEKİLECEK 
-
-        StartCoroutine(initDatabaseValues(email, category, game));
-
-
-    }*/
-
-
-
-
 
     public void InitializeGlobalAverage(string category, string game)
     {
@@ -145,7 +128,7 @@ public class StaisticsPanelManager : MonoBehaviour
             float globalLastPerformanceChangePercentage = Math.Abs(globalLastPerformanceDifference) * 100f / globalAverageWithoutLastIncluded;
             
 
-            if (globalLastPerformanceDifference > 0)//Kötü durum
+            if (globalLastPerformanceDifference > 0)
             {
                 lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=#FF7B7B>%" +
@@ -155,7 +138,7 @@ public class StaisticsPanelManager : MonoBehaviour
                 StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall, Color.red));
 
             }
-            else if (globalLastPerformanceDifference < 0)// iyi durum
+            else if (globalLastPerformanceDifference < 0)
             {
                 lastPerformancePercentageAmongUsers.text = "Son performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=#B0FC38>%" +
@@ -181,7 +164,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
         
 
-            if (globalOverallPerformanceDifference > 0)//Kötü durum
+            if (globalOverallPerformanceDifference > 0)
             {
                 percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=#FF7B7B>%" +
@@ -191,7 +174,7 @@ public class StaisticsPanelManager : MonoBehaviour
                 successPercentageOverallToOverall = globalOverallPerformanceChangePercentage;
                 StartCoroutine(drawPie(successPercentageOverallToOverall, pieOverallToOverall, Color.red));
             }
-            else if (globalOverallPerformanceDifference < 0)// iyi durum
+            else if (globalOverallPerformanceDifference < 0)
             {
                 percentageAmongUsers.text = "Genel performansınız, yaş aralığınızdaki (" + ageGapLower + "-" + ageGapUpper + ")  " +
                                           "diğer oyuncuların performanslarına göre <color=#B0FC38>%" +
@@ -240,13 +223,12 @@ public class StaisticsPanelManager : MonoBehaviour
                 mailOptions.gameObject.SetActive(false);
                 ownPerformanceText.text = "Son performansınızın kıyaslanabileceği başka istatistiğiniz bulunmamaktadır.";
                 lastPerformance = statistics.Values.Last().minigameScore;
-                //doNotTouchOwnText = true;
-                //return;
+               
             }
 
             foreach (var statistic in statistics)
             {
-                //Debug.Log($"{statistic.Key} tarihindeki skor: {statistic.Value.minigameScore}");
+           
                 statisticsToAnalyze.Add(statistic.Key, statistic.Value);
                 userAverageOverall += statistic.Value.minigameScore;
                 userPerformanceCount++;
@@ -256,16 +238,16 @@ public class StaisticsPanelManager : MonoBehaviour
 
             userAverageLastPerformanceExcluded = (userAverageOverall - statistics.Values.Last().minigameScore) / (statisticsToAnalyze.Count - 1);
             userAverageOverall = userAverageOverall / statisticsToAnalyze.Count;
-            //Debug.Log(statisticsToAnalyze.Count);
+           
 
-            if (userAverageLastPerformanceExcluded == 0f)//Önceki istatistiklerinin ortalaması 0 ise % hesaplayamayız.
+            if (userAverageLastPerformanceExcluded == 0f)
             {
                 ownPerformanceText.text = "Son performansınız önceki performanslarınıza göre çok daha iyi durumda.";
                 return;
             }
 
             lastPerformance = statistics.Values.Last().minigameScore;
-            //Debug.Log("Last performance " + lastPerformance);
+       
 
             userStatsInitialized = true;
             InformUserComparedToHisOwn();
@@ -283,13 +265,13 @@ public class StaisticsPanelManager : MonoBehaviour
 
             float difference = userAverageLastPerformanceExcluded - lastPerformance;
             float changePercentage = Math.Abs(difference) * 100f / userAverageLastPerformanceExcluded;
-            if (difference > 0)//Kötü durum
+            if (difference > 0)
             {
                 ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=#FF7B7B>%" +
                                            changePercentage.ToString("F1") +
                                            "</color> daha kötü durumda.";
             }
-            else if (difference < 0)// iyi durum
+            else if (difference < 0)
             {
                 ownPerformanceText.text = "Son performansınız, önceki performanslarınıza göre <color=#B0FC38>%" +
                                            changePercentage.ToString("F1") +
@@ -337,7 +319,7 @@ public class StaisticsPanelManager : MonoBehaviour
 
     public IEnumerator initDatabaseValues(string email, string category, string game)
     {
-        //if(operatingForDisplay) yield break;
+
         raycaster.enabled = false;
         operatingForDisplay = true;
         
@@ -394,12 +376,6 @@ public class StaisticsPanelManager : MonoBehaviour
 
 
 
-        // StartCoroutine(drawPie(successPercentageOverallToOverall,pieOverallToOverall));
-        //  StartCoroutine(drawPie(succesPercentageLastToOverall, pieLastToOverall));
-
-        //InformUserComparedToHisOwn();
-        //InformUserAboutGlobal();
-
         loadingText.enabled = false;
         panelToDisplay.SetActive(true);
     
@@ -444,11 +420,9 @@ public class StaisticsPanelManager : MonoBehaviour
         
 
         while(pieImage.fillAmount <= angleToFill)
-        {
-            //float next = Mathf.Lerp(0f, angleToFill, Time.time * timeToFill );
+        {   
             float next = Mathf.MoveTowards(pieImage.fillAmount, angleToFill, increaseTick * Time.deltaTime);
-            pieImage.fillAmount = next;
-            //yield return new WaitForSeconds(increaseTick);
+            pieImage.fillAmount = next; 
             yield return null;
         }
         
@@ -485,12 +459,8 @@ public class StaisticsPanelManager : MonoBehaviour
         string category = gameToDisplay.minigameCategory;
         string game = gameToDisplay.minigameName;
         titleText.text = gameToDisplay.displayName;
-        //Debug.Log(email + " " + category + " " + game);
 
         StopAllCoroutines();
-        //statisticsToAnalyze.Clear();
-        //clearValues();
-
         StartCoroutine(initDatabaseValues(email, category, game));
 
     }

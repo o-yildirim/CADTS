@@ -3,19 +3,15 @@ public class UppercaseLetterStatistic : Statistic
 {
     public int questionsAsked;
     public int correctAnswers;
-    //public int wrongAnswers;
     public float averageReactionTime;
 
     public UppercaseLetterStatistic(User owner,string minigameCategory,string minigameName,float minigameScore,int questionsAsked,int correctAnswers,float averageReactionTime)
     {
-        //----------------Super class attributeları---------
+        //----------------Super class attributes---------
         SetOwner(owner);
         SetCategory(minigameCategory);
-        SetMinigameName(minigameName);
-        //SetDatePerformed(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+        SetMinigameName(minigameName);      
         SetDatePerformed(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-        //SetScore(minigameScore);
-
         this.minigameScore = minigameScore;
 
         //----------------------------------------------------
@@ -24,6 +20,6 @@ public class UppercaseLetterStatistic : Statistic
         this.averageReactionTime = averageReactionTime;
         this.questionsAsked = questionsAsked;
         this.correctAnswers = correctAnswers;
-        //this.wrongAnswers = wrongAnswers;
+ 
     }
 }

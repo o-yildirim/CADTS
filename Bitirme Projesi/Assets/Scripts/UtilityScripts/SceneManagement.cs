@@ -21,39 +21,18 @@ public class SceneManagement : MonoBehaviour
     }
 
     public IEnumerator loadScene(int index)
-    {
-        //Debug.Log("Korutinin içi");
-        //loading screen aktifleşir
+    {  
         AsyncOperation loading = SceneManager.LoadSceneAsync(index);
         while (!loading.isDone)
         {
             yield return null;
         }
-        //loading screeni kaldır
     }
 
     public void loadSceneCall(int buildIndex)
     {
         StartCoroutine(loadScene(buildIndex));
     }
-
-    /*
-    public void loadMinigame()
-    {
-        GameObject selectedGameObject = EventSystem.current.currentSelectedGameObject;
-        Debug.Log(selectedGameObject.name);
-        Minigame minigame = selectedGameObject.GetComponent<Minigame>();
-
-        if (minigame != null)
-        {
-            Debug.Log("Clicked on " + minigame.transform.name);
-            int buildIndex = minigame.sceneIndex;
-            loadSceneCall(buildIndex);
-        }
-    
-    }
-
-    */
 
     public void loadLoginScreen()
     {

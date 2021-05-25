@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     
-    // Update is called once per frame
     void Update()
     {
         if (ProblemSolvingGameManager.instance.inputUnavailable)

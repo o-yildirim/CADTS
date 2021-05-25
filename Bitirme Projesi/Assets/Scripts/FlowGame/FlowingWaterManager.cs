@@ -68,14 +68,13 @@ public class FlowingWaterManager : MonoBehaviour
                     }
                 }
 
-               // Debug.Log("Input: " + input + "  Output: " + output);
+               
 
                 float xOffset = 0f;
                 float yOffset = 0f;
                 float xLength = lastPipe.GetComponent<BoxCollider>().size.x;
                 float yLength = lastPipe.GetComponent<BoxCollider>().size.y;
 
-              //  Debug.Log("xLength: " + xLength + "  yLength: " + yLength);
        
 
                 if (output == 0)
@@ -90,7 +89,7 @@ public class FlowingWaterManager : MonoBehaviour
                 {
                     yOffset -= yLength;
                 }
-                else // 3
+                else 
                 {
                     xOffset -= xLength;
                 }
@@ -168,16 +167,5 @@ public class FlowingWaterManager : MonoBehaviour
         water.positionCount = 0;
         waterEffect.Stop();
     }
-
-    /*public void drawWater(List<Vector3> positionList)
-    {
-        int passedPipesLength = positionList.Count;
-
-        water.positionCount = passedPipesLength;
-        for (int i = 0; i < passedPipesLength; i++)
-        {
-            water.SetPosition(i, positionList[i]);
-        }
-    }*/
 
 }

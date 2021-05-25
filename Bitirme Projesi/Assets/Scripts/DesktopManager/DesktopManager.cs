@@ -34,12 +34,12 @@ public class DesktopManager : MonoBehaviour
     public Image leftMenuBar;
     public Image upperMenuBar;
     public Image background;
-    //public Image settingsImage;
+   
 
     public Sprite[] leftMenuBarImages;
     public Sprite[] upperMenuBarImages;
     public Sprite[] backgroundImages;
-    //public Image[] leftMenuBarImages;
+ 
 
 
     public Color selectedButtonColor;
@@ -61,26 +61,19 @@ public class DesktopManager : MonoBehaviour
 
 
 
-        //ActivatePanel(desktopButtons[0], desktopPanels[0], false);
+ 
 
         desktopPanels[0].SetActive(true);
 
         Image firstButtonImage = desktopButtons[0].GetComponent<Image>();
         firstButtonImage.color = selectedButtonColor;
-        //firstButtonImage.enabled = false;
-        //firstButtonImage.enabled = true;
+      
 
         int startingWindow = 0;
 
         ActivatePanel(statisticCategoriesButtons[startingWindow], minigameSelectPanels[startingWindow], true);
         ActivatePanel(displayStatisticMiniGameButtons[startingWindow], null, false);
         ActivatePanel(gameCategoryButtons[startingWindow], gameCategoryPanels[startingWindow], true);
-
-        //gameCategoryPanels[startingWindow].SetActive(true);
-
-    
-
-
 
 
         displayStatisticMiniGameButtons[startingWindow].onClick.Invoke();
@@ -134,7 +127,7 @@ public class DesktopManager : MonoBehaviour
             GameObject panelToOpen;
             panelButtonMatch.TryGetValue(clickedPanelButton, out panelToOpen);
 
-            if (panelToOpen != null && !panelToOpen.activeSelf) //BURALARDA SUB PANEL MI DIYE BIR IF KOYULACAK
+            if (panelToOpen != null && !panelToOpen.activeSelf) 
             {
 
                 bool isCategoryButton = false;
@@ -172,7 +165,7 @@ public class DesktopManager : MonoBehaviour
             GameObject panelToOpen;
             statisticCategoryButtonPanelMatch.TryGetValue(clickedPanelButton, out panelToOpen);
 
-            if (panelToOpen != null && !panelToOpen.activeSelf) //BURALARDA SUB PANEL MI DIYE BIR IF KOYULACAK
+            if (panelToOpen != null && !panelToOpen.activeSelf) 
             {
 
                 bool isCategoryButton = false;
@@ -195,20 +188,7 @@ public class DesktopManager : MonoBehaviour
                 firstMinigameButtonInCategory.GetComponent<Image>().color = selectedButtonColor;
                 firstMinigameButtonInCategory.onClick.Invoke();
 
-                /*
-                  for (int i = 0; i < panelToOpen.transform.childCount; i++)
-                  {
-                      Button button = panelToOpen.transform.GetChild(i).GetComponent<Button>();
-                      if(button && button.gameObject.activeSelf)
-                      {
-                          button.GetComponent<Image>().color = selectedButtonColor;
-                          button.onClick.Invoke();
-                          Debug.Log(button.name);
-                          break;                    
-                      }
-                  }
-                */
-
+        
 
             }
         }
@@ -237,7 +217,7 @@ public class DesktopManager : MonoBehaviour
         {
             Minigame minigameScript = displayStatisticMiniGameButtons[i].GetComponent<Minigame>();
             displayStatisticMiniGameButtons[i].onClick.AddListener(() => { StaisticsPanelManager.instance.DisplayForMinigame(minigameScript); });
-            //Debug.Log("Added listener to: " + displayStatisticMiniGameButtons[i].name);
+        
         }
 
         for (int i = 0; i < minigameButtons.Length; i++)
@@ -245,7 +225,7 @@ public class DesktopManager : MonoBehaviour
             Minigame minigameScript = minigameButtons[i].GetComponent<Minigame>();
             int indexOfThisMinigame = minigameScript.sceneIndex;
             minigameButtons[i].onClick.AddListener(() => { SceneManagement.instance.loadSceneCall(indexOfThisMinigame); });
-            //Debug.Log("Added listener to: " + minigameButtons[i].name + "with scene index:" + indexOfThisMinigame);
+ 
         }
 
     }
@@ -256,13 +236,13 @@ public class DesktopManager : MonoBehaviour
         for (int i = 0; i < desktopPanels.Length; i++)
         {
             panelButtonMatch.Add(desktopButtons[i], desktopPanels[i]);
-            //Debug.Log(desktopButtons[i] + "  " + desktopPanels[i]);
+           
         }
 
         for (int i = 0; i < gameCategoryPanels.Length; i++)
         {
             panelButtonMatch.Add(gameCategoryButtons[i], gameCategoryPanels[i]);
-            // Debug.Log(gameCategoryButtons[i] + "  " + gameCategoryPanels[i]);
+     
         }
         for (int i = 0; i < statisticCategoriesButtons.Length; i++)
         {
@@ -278,8 +258,7 @@ public class DesktopManager : MonoBehaviour
         {
             Image image = button.GetComponent<Image>();
             image.color = selectedButtonColor;
-            //image.enabled = false;
-            //image.enabled = true;
+         
         }
       
 
@@ -320,10 +299,7 @@ public class DesktopManager : MonoBehaviour
                                buttonImage =  statisticCategoriesButtons[index].GetComponent<Image>();
                             }
 
-                            buttonImage.color = selectedButtonColor;
-                            //buttonImage.enabled = false;
-                            //buttonImage.enabled = true;
-
+                            buttonImage.color = selectedButtonColor;                         
                             break;
                         }
                         index++;

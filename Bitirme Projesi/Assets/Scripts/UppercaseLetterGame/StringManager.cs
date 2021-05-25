@@ -21,7 +21,7 @@ public class StringManager : MonoBehaviour
     }
 
 
-    public string generateString(int length) //Length uzunluğunda rasgele string üretiyor. NOT: Karakterler tekrar edebiliyor.
+    public string generateString(int length)
     {
         string generated = "";
 
@@ -34,7 +34,7 @@ public class StringManager : MonoBehaviour
         return generated;
     }
 
-    public string assignRandomUppercase(string stringToUse) //Stringin içindeki rasgele bir karakteri uppercase yapıyor.
+    public string assignRandomUppercase(string stringToUse)
     {
 
 

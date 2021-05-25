@@ -1,6 +1,6 @@
 ﻿using System;
 
-[Serializable] // This makes the class able to be serialized into a JSON
+[Serializable] 
 public class Date
 {
     public int correctAnswers;

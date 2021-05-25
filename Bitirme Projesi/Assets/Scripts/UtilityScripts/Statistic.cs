@@ -10,10 +10,6 @@ public class Statistic
     public float minigameScore;
  
 
-   
-
-    //Minigame ranking falan eklenebilir sıralaması oyuncunun vs.
-
     public string GetCategory()
     {
         return minigameCategory;

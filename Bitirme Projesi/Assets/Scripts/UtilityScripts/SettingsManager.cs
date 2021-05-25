@@ -83,7 +83,6 @@ public class SettingsManager : MonoBehaviour
     public void LogOut()
     {
         DatabaseHandler.loggedInUser = null;
-        //TOKENI YOKET
         SceneManagement.instance.loadLoginScreen();
     }
 
@@ -215,7 +214,7 @@ public class SettingsManager : MonoBehaviour
         string enteredNewPw2 = newPw2.text;
 
         string hashedPwd = AuthenticationManager.GetMD5HashString(enteredOldPw1);
-        string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw1); //**
+        string hashedNewPassword = AuthenticationManager.GetMD5HashString(enteredNewPw1); 
 
         if (string.IsNullOrWhiteSpace(enteredOldPw1) || string.IsNullOrWhiteSpace(enteredOldPw2) || string.IsNullOrWhiteSpace(enteredNewPw1) || string.IsNullOrWhiteSpace(enteredNewPw2))
         {
@@ -324,15 +323,6 @@ public class SettingsManager : MonoBehaviour
     public void ScreenSettings()
     {
 
-        //screenResolutionDropdown.value = PlayerPrefs.GetInt("ResolutionIndex");
-        //screenModeDropdown.value = PlayerPrefs.GetInt("ModeIndex");
-
-        //screenModeDropdown.RefreshShownValue();
-        //screenResolutionDropdown.RefreshShownValue();
-
-        //Text tempText = screenPanel.transform.Find("Title").GetComponent<Text>();
-        //tempText.text = screenResolutionDropdown.value.ToString();
-
         CloseCanvas(applicationSettingsCanvas);
         OpenCanvas(operationCanvas);
         OpenCanvas(screenPanel);
@@ -343,9 +333,6 @@ public class SettingsManager : MonoBehaviour
         audioMixer.SetFloat("volume", volume);
         PlayerPrefs.SetFloat("volume", volume);
         if (!sampleSource.isPlaying) sampleSource.Play();
-        //sampleSource.Play();
-
-        // Debug.Log(volume);
     }
 
 

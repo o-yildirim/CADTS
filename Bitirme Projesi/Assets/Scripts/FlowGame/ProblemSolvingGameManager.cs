@@ -108,12 +108,10 @@ public class ProblemSolvingGameManager : MonoBehaviour
                     ResetLevel();
                     StartGame();
 
-                } //load next level
+                } 
             }
             else
             {
-               // pipesPassedTrough.Clear();
-               // waterManagerScript.ResetElements();
                 inputUnavailable = false;
             }
             
@@ -165,7 +163,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
         BoxCollider sinkCollider = sink.GetComponent<BoxCollider>();
         valveCollider.enabled = sinkCollider.enabled = false;
 
-        for (int j =1; j < tutorialMap.transform.childCount; j++) //0 dan başlatmamamın sebebi ilk çocuğun collideri aktif olmasını istiyorum onu döndürecek
+        for (int j =1; j < tutorialMap.transform.childCount; j++) 
         {
             BoxCollider collider = tutorialMap.transform.GetChild(j).GetComponent<BoxCollider>();
             if(collider != null)
@@ -208,7 +206,7 @@ public class ProblemSolvingGameManager : MonoBehaviour
             yield return null;
         }
 
-        for (int j = 1; j < tutorialMap.transform.childCount; j++) //0 dan başlatmamamın sebebi ilk çocuğun collideri aktif olmasını istiyorum onu döndürecek
+        for (int j = 1; j < tutorialMap.transform.childCount; j++) 
         {
             BoxCollider collider = tutorialMap.transform.GetChild(j).GetComponent<BoxCollider>();
             if (collider != null)
@@ -267,13 +265,13 @@ public class ProblemSolvingGameManager : MonoBehaviour
         waterManagerScript.StopAllCoroutines();
         waterManagerScript.waterSoundSource.Stop();
         valveScript.StopAllCoroutines();
-        //valveScript.gameObject.GetComponent<AudioSource>().Stop();
+
         valveScript.audioSource.Stop();
         pipesPassedTrough.Clear();
         waterManagerScript.ResetElements();
         FlowStatisticManager.instance.ResetAttributes();
 
-        //tutorialMap.SetActive(false);
+    
         Destroy(tutorialMap);
         tutorialCanvas.SetActive(false);
         inputUnavailable = false;

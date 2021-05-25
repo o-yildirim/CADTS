@@ -10,7 +10,6 @@ using System.Globalization;
 public class AuthenticationManager : MonoBehaviour
 {
     public static AuthenticationManager instance;
-    // Start is called before the first frame update
     public InputField registerName;
     public InputField registerSurname;
     public InputField dateOfBirth;
@@ -61,12 +60,12 @@ public class AuthenticationManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3000); // 50 dakikada bir yeni token üretsin
+            yield return new WaitForSeconds(3000); 
             createTokenAsync();
         }
     }
 
-    public async System.Threading.Tasks.Task createTokenAsync() //visual studio kendi önerdi, değiştirilebilir
+    public async System.Threading.Tasks.Task createTokenAsync() 
     {
         try
         {
@@ -83,9 +82,9 @@ public class AuthenticationManager : MonoBehaviour
                                 ""client_x509_cert_url"": ""https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-itguz%40bitirme-projesi-df6c6.iam.gserviceaccount.com""
                             }
     "; 
-                var cr = JsonConvert.DeserializeObject<ServiceAccount>(json); // service account credential
-            //Debug.Log("Email: " + cr.client_email + "PK: " + cr.private_key);
-            // Create an explicit ServiceAccountCredential credential
+                var cr = JsonConvert.DeserializeObject<ServiceAccount>(json); 
+           
+   
             var xCred = new ServiceAccountCredential(new ServiceAccountCredential.Initializer(cr.client_email)
             {
                 Scopes = new[] {
@@ -95,11 +94,11 @@ public class AuthenticationManager : MonoBehaviour
             }.FromPrivateKey(cr.private_key));
             string accessToken = await xCred.GetAccessTokenForRequestAsync();
             RestClient.DefaultRequestHeaders["Authorization"] = "Bearer " + accessToken;
-            //Debug.Log("Access token: " + accessToken);
+         
         }
         catch (Exception e)
         {
-           // Debug.Log(e.Message);
+  
         }
     }
 
@@ -205,56 +204,5 @@ public class AuthenticationManager : MonoBehaviour
         }
         return sb.ToString();
     }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* public void getAllUsers()
-     {
-
-         DatabaseHandler.GetUser(registerEmail.text, user =>
-         {
-             Debug.Log($"{user.name}'s mail is {user.email} and password is {user.password}");
-         });
-
-         DatabaseHandler.GetUsers(users =>
-         {
-             foreach (var user in users)
-             {
-                 Debug.Log($"{user.Value.name} {user.Value.email} {user.Value.password}");
-             }
-         });
-     });
-     }
-     */
 
 }

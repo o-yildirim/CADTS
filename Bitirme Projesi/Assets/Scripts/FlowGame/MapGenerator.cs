@@ -16,7 +16,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject mapGameObject;
 
     public int rows;
-    public int columns; // 2D Array with capacity mapLength x mapHeight
+    public int columns; 
     public float finishOffsetY = -2f;
     public float sinkOffsetY = 2f;
     public float valveOffsetX = 2f;
@@ -112,7 +112,7 @@ public class MapGenerator : MonoBehaviour
 
     public void CreateCorners()
     {
-        //SOL ALT KOSE
+    
 
         int randomState = Random.Range(0, possiblePipeStateCount);
         float leftBottomCornerX = firstSpawnPoint.position.x;
@@ -130,7 +130,7 @@ public class MapGenerator : MonoBehaviour
         map[rows - 1, columns-1].GetComponent<Tile>().currentState = randomState;
         map[rows - 1, columns-1].transform.parent = mapGameObject.transform;
 
-        //SAG UST KOSE
+ 
         randomState = Random.Range(0, possiblePipeStateCount);
         cornerSpawn.y += (rows * tileLengthY) - tileLengthY;
         map[0, columns - 1] = Instantiate(pipes[0], cornerSpawn, Quaternion.identity);
@@ -148,9 +148,9 @@ public class MapGenerator : MonoBehaviour
         }
 
         float currentTileX = firstSpawnPoint.position.x + (columns / 2f * tileLengthX) - spawnOffsetX;
-        float currentTileY = firstSpawnPoint.position.y - (rows * tileLengthY) + tileLengthY; //burasi + n * tileLengthY falan olabilir
+        float currentTileY = firstSpawnPoint.position.y - (rows * tileLengthY) + tileLengthY; 
 
-        int currentRowIndex = rows-1;        //finish oncesinden basliyorum;
+        int currentRowIndex = rows-1;       
         int currentColumnIndex = columns/2;      
 
         Vector3 nextTileSpawnPoint = new Vector3(currentTileX, currentTileY, 0f);
@@ -167,11 +167,11 @@ public class MapGenerator : MonoBehaviour
         int roll = (int)Random.Range(0, 3);
         if (roll == 0)
         {
-            desiredOutput = 0; //SOL
+            desiredOutput = 0; 
         }
         else if(roll == 1)
         {
-            desiredOutput = 1; //YUKARI
+            desiredOutput = 1; 
         }
         else if(roll == 2)
         {
@@ -210,7 +210,6 @@ public class MapGenerator : MonoBehaviour
 
 
 
-        //Debug.Log("Input: " + input + " Output: " + desiredOutput + " for " + createdTile.transform.name);
         CreateAdjacentTile(createdTile, desiredOutput, currentRowIndex, currentColumnIndex);
 
     }
@@ -264,9 +263,9 @@ public class MapGenerator : MonoBehaviour
 
            
 
-        if (output == 0) //ACIL MUDAHALE GEREKIR
+        if (output == 0) 
         {
-            if (currentRowIndex > 0) //YUKARI YARATMAYA CALISIYOR
+            if (currentRowIndex > 0) 
             {
                 currentRowIndex--;
                 if (!isOutputDetermined)
@@ -274,11 +273,11 @@ public class MapGenerator : MonoBehaviour
                     int roll = (int)Random.Range(0, 2);
                     if (roll == 0)
                     {
-                        desiredOutput = 0; //SOL
+                        desiredOutput = 0; 
                     }
                     else
                     {
-                        desiredOutput = 3; //YUKARI
+                        desiredOutput = 3; 
                     }
                 }
             }
@@ -287,7 +286,7 @@ public class MapGenerator : MonoBehaviour
  
         else if (output == 1)
         {
-            if (currentColumnIndex < columns-1 ) //SAĞA YARATMAYA CALISIYOR
+            if (currentColumnIndex < columns-1 ) 
             {
                 currentColumnIndex++;
                 if (!isOutputDetermined) desiredOutput = 0;
@@ -297,7 +296,7 @@ public class MapGenerator : MonoBehaviour
         }
         else if (output == 2)
         {
-            if (currentRowIndex < rows-1 )  //ASAGI YARATMAYA CALISIYOR
+            if (currentRowIndex < rows-1 )  
             {
                 
                 currentRowIndex++;
@@ -309,7 +308,7 @@ public class MapGenerator : MonoBehaviour
         }      
         else if (output == 3)
         {
-            if (currentColumnIndex > 0)   //SOLA YARATMAYA CALISIYOR
+            if (currentColumnIndex > 0)   
             {         
                 currentColumnIndex--;
                 if (!isOutputDetermined)
@@ -317,11 +316,11 @@ public class MapGenerator : MonoBehaviour
                     int roll = (int)Random.Range(0, 2);
                     if (roll == 0)
                     {
-                        desiredOutput = 0; //SOL
+                        desiredOutput = 0; 
                     }
                     else
                     {
-                        desiredOutput = 3; //YUKARI
+                        desiredOutput = 3; 
                     }
                 }
             }               
@@ -394,17 +393,12 @@ public class MapGenerator : MonoBehaviour
             createdTile.init();
            
         }
-        createdTile.transform.parent = mapGameObject.transform;
-
-
-
-        //Debug.Log("Input: "+input + " Output: " + desiredOutput +  " for " + createdTile.transform.name);
-
+        createdTile.transform.parent = mapGameObject.transform; 
         CreateAdjacentTile(createdTile, desiredOutput, currentRowIndex, currentColumnIndex);
 
     }
 
-    public void MixSolution() //BURASI KESİNLİKLE OPTİMİZE EDİLMELİ
+    public void MixSolution() 
     {
         for(int i = 0; i< rows; i++)
         {
@@ -421,15 +415,8 @@ public class MapGenerator : MonoBehaviour
                         {
                           randomState = Random.Range(0, possiblePipeStateCount);
                         } while (randomState != tile.currentState);
-
-                        /*for (int x = 0; x < randomState; x++)
-                        {
-                            tile.manageEdges();
-                            tile.currentState = (tile.currentState+1) % possiblePipeStateCount;
-                           
-                        }*/
-                        tile.currentState = randomState;
-                        //tile.init();
+                  
+                        tile.currentState = randomState;              
                         tile.manageEdges();
                         tile.currentState = (tile.currentState+1)%possiblePipeStateCount;
                     }
@@ -440,16 +427,6 @@ public class MapGenerator : MonoBehaviour
 
     public void RepositionCamera()
     {
-
-        /*float xLength = (columns * tileLengthX);
-        float yLength = (rows * tileLengthY) + finishOffsetY - sinkOffsetY;
-
-        float sum = Mathf.Pow(xLength, 2) + Mathf.Pow(yLength, 2);       
-        float newCamSize = Mathf.Sqrt(sum)/2f;
-
-        Camera.main.orthographicSize = newCamSize;
-        */
-
         float xPos = (map[0, 0].transform.position.x + map[0, columns - 1].transform.position.x)/2f;
         float yPos = (ProblemSolvingGameManager.instance.sink.transform.position.y + ProblemSolvingGameManager.instance.finish.transform.position.y)/ 2f;
 
@@ -457,8 +434,6 @@ public class MapGenerator : MonoBehaviour
         Vector3 newCamPos = new Vector3(xPos, yPos, 0f);
         newCamPos.z = Camera.main.transform.position.z;
         Camera.main.transform.position = newCamPos;
-        
-       
-    
+           
     }
 }

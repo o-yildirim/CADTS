@@ -100,16 +100,14 @@ public class MathGameController : MonoBehaviour
             isFinished = true;
             destroyBalloons();
             StatisticPanelManager.instance.gameCanvas.SetActive(false);
-            Debug.Log(score);
-          //  scoreTxt.text += score.ToString();
-            Debug.Log(wrongAttempts);
+    
             wrongAttemptsTxt.text += wrongAttempts.ToString();
             endGameButton.gameObject.SetActive(false);
             StatisticPanelManager.instance.statisticPanel.SetActive(true);
-            MathStatisticManager.instance.EvaluateValues(score, wrongAttempts); //**
+            MathStatisticManager.instance.EvaluateValues(score, wrongAttempts); 
             scoreTxt.text += MathStatisticManager.instance.minigameScore.ToString();
-            MathStatisticManager.instance.InitializeStatisticObject(); //**
-            MathStatisticManager.instance.InsertToDatabase(); //**
+            MathStatisticManager.instance.InitializeStatisticObject(); 
+            MathStatisticManager.instance.InsertToDatabase(); 
             StatisticPanelManager.instance.exitButton.onClick.AddListener(SceneManagement.instance.loadMainMenu);
         }
     }

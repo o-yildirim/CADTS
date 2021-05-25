@@ -14,7 +14,7 @@ public class FlowStatistic : Statistic
         SetMinigameName(minigameName); 
         SetDatePerformed(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));  
         this.minigameScore = minigameScore;
-        //----------------------------------------------------
+   
 
 
         this.cycleCount = cycleCount;

@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Tutorial());
     }
 
-    void Update()                                           //level timer ve global timer
+    void Update()                                        
     {
         if (timerActive)
         {
@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
         skip.onClick.AddListener(SkipTutorial);
         inputEnabled = false;
         tutorialEnabled = true;
-        rg = new System.Random("honeybee".GetHashCode());           //tutorialda her seferinde aynı ikili geliyor.
+        rg = new System.Random("honeybee".GetHashCode());          
         SetBleeps();
         Info.text = "Bu oyunda amacınız, yanan düğmelerin sırasını aklınızda tutarak tekrar girmenizdir.";
         yield return new WaitForSeconds(2.5f);
@@ -233,7 +233,7 @@ public class GameManager : MonoBehaviour
         }
     }           
 
-    IEnumerator TutorialEnd()           //yazılar delayleriyle birlikte düzenlenecek
+    IEnumerator TutorialEnd()           
     {
         Info.text = "Girdiniz doğru! Harika!";
         yield return new WaitForSeconds(2f);
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SimonSays());
     }
 
-    IEnumerator SimonSays()             //yazılar delayleriyle birlikte düzenlenecek
+    IEnumerator SimonSays()             
     {
         SkipButton.SetActive(false);
         quitToMenuCanvas.SetActive(true);

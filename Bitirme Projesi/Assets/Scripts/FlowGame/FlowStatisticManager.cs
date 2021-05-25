@@ -37,7 +37,7 @@ public class FlowStatisticManager : MonoBehaviour
         {
             instance = this;
         }
-        else if(instance != this)
+        else if (instance != this)
         {
             Destroy(this);
         }
@@ -61,16 +61,16 @@ public class FlowStatisticManager : MonoBehaviour
 
     public void IncrementRotation(Tile tile)
     {
-       
-        if (tilesRotationCounts.ContainsKey(tile)) // Henuz dictionary de yoksa
+
+        if (tilesRotationCounts.ContainsKey(tile))
         {
             tilesRotationCounts[tile]++;
         }
         else
         {
-            tilesRotationCounts.Add(tile, 1);         
+            tilesRotationCounts.Add(tile, 1);
         }
-       
+
         Debug.Log(tilesRotationCounts[tile]);
 
     }
@@ -83,8 +83,6 @@ public class FlowStatisticManager : MonoBehaviour
     public void EvaluateValues()
     {
 
-     
-        
         foreach (int rotationCount in tilesRotationCounts.Values)
         {
             cycles += rotationCount / 4;
@@ -93,12 +91,12 @@ public class FlowStatisticManager : MonoBehaviour
         for (int i = 0; i < pathCostByPipes.Length; i++)
         {
             Debug.Log("Level " + i + " yol uzunlugu: " + pathCostByPipes[i]);
-            allLevelsTotalCostByPipes += pathCostByPipes[i]; 
+            allLevelsTotalCostByPipes += pathCostByPipes[i];
         }
-        //ÇOK DANDIK BIR HESAPLAMA SKOR HESAPLAMASI
-        score = ((1f / time)* timeMultiplier) - (wrongAttempts * wrongAttemptMultiplier) - (cycles * cycleMultiplier) - (allLevelsTotalCostByPipes * pathCostByPipesMultiplier); 
 
-        if(score < 0f)
+        score = ((1f / time) * timeMultiplier) - (wrongAttempts * wrongAttemptMultiplier) - (cycles * cycleMultiplier) - (allLevelsTotalCostByPipes * pathCostByPipesMultiplier);
+
+        if (score < 0f)
         {
             score = 0f;
         }
@@ -114,7 +112,7 @@ public class FlowStatisticManager : MonoBehaviour
                                        allLevelsTotalCostByPipes,
                                        wrongAttempts
                                       );
-   
+
     }
     public void InsertToDatabase()
     {
@@ -137,7 +135,7 @@ public class FlowStatisticManager : MonoBehaviour
         tilesRotationCounts.Clear();
         cycles = 0;
         instance.wrongAttempts = 0;
-        for(int i = 0; i< pathCostByPipes.Length; i++)
+        for (int i = 0; i < pathCostByPipes.Length; i++)
         {
             pathCostByPipes[i] = 0;
         }

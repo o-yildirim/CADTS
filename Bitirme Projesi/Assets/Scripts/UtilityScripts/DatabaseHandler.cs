@@ -9,9 +9,7 @@ public class DatabaseHandler
 {
 
     public static User loggedInUser;
-    // Start is called before the first frame update
-    //bitirme-projesi-df6c6
-    private const string projectId = "bitirme-projesi-df6c6"; // You can find this in your Firebase project settings
+    private const string projectId = "bitirme-projesi-df6c6"; 
     private static readonly string databaseURL = $"https://{projectId}.firebaseio.com/";
 
     private static fsSerializer serializer = new fsSerializer();
@@ -20,24 +18,15 @@ public class DatabaseHandler
     public delegate void GetUserCallback(User user);
     public delegate void GetUsersCallback(Dictionary<string, User> users);
 
-    public delegate void PostUserStatisticsCallback(); //**
+    public delegate void PostUserStatisticsCallback(); 
     public delegate void GetUserStatisticsCallback(Dictionary<string, Statistic> dates);
     public delegate void GetGlobalStatisticCallback(GlobalStatistic globalStatistic);
-    /*
-    private void Update()
-    {
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            Debug.Log("Error. Check internet connection!");
-            AuthenticationManager.instance.setStatus("İnternet bağlantısı kurulamıyor.");
-        }
-    }*/
+
 
 
     public static void PostUser(User user, string userEmail, PostUserCallback callback)
     {
-        RestClient.Put<User>($"{databaseURL}users/{userEmail}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error)); 
-        //RestClient.Put<User>(databaseURL +"users/"+userEmail+".json", user).Then(response => {callback(); }).Catch(error => AuthenticationManager.instance.setStatus("Kayıt olunamadı"));
+        RestClient.Put<User>($"{databaseURL}users/{userEmail}.json", user).Then(response => { callback(); }).Catch(error => Debug.Log(error));
     }
 
     public static void GetUser(string userEmail, GetUserCallback callback)
@@ -76,7 +65,6 @@ public class DatabaseHandler
 
     public static void handleJsonException(string userId, User user, Exception error)
     {
-       // Debug.Log(error);
         if (error.Message.Equals("JSON must represent an object type."))
         {
             AuthenticationManager.instance.createTokenAsync();
@@ -109,22 +97,7 @@ public class DatabaseHandler
         });
     }
 
-    /*public static void GetUserStatistics(string email, string category, string game, GetUserStatisticsCallback callback)
-    {
-        RestClient.Get($"{databaseURL}/statistics/{email}/{category}/{game}.json").Then(response =>
-        {
-            var responseJson = response.Text;
 
-            // Using the FullSerializer library: https://github.com/jacobdufault/fullserializer
-            // to serialize more complex types (a Dictionary, in this case)
-            var data = fsJsonParser.Parse(responseJson);
-            object deserialized = null;
-            serializer.TryDeserialize(data, typeof(Dictionary<string, Date>), ref deserialized);
-
-            var users = deserialized as Dictionary<string, Date>;
-            callback(users);
-        });
-    }*/
 
     public static void GetUserStatistics(string email, string category, string game, GetUserStatisticsCallback callback)
     {
@@ -167,8 +140,7 @@ public class DatabaseHandler
 
     public static void GetGlobalStatistic(string category,string game,int ageGapLower,int ageGapUpper, GetGlobalStatisticCallback callback)
     {
-       RestClient.Get<GlobalStatistic>(databaseURL + "globalStatistics/" +ageGapLower +"-" + ageGapUpper +  "/" + category + "/" + game +".json").Then(globalStatistic => { callback(globalStatistic); });
-        //RestClient.Get<GlobalStatistic>(databaseURL + "globalStatistics/18-24/attention/UppercaseLetterGame.json").Then(globalStatistic => { callback(globalStatistic); });
+       RestClient.Get<GlobalStatistic>(databaseURL + "globalStatistics/" +ageGapLower +"-" + ageGapUpper +  "/" + category + "/" + game +".json").Then(globalStatistic => { callback(globalStatistic); });    
     }
 
 }

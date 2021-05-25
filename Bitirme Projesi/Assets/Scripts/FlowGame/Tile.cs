@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour
     public int currentState = 0;
     public Dictionary<int, float> stateAngleMatch;
     
-    //public Dictionary<int, bool[]> stateEdgeMatch;
+
 
 
     public bool[] edges = { false, false, false, false };
@@ -124,7 +124,7 @@ public class Tile : MonoBehaviour
         {
             return;
         }
-        //Debug.Log(transform.name);
+      
         ProblemSolvingGameManager.instance.pipesPassedTrough.Add(this.gameObject);
 
 
@@ -138,7 +138,6 @@ public class Tile : MonoBehaviour
             }
         }
 
-        //Debug.Log(outputEdge);
 
         RaycastHit hit = new RaycastHit();
         switch (outputEdge)
@@ -173,9 +172,7 @@ public class Tile : MonoBehaviour
         {
            Tile hitTile = hit.transform.GetComponent<Tile>();
            if (hitTile != null)
-           {
-               // Debug.Log("Send from " +outputEdge+". edge.");
-               // Debug.Log("To "+(outputEdge + 2) % totalStates + ". edge.");
+            { 
                 hitTile.checkTransmission((outputEdge + 2 ) % totalStates);
             }
          }  

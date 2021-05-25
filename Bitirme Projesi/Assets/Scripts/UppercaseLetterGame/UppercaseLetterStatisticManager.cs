@@ -36,8 +36,6 @@ public class UppercaseLetterStatisticManager : MonoBehaviour
     public void InitializeStatistics()
     {
 
-        //ALTTAKİ SATIRDA MİNİGAME OBJESİ KULLANILABİLİR BELKİ
-
         if (GameController.instance.reactionTimeAverage == 0f)
         {
             GameController.instance.score = 0f;

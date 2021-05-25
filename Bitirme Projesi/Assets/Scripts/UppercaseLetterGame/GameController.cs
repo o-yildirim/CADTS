@@ -33,10 +33,6 @@ public class GameController : MonoBehaviour
     public int questionAnswered;
     public int correctAnswered;
 
-    //  public float questionAskedTime;
-    //  public float questionAnsweredTime;
-    //  public float reactionTimeAverage;
-
     public float reactionTimeAverage;
     public float reactionTimeCounter = 0;
 
@@ -52,7 +48,7 @@ public class GameController : MonoBehaviour
     public float bonusTime = 2f;
 
     public int minLetters = 1;
-    public int maxLetters = 7; //Random fonksiyonu 7 yi exclude ediyor yani 6 karakterli olacak en uzun.
+    public int maxLetters = 7; 
 
     public bool rightIsCorrect;
     public bool gamePaused = true;
@@ -105,28 +101,15 @@ public class GameController : MonoBehaviour
 
         
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            // questionAnsweredTime = Time.time;
-            // reactionTimeAverage += questionAskedTime - questionAnsweredTime;
-            
-
-            checkLeft();//Soldaki doğru cevap mı diye kontrol et
-            newQuestion();
-            
+        {                 
+            checkLeft();
+            newQuestion();          
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-   
-           // questionAskedTime = Time.time;
-           // reactionTimeAverage += questionAskedTime - questionAnsweredTime;
-
-            checkRight();//Sağdaki doğru cevap mı diye kontrol et
-            newQuestion();
-            //this.timePassedSinceLastAnswer = 0f;
+            checkRight();
+            newQuestion();     
         }
-
-        //this.timePassedSinceLastAnswer += Time.deltaTime;
-
     }
 
     public void newQuestion()
@@ -144,17 +127,17 @@ public class GameController : MonoBehaviour
         {
             this.leftText.text = withUppercase;
             this.rightText.text = withoutUppercase;
-            this.rightIsCorrect = false;//O zaman doğru cevap sol olacak
+            this.rightIsCorrect = false;
         }
         else
         {
             this.rightText.text = withUppercase;
             this.leftText.text = withoutUppercase;
-            this.rightIsCorrect = true;//Doğru cevap sağ olacak
+            this.rightIsCorrect = true;
         }
 
         this.questionsAsked++;
-        //questionAskedTime = Time.time;
+    
 
 
     }
@@ -190,13 +173,12 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            //StartCoroutine(displayMarker(markerDisplayDuration, cross));
+        
             displayMarker(cross);
             correctStreak = 0;
             wrongStreak++;
             if(wrongStreak == wrongStreakLimit)
             {
-                //QUESTION ANSWERED I ARTTIRACAK MI
                 finishGame();
             }
         }
@@ -210,9 +192,7 @@ public class GameController : MonoBehaviour
             reactionTimeAverage += reactionTimeCounter;
             reactionTimeCounter = 0f;
 
-            this.correctAnswered++;
-            // Debug.Log(score);
-            //StartCoroutine(displayMarker(markerDisplayDuration, check));
+            this.correctAnswered++;      
             displayMarker(check);
 
             wrongStreak = 0;
@@ -224,14 +204,12 @@ public class GameController : MonoBehaviour
             }
         }
         else
-        {
-            //StartCoroutine(displayMarker(markerDisplayDuration, cross));
+        {  
             displayMarker(cross);
             correctStreak = 0;
             wrongStreak++;
             if (wrongStreak == wrongStreakLimit)
-            {
-                //QUESTION ANSWERED I ARTTIRACAK MI
+            {      
                 finishGame();
             }
         }
