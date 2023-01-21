@@ -1,2 +1,3 @@
-# Bitirme-Projesi
-Beyin jimnastiği oyunu
+# CADTS
+Desktop application that contains minigames.
+Developed with Unity.
